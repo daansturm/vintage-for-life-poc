@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+
+  mysql:
+    image: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+   
+    volumes:
+      - ./mysql/init.sql:/docker-entrypoint-initdb.d/init.sql
+    container_name: mysql-db
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 9000:8080
+    container_name: adminer
+    depends_on:
+      - mysql
+
+  graphhopper:
+    image: israelhikingmap/graphhopper
+    restart: always
+    ports:
+      - "8989:8989"
+    volumes:
+      - ./graphhopper/graphhopper.yml:/graphhopper/config/config.yml
+      - ./graphhopper/netherlands.osm.pbf:/graphhopper/data/merge.osm.pbf
+    environment:
+      - JAVA_OPTS=-Xmx6g 
+    command: --host 0.0.0.0 --config /graphhopper/config/config.yml
+    depends_on:
+      - mysql
