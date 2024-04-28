@@ -24,4 +24,4 @@ hs_err_pid*
 replay_pid*
 
 # Custom files
-graphhopper/netherlands.osm.pbf
+/graphhopper/netherlands.osm.pbf
