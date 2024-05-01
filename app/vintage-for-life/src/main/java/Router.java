@@ -20,7 +20,8 @@ public class Router {
     /**
      * Private constructor to prevent external instantiation.
      */
-    private Router() {}
+    private Router() {
+    }
 
     /**
      * Method to get the current instance of the Router class. If it doesn't exist, create a new instance.

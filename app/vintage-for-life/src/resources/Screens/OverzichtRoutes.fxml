@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane minHeight="600.0" minWidth="1000.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Screens.OverzichtRoutes">
+   <children>
+      <ToolBar nodeOrientation="RIGHT_TO_LEFT" prefHeight="40.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <items>
+            <Button mnemonicParsing="false">
+               <graphic>
+                  <ImageView fitHeight="33.0" fitWidth="109.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Pictures/LoginIcon.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+          <Button mnemonicParsing="false" prefHeight="39.0" prefWidth="165.0" text="Invoer Routes">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
+            <Button mnemonicParsing="false" prefHeight="39.0" prefWidth="165.0" text="Routes">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
+            <StackPane prefHeight="41.0" prefWidth="466.0" />
+            <Label text="Vintage For Life">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+        </items>
+      </ToolBar>
+      <SplitPane dividerPositions="0.33, 0.66" layoutX="78.0" layoutY="126.0" prefHeight="160.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0">
+         <items>
+            <AnchorPane prefHeight="200.0" prefWidth="200.0">
+               <children>
+                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="124.0" layoutY="43.0" style="-fx-border-color: lightgrey;" text="Routes" textAlignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+            <AnchorPane prefHeight="200.0" prefWidth="200.0">
+               <children>
+                  <Label alignment="CENTER" layoutX="58.0" layoutY="49.0" style="-fx-border-color: lightgrey;" text="Overzicht Leveringen" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+            <AnchorPane prefHeight="559.0" prefWidth="235.0">
+               <children>
+                  <Label alignment="CENTER" layoutX="123.0" layoutY="48.0" style="-fx-border-color: lightgrey;" text="Overzicht Retouren" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+         </items>
+      </SplitPane>
+   </children>
+</AnchorPane>
