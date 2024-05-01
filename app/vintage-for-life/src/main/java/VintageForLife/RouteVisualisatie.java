@@ -1,4 +1,4 @@
-package Screens;
+package VintageForLife;
 
 public class RouteVisualisatie {
 }
