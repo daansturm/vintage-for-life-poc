@@ -1,5 +1,6 @@
 package VintageForLife;
 
+import VintageForLife.SceneController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 

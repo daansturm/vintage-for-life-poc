@@ -14,7 +14,10 @@ module VintageForLife {
 
     opens VintageForLife to javafx.fxml;
     exports VintageForLife;
-    exports VintageForLife.API;
+
     opens VintageForLife.API to javafx.fxml;
+    exports VintageForLife.API;
+
+
 
 }
