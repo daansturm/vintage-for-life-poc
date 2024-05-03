@@ -5,7 +5,6 @@ services:
   mysql:
     container_name: mysql
     image: mysql
-    command: --default-authentication-plugin=mysql_native_password
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: password
@@ -23,6 +22,7 @@ services:
     depends_on:
       - mysql
 
+
   graphhopper:
     container_name: graphhopper
     image: israelhikingmap/graphhopper
@@ -31,9 +31,9 @@ services:
       - "8989:8989"
     volumes:
       - ./graphhopper/graphhopper.yml:/graphhopper/config/config.yml
-      - ./graphhopper/netherlands.osm.pbf:/graphhopper/data/merge.osm.pbf
+      #- ./graphhopper/netherlands.pbf:/graphhopper/data.pbf
     environment:
-      - JAVA_OPTS=-Xmx6g 
-    command: --host 0.0.0.0 --config /graphhopper/config/config.yml
+      - JAVA_OPTS=-Xmx6g
+    command: --url https://download.geofabrik.de/europe/netherlands-latest.osm.pbf --host 0.0.0.0 --config /graphhopper/config/config.yml
     depends_on:
       - mysql
