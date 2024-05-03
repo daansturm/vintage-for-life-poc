@@ -15,7 +15,7 @@ public class SceneController {
     static private Parent root;
 
     public void ShowLoginScreen(ActionEvent event) throws IOException {
-        root = FXMLLoader.load(getClass().getResource("../LoginScreen.fxml"));
+        root = FXMLLoader.load(getClass().getResource("LoginScreen.fxml"));
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
@@ -23,8 +23,6 @@ public class SceneController {
     }
 
     public void ShowOverzichtRoutes(ActionEvent event) throws IOException {
-
-        System.out.println(getClass().getResource("OverzichtRoutes.fxml"));
         root = FXMLLoader.load(getClass().getResource("OverzichtRoutes.fxml"));
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
