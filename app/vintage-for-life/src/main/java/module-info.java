@@ -11,6 +11,7 @@ module VintageForLife {
     requires eu.hansolo.tilesfx;
     requires com.almasb.fxgl.all;
     requires java.net.http;
+    requires java.sql;
 
     opens VintageForLife to javafx.fxml;
     exports VintageForLife;

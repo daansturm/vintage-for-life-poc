@@ -3,15 +3,64 @@ package VintageForLife;
 import VintageForLife.SceneController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
-public class LoginScreen  {
-    private SceneController Scene = new SceneController();
-    @FXML
-    void Login(ActionEvent event) throws IOException {
-        Scene.ShowOverzichtRoutes(event);
+public class LoginScreen {
+    public TextField emailTextField;
+    public PasswordField passwordField;
+    public Label notificationLabel;
 
+    private SceneController sceneController;
+
+    private Connection connection;
+
+    public LoginScreen() {
+        this.sceneController = new SceneController();
     }
 
+    public void setConnection(Connection connection) {
+        this.connection = connection;
+    }
+
+    @FXML
+    void Login(ActionEvent event) throws IOException {
+        String email = emailTextField.getText();
+        String password = passwordField.getText();
+
+        if (authenticateUser(email, password)) {
+            try {
+                sceneController.ShowOverzichtRoutes(event);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            notificationLabel.setText("Invalid email or password");
+            notificationLabel.setVisible(true);
+        }
+    }
+
+    private boolean authenticateUser(String email, String password) {
+        try {
+            String sql = "SELECT * FROM user WHERE email = ? AND password = ?";
+            PreparedStatement pstmt = connection.prepareStatement(sql);
+            pstmt.setString(1, email);
+            pstmt.setString(2, password);
+            ResultSet resultSet = pstmt.executeQuery();
+
+            if (resultSet.next()) {
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 }
