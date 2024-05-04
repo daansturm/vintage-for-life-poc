@@ -1,6 +1,5 @@
 package VintageForLife;
 
-import VintageForLife.SceneController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -19,15 +18,11 @@ public class LoginScreen {
     public Label notificationLabel;
 
     private SceneController sceneController;
-
-    private Connection connection;
+    private final Connection connection;
 
     public LoginScreen() {
-        this.sceneController = new SceneController();
-    }
-
-    public void setConnection(Connection connection) {
-        this.connection = connection;
+        sceneController = new SceneController();
+        connection = DBConnection.getConnection();
     }
 
     @FXML
@@ -42,7 +37,7 @@ public class LoginScreen {
                 e.printStackTrace();
             }
         } else {
-            notificationLabel.setText("Invalid email or password");
+            notificationLabel.setText("Ongeldig e-mailadres of wachtwoord");
             notificationLabel.setVisible(true);
         }
     }
