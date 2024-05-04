@@ -20,7 +20,7 @@ public class LoginScreen {
 
     private SceneController sceneController;
 
-    private Connection connection;
+    private static Connection connection;
 
     public LoginScreen() {
         this.sceneController = new SceneController();
