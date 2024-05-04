@@ -6,6 +6,7 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -118,4 +119,47 @@ public class Router {
         jsonBuilder.append("]");
         return jsonBuilder.toString();
     }
+
+    //justin, dit moet herschreven worden om de punten uit de response te halen en dan in een lijst te zetten
+    //met drawmap kan dan een HTML file gemaakt worden, deze gaat nu nog naar console maar moet naar een file gaan
+   /* public static void drawRouteOnMap(ResponsePath path) {
+        // Haal de lijst met coördinaten op uit het pad
+        PointList pointList = path.getPoints();
+        int numPoints = pointList.size();
+
+        // Maak een array voor de coördinaten
+        double[][] coordinates = new double[numPoints][2];
+
+        for (int i = 0; i < numPoints; i++) {
+            coordinates[i][0] = pointList.getLat(i);
+            coordinates[i][1] = pointList.getLon(i);
+        }
+
+        // Gebruik de coördinaten om de kaart te tekenen met Leaflet
+        drawMap(coordinates);
+    }*/
+
+    public static void drawMap(double[][] coordinates) {
+        // Toon de kaart in een webbrowser met Leaflet
+        System.out.println("<html>");
+        System.out.println("<head>");
+        System.out.println("<title>Gerouteerde route</title>");
+        System.out.println("<link rel=\"stylesheet\" href=\"https://unpkg.com/leaflet@1.7.1/dist/leaflet.css\" />");
+        System.out.println("<script src=\"https://unpkg.com/leaflet@1.7.1/dist/leaflet.js\"></script>");
+        System.out.println("</head>");
+        System.out.println("<body>");
+        System.out.println("<div id=\"map\" style=\"height: 600px;\"></div>");
+        System.out.println("<script>");
+        System.out.println("var map = L.map('map').setView([" + coordinates[0][0] + ", " + coordinates[0][1] + "], 13);");
+        System.out.println("L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);");
+        System.out.println("L.polyline(" + Arrays.deepToString(coordinates) + ", {color: 'blue'}).addTo(map);");
+        System.out.println("</script>");
+        System.out.println("</body>");
+        System.out.println("</html>");
+    }
+
+
+
+
 }
+
