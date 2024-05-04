@@ -51,10 +51,17 @@ public class OverzichtRoutes {
             }
         }
 
-        VBox items = new VBox();
+        VBox items = new VBox(Leveringen.getWidth());
         items.getChildren().addAll(Levering);
+        items.prefWidthProperty().bind(Leveringen.widthProperty());
         Leveringen.setContent(items);
+
+
     }
+
+
+
+
 
     public OverzichtRoutes() throws IOException {
 
