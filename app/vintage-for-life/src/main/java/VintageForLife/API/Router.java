@@ -1,3 +1,5 @@
+package VintageForLife.API;
+
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -20,12 +22,13 @@ public class Router {
     /**
      * Private constructor to prevent external instantiation.
      */
-    private Router() {}
+    private Router() {
+    }
 
     /**
-     * Method to get the current instance of the Router class. If it doesn't exist, create a new instance.
+     * Method to get the current instance of the Screens.Router class. If it doesn't exist, create a new instance.
      *
-     * @return the current instance of the Router class
+     * @return the current instance of the Screens.Router class
      */
     public static Router getInstance() {
         return instance == null ? (instance = new Router()) : instance;
