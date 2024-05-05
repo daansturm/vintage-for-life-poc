@@ -25,8 +25,7 @@ public class OverzichtRoutes {
     @FXML
     private ScrollPane Retouren = new ScrollPane();;
     @FXML
-    private ScrollPane Routes = new ScrollPane();;
-    private SceneController Scene = new SceneController();
+    private ScrollPane Routes = new ScrollPane();
 
 
     private Stage stage;
@@ -74,7 +73,7 @@ public class OverzichtRoutes {
                 Levering.add(content);
                 } catch (IOException e) {
                 e.printStackTrace();
-             
+
             }
         }
 
