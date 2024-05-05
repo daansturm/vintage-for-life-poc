@@ -1,5 +1,9 @@
 package VintageForLife.API;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -84,78 +88,78 @@ public class Router {
     /**
      * Send a POST request to the API endpoint to get the route.
      */
-    public void getRoute() {
-        String apiUrl = "{API URL}"; // TODO: Set API URL
-
-        HttpClient client = HttpClient.newHttpClient();
+    public String getRoute() {
+        String apiUrl = "http://localhost:8989/route"; // TODO: Set API URL
+        JSONObject body = new JSONObject();
+        body.put("profile", profile);
+        body.put("points", new JSONArray(points));
 
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(apiUrl))
-                .POST(HttpRequest.BodyPublishers.ofString("{\"points\":" + pointsToJson() + ",\"profile\":\"" + profile + "\"}"))
+                .POST(HttpRequest.BodyPublishers.ofString(body.toString()))
                 .header("Content-Type", "application/json")
                 .build();
 
         try {
-            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-            System.out.println("Response: " + response.body());
+            HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
+            return response.body();
         } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
         }
     }
 
     /**
-     * Convert points to JSON format.
-     *
-     * @return the JSON representation of the points
+     * Get coordinates from the API and generate an HTML file.
      */
-    private String pointsToJson() {
-        StringBuilder jsonBuilder = new StringBuilder("[");
-        for (double[] point : points) {
-            jsonBuilder.append("[").append(point[0]).append(",").append(point[1]).append("],");
-        }
-        if (!points.isEmpty()) {
-            jsonBuilder.deleteCharAt(jsonBuilder.length() - 1); // Remove the last comma
-        }
-        jsonBuilder.append("]");
-        return jsonBuilder.toString();
-    }
+    public void drawRouteOnMap() {
+        JSONObject pointList = new JSONObject(getPoints());
+        JSONArray paths = pointList.getJSONArray("paths");
+        JSONObject firstPath = paths.getJSONObject(0); // Assuming you are working with the first path
+        JSONObject pointsObject = firstPath.getJSONObject("points");
+        JSONArray coordinates = pointsObject.getJSONArray("coordinates");
+        int numPoints = coordinates.length();
 
-    //justin, dit moet herschreven worden om de punten uit de response te halen en dan in een lijst te zetten
-    //met drawmap kan dan een HTML file gemaakt worden, deze gaat nu nog naar console maar moet naar een file gaan
-   /* public static void drawRouteOnMap(ResponsePath path) {
-        // Haal de lijst met coördinaten op uit het pad
-        PointList pointList = path.getPoints();
-        int numPoints = pointList.size();
-
-        // Maak een array voor de coördinaten
-        double[][] coordinates = new double[numPoints][2];
+        // Create an array for the coordinates
+        double[][] coordinatesArray = new double[numPoints][2];
 
         for (int i = 0; i < numPoints; i++) {
-            coordinates[i][0] = pointList.getLat(i);
-            coordinates[i][1] = pointList.getLon(i);
+            JSONArray coordinate = coordinates.getJSONArray(i);
+            double latitude = coordinate.getDouble(0); // Latitude is the first value
+            double longitude = coordinate.getDouble(1); // Longitude is the second value
+            coordinatesArray[i][0] = latitude;
+            coordinatesArray[i][1] = longitude;
         }
 
-        // Gebruik de coördinaten om de kaart te tekenen met Leaflet
-        drawMap(coordinates);
-    }*/
+        // Use the coordinates to draw the map with Leaflet
+        drawMap(coordinatesArray);
+    }
 
-    public static void drawMap(double[][] coordinates) {
-        // Toon de kaart in een webbrowser met Leaflet
-        System.out.println("<html>");
-        System.out.println("<head>");
-        System.out.println("<title>Gerouteerde route</title>");
-        System.out.println("<link rel=\"stylesheet\" href=\"https://unpkg.com/leaflet@1.7.1/dist/leaflet.css\" />");
-        System.out.println("<script src=\"https://unpkg.com/leaflet@1.7.1/dist/leaflet.js\"></script>");
-        System.out.println("</head>");
-        System.out.println("<body>");
-        System.out.println("<div id=\"map\" style=\"height: 600px;\"></div>");
-        System.out.println("<script>");
-        System.out.println("var map = L.map('map').setView([" + coordinates[0][0] + ", " + coordinates[0][1] + "], 13);");
-        System.out.println("L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);");
-        System.out.println("L.polyline(" + Arrays.deepToString(coordinates) + ", {color: 'blue'}).addTo(map);");
-        System.out.println("</script>");
-        System.out.println("</body>");
-        System.out.println("</html>");
+    /**
+     * Generate a map based on the given coordinates.
+     */
+    private void drawMap(double[][] coordinates) {
+        StringBuilder contentBuilder = new StringBuilder();
+        contentBuilder.append("<html>\n");
+        contentBuilder.append("<head>\n");
+        contentBuilder.append("<title>Gerouteerde route</title>\n");
+        contentBuilder.append("<link rel=\"stylesheet\" href=\"https://unpkg.com/leaflet@1.7.1/dist/leaflet.css\" />\n");
+        contentBuilder.append("<script src=\"https://unpkg.com/leaflet@1.7.1/dist/leaflet.js\"></script>\n");
+        contentBuilder.append("</head>\n");
+        contentBuilder.append("<body>\n");
+        contentBuilder.append("<div id=\"map\" style=\"height: 600px;\"></div>\n");
+        contentBuilder.append("<script>\n");
+        contentBuilder.append("var map = L.map('map').setView([").append(coordinates[0][0]).append(", ").append(coordinates[0][1]).append("], 13);\n");
+        contentBuilder.append("L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);\n");
+        contentBuilder.append("L.polyline(").append(Arrays.deepToString(coordinates)).append(", {color: 'blue'}).addTo(map);\n");
+        contentBuilder.append("</script>\n");
+        contentBuilder.append("</body>\n");
+        contentBuilder.append("</html>\n");
+
+        try (FileWriter fileWriter = new FileWriter("map.html")) {
+            fileWriter.write(contentBuilder.toString());
+        } catch (IOException e) {
+            System.err.println("Fout bij schrijven naar het bestand: " + e.getMessage());
+        }
     }
 
 
