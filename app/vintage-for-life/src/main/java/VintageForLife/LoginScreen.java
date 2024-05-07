@@ -1,5 +1,6 @@
 package VintageForLife;
 
+import VintageForLife.DB.DBConnection;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -44,7 +45,7 @@ public class LoginScreen {
 
     private boolean authenticateUser(String email, String password) {
         try {
-            String sql = "SELECT * FROM user WHERE email = ? AND password = ?";
+            String sql = "SELECT * FROM gebruikers WHERE email = ? AND wachtwoord = ?";
             PreparedStatement pstmt = connection.prepareStatement(sql);
             pstmt.setString(1, email);
             pstmt.setString(2, password);

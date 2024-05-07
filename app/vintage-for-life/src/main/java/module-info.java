@@ -18,7 +18,8 @@ module VintageForLife {
 
     opens VintageForLife.API to javafx.fxml;
     exports VintageForLife.API;
-
+    exports VintageForLife.DB;
+    opens VintageForLife.DB to javafx.fxml;
 
 
 }

@@ -1,4 +1,4 @@
-package VintageForLife;
+package VintageForLife.DB;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
