@@ -12,6 +12,7 @@ module VintageForLife {
     requires com.almasb.fxgl.all;
     requires java.net.http;
     requires java.sql;
+    requires org.json;
 
     opens VintageForLife to javafx.fxml;
     exports VintageForLife;
