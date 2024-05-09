@@ -1,6 +1,8 @@
 package VintageForLife;
 
 import VintageForLife.DB.DBConnection;
+import VintageForLife.DB.DBadres;
+import VintageForLife.DB.DBlevering;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -81,29 +83,22 @@ public class OverzichtRoutes {
 
     public void addLeveringen() throws SQLException {
 
-        String sql = "SELECT * FROM levering";
-        PreparedStatement pstmt = connection.prepareStatement(sql);
-        ResultSet resultSet = pstmt.executeQuery();
+        List<DBlevering> DB_leveringen = DBConnection.getSQLDBlevering();
+        for (int i = 0; i < DB_leveringen.size(); i++) {
+             DB_leveringen.get(i).setLevering(DBConnection.getSQLDBbestelling(DB_leveringen.get(i)));
+             for (int t = 0; t < DB_leveringen.get(i).getBestellingCount(); t++)
+             {
+                 DB_leveringen.get(i).getBestelling(t).setBestelling(DBConnection.getSQLDBproduct(DB_leveringen.get(i).getBestelling(t)));
+             }
 
-        ArrayList<Integer> idArray = new ArrayList<>();
-        ArrayList<String> statusArray = new ArrayList<>();
-        ArrayList<String> bezorgdatumArray = new ArrayList<>();
+        }
 
-            while (resultSet.next()) {
-                int id = resultSet.getInt("id");
-                String status = resultSet.getString("status");
-                String bezorgdatum = resultSet.getString("bezorgdatum");
-
-                idArray.add(id);
-                statusArray.add(status);
-                bezorgdatumArray.add(bezorgdatum);
-            }
-
-
-
-        for (int i = 0; i < idArray.size(); i++) {
+        for (int i = 0; i < DB_leveringen.size(); i++) {
             try {
+
+
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("LeveringRetour.fxml"));
+                DBadres adres = DB_leveringen.get(i).getFirstAdres();
 
 
 
@@ -112,6 +107,7 @@ public class OverzichtRoutes {
 
                 LeveringRetour controller = loader.getController();
                 controller.getLeveringLabel().setText("Levering: " + i );
+                controller.getPlaatstLabel().setText("Plaats: " + adres.getPlaats() );
 
 
 
@@ -130,41 +126,8 @@ public class OverzichtRoutes {
 
     }
 
-    ///todo julian
-    void addInfoLevering(int id, LeveringRetour controller) throws SQLException {
-
-        String sql =   "SELECT b.id AS bestelling_id, b.klant_id, b.status, b.installatieservice, b.straat, b.huisnummer, b.plaats, b.postcode, b.land, " +
-                "k.voornaam, k.tussenvoegsel, k.achternaam, k.telefoonnummer " +
-                "FROM bestelling b " +
-                "INNER JOIN bestelling_levering bl ON b.id = bl.bestelling_id " +
-                "INNER JOIN levering l ON bl.levering_id = l.id " +
-                "INNER JOIN klanten k ON b.klant_id = k.id " +
-                "WHERE l.status = 'nieuw' and l.id = ";
-
-        PreparedStatement pstmt = connection.prepareStatement(sql);
-        ResultSet resultSet = pstmt.executeQuery();
-
-        while (resultSet.next()) {
-            int bestellingId = resultSet.getInt("bestelling_id");
-            int klantId = resultSet.getInt("klant_id");
-            String status = resultSet.getString("status");
-            boolean installatieservice = resultSet.getBoolean("installatieservice");
-            String straat = resultSet.getString("straat");
-            String huisnummer = resultSet.getString("huisnummer");
-            String plaats = resultSet.getString("plaats");
-            String postcode = resultSet.getString("postcode");
-            String land = resultSet.getString("land");
-
-            // Klantinformatie
-            String voornaam = resultSet.getString("voornaam");
-            String tussenvoegsel = resultSet.getString("tussenvoegsel");
-            String achternaam = resultSet.getString("achternaam");
-            String telefoonnummer = resultSet.getString("telefoonnummer");
 
 
-
-        }
-    }
 
 
 

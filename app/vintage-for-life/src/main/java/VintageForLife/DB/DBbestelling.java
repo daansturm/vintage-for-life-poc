@@ -1,5 +1,6 @@
 package VintageForLife.DB;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class DBbestelling {
@@ -7,40 +8,55 @@ public class DBbestelling {
     private int klantId;
     private String status;
     private boolean installatieservice;
-    private String straat;
-    private String huisnummer;
-    private String plaats;
-    private String postcode;
-    private String land;
-    private String voornaam;
-    private String tussenvoegsel;
-    private String achternaam;
-    private String telefoonnummer;
+    private DBadres adres;
     private List<DBproduct> producten;
 
 
-    public DBbestelling(int id, int klant_id, String status, boolean installatieservice, String straat, String huisnummer, String Plaats, String postcode, String land,
-                        String voornaam, String tussenvoegsel, String achternaam, String telefoonnummer)
+    public DBbestelling(int id, int klant_id, String status, boolean installatieservice, String straat, String huisnummer, String plaats, String postcode, String land)
     {
         this.id = id;
         this.klantId = klant_id;
         this.status = status;
         this.installatieservice = installatieservice;
-        this.straat = straat;
-        this.huisnummer = huisnummer;
-        this.plaats = Plaats;
-        this.postcode = postcode;
-        this.land = land;
-        this.voornaam = voornaam;
-        this.tussenvoegsel = tussenvoegsel;
-        this.achternaam = achternaam;
-        this.telefoonnummer = telefoonnummer;
-
+        this.adres = new DBadres(straat,huisnummer,plaats, postcode, land);
+        this.producten = new ArrayList<DBproduct>();
     }
 
-    public void voegProductToe(int id, String naam, String beschrijving, String afmeting, String gewicht, int aantal) {
-        producten.add(new DBproduct(id, naam, beschrijving, afmeting, gewicht, aantal));
+    public void voegProductToe(String id, String naam, String beschrijving, String afmeting, String gewicht, String aantal) {
+        producten.add(new DBproduct(Integer.parseInt(id), naam, beschrijving, afmeting, gewicht, Integer.parseInt(aantal)));
     }
 
+    public void setBestelling(DBbestelling bestelling)
+    {
+        this.id = bestelling.id;
+        this.klantId = bestelling.klantId;
+        this.status = bestelling.status;
+        this.installatieservice = bestelling.installatieservice;
+        this.adres = bestelling.adres;
+        this.producten = bestelling.producten;
+    }
+
+    public DBadres getAdres()
+    {
+        return adres;
+    }
+
+    public DBproduct getProduct(int index)
+    {
+        if (index < 0 || index >= producten.size())
+            return null;
+
+        return producten.get(index);
+    }
+
+    public String getId()
+    {
+        return String.valueOf(this.id);
+    }
+
+    public int getProductCount()
+    {
+        return producten.size();
+    }
 
 }
