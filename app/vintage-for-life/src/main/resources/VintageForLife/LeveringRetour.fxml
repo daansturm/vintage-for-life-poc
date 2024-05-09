@@ -26,12 +26,19 @@
     <content>
       <AnchorPane>
          <children>
-            <Label fx:id="plaatstxt" layoutX="34.0" layoutY="5.0" text="Plaats: " textAlignment="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+            <VBox layoutY="-77.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <Label fx:id="plaatstxt" text="Plaats: " textAlignment="CENTER" />
+                  <Label fx:id="adrestxt" text="Adres :  " textAlignment="CENTER" />
+                  <Label fx:id="postcodetxt" text="postcode: " textAlignment="CENTER" />
+                  <Label fx:id="landtxt" text="Land: " textAlignment="CENTER" />
+               </children>
+            </VBox>
          </children></AnchorPane>
     </content>
     <expandableContent>
       <AnchorPane maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity">
-            <Label text="Bestellingen " textAlignment="CENTER" />
+            <Label layoutX="14.0" layoutY="6.0" text="Bestellingen " textAlignment="CENTER" />
         </AnchorPane>
     </expandableContent>
    <effect>

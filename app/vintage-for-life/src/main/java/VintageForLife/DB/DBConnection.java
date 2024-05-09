@@ -76,7 +76,7 @@ public class DBConnection {
 
     public static List<DBlevering> getSQLDBlevering() throws SQLException {
 
-        String sql = "SELECT * FROM levering";
+        String sql = "SELECT * FROM levering where status = 'nieuw'";
         PreparedStatement pstmt = connection.prepareStatement(sql);
         ResultSet resultSet = pstmt.executeQuery();
 
@@ -88,6 +88,51 @@ public class DBConnection {
 
 
         return leveringen;
+
+    }
+
+    public static DBroute getSQLDBlevering(DBroute route) throws SQLException {
+
+        String id = route.getId();
+        String sql = "SELECT * FROM levering inner join levering_route lr on levering.id = lr.id where route_id = ?";
+        PreparedStatement pstmt = connection.prepareStatement(sql);
+        pstmt.setString(1, id);
+        ResultSet resultSet = pstmt.executeQuery();
+
+
+        while (resultSet.next()) {
+            route.voegLeveringToe( new DBlevering(resultSet.getInt("id"), resultSet.getString("status"), resultSet.getString("bezorgdatum")));
+        }
+
+
+        return route;
+
+    }
+
+    public static List<DBroute> getSQLDBroute() throws SQLException {
+
+        String sql = "SELECT * FROM route ";
+        PreparedStatement pstmt = connection.prepareStatement(sql);
+        ResultSet resultSet = pstmt.executeQuery();
+
+        List<DBroute> routes = new ArrayList<>();
+        while (resultSet.next()) {
+            routes.add(new DBroute(resultSet.getInt("id"), resultSet.getString("status"), resultSet.getString("datum"), resultSet.getString("priotisering") ));
+
+        }
+
+
+
+        return routes;
+    }
+
+    public static void setSQLDBlevering(DBlevering levering)
+    {
+
+    }
+
+    public static void setSQLRoute(DBroute route)
+    {
 
     }
 
