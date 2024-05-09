@@ -11,6 +11,7 @@ public class DBroute {
     private LocalDateTime datum;
     private String priotisering;
     private List<DBlevering> leveringen;
+    private List<DBretour> retouren;
     private DBadres beginadres;
     private DBadres eindadres;
 
@@ -46,6 +47,11 @@ public class DBroute {
         this.eindadres = route.eindadres;
     }
 
+    public void setId(int id)
+    {
+        this.id = id;
+    }
+
     public void setBeginadres(DBadres beginadres) {
         this.beginadres = beginadres;
     }
@@ -58,6 +64,10 @@ public class DBroute {
         this.leveringen.add(levering);
     }
 
+    public void voegRetourToe(DBretour retour) {
+        this.retouren.add(retour);
+    }
+
     public DBadres getBeginadres() {
         return beginadres;
     }
@@ -68,6 +78,20 @@ public class DBroute {
 
     public String getStatus() {
         return status;
+    }
+
+    public String getPriotisering()
+    {
+        return priotisering;
+    }
+
+
+
+    public String getDatum()
+    {
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        return this.datum.format(format);
+
     }
 
     public List<DBlevering> getLeveringen()

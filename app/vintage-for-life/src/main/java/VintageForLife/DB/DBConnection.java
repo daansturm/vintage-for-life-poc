@@ -109,6 +109,39 @@ public class DBConnection {
 
     }
 
+    public static DBroute getSQLDBRetour(DBroute route) throws SQLException {
+
+        String id = route.getId();
+        String sql = "SELECT * FROM retour inner join retour_route lr on retour.id = lr.id where route_id = ?";
+        PreparedStatement pstmt = connection.prepareStatement(sql);
+        pstmt.setString(1, id);
+        ResultSet resultSet = pstmt.executeQuery();
+
+
+        while (resultSet.next()) {
+            id = resultSet.getString("id");
+            String bestelling_id = resultSet.getString("klant_id");
+            String status = resultSet.getString("status");
+            String reden = resultSet.getString("reden");
+            String opmerking = resultSet.getString("opmerking");
+            String retourdatum = resultSet.getString("retourdatum");
+            String straat = resultSet.getString("straat");
+            String huisnummer = resultSet.getString("huisnummer");
+            String plaats = resultSet.getString("plaats");
+            String postcode = resultSet.getString("postcode");
+            String land = resultSet.getString("land");
+
+            route.voegRetourToe( new DBretour(id,bestelling_id,status,reden,opmerking,retourdatum,straat,huisnummer,plaats,postcode,land));
+        }
+
+
+        return route;
+
+    }
+
+
+
+
     public static List<DBroute> getSQLDBroute() throws SQLException {
 
         String sql = "SELECT * FROM route ";
@@ -128,12 +161,57 @@ public class DBConnection {
 
     public static void setSQLDBlevering(DBlevering levering)
     {
+         //TODO Julian
 
     }
 
-    public static void setSQLRoute(DBroute route)
-    {
+    public static DBroute setSQLRoute(DBroute route) throws SQLException {
 
+
+        String id = route.getId();
+
+        //update
+        if(id != "" || id == null) {
+            String sql = "UPDATE route SET  status = ?, datum = ?, priotisering = ?, beginadres = ?, eindadreswhere = ? where id = ?";
+            PreparedStatement pstmt = connection.prepareStatement(sql);
+            pstmt.setString(1, route.getStatus());
+            pstmt.setString(2, route.getDatum());
+            pstmt.setString(3, route.getPriotisering());
+            pstmt.setString(4,"1");
+            pstmt.setString(5,"1");
+            pstmt.setString(6, id);
+            int row = pstmt.executeUpdate();
+
+
+
+        }
+        else
+        {
+            String sql = "INSERT into route (status, datum, priotisering, beginadres, eindadres) values (?, ?, ?, ?, ?)";
+            PreparedStatement pstmt = connection.prepareStatement(sql);
+            pstmt.setString(1, route.getStatus());
+            pstmt.setString(2, route.getDatum());
+            pstmt.setString(3, route.getPriotisering());
+            pstmt.setString(4,"1");
+            pstmt.setString(5,"1");
+            int rowsInserted = pstmt.executeUpdate();
+
+            if (rowsInserted > 0) {
+                ResultSet generatedKeys = pstmt.getGeneratedKeys();
+                if (generatedKeys.next()) {
+                    route.setId(generatedKeys.getInt(1));
+
+                }
+            }
+
+
+
+        }
+        //TODO Julian
+        //delete koppel tabel waar alle referenties naar id staan in levering en retour
+        //insert nieuwe lijst met koppelingen naar levering en retour
+
+      return route;
     }
 
 }

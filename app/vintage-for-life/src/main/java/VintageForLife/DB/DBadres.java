@@ -1,6 +1,7 @@
 package VintageForLife.DB;
 
 public class DBadres {
+    private int id;
     private String straat;
     private String huisnummer;
     private String plaats;
@@ -8,6 +9,16 @@ public class DBadres {
     private String land;
 
     public DBadres(String straat, String huisnummer, String plaats, String postcode, String land) {
+        this.straat = straat;
+        this.huisnummer = huisnummer;
+        this.plaats = plaats;
+        this.postcode = postcode;
+        this.land = land;
+
+    }
+
+    public DBadres(String id, String straat, String huisnummer, String plaats, String postcode, String land) {
+        this.id = Integer.parseInt(id);
         this.straat = straat;
         this.huisnummer = huisnummer;
         this.plaats = plaats;

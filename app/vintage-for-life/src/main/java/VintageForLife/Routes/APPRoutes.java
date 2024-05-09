@@ -4,7 +4,7 @@ import VintageForLife.DB.DBConnection;
 import VintageForLife.DB.DBbestelling;
 import VintageForLife.DB.DBlevering;
 import VintageForLife.DB.DBroute;
-import VintageForLife.RouteInfo;
+
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -22,12 +22,14 @@ public class APPRoutes {
         routeList = DBConnection.getSQLDBroute();
         for (DBroute route : routeList) {
             route.setRoute(DBConnection.getSQLDBlevering(route));
+            route.setRoute(DBConnection.getSQLDBRetour(route));
             for(DBlevering levering : route.getLeveringen())
             {
                 levering.setLevering(DBConnection.getSQLDBbestelling(levering));
                 for(DBbestelling bestelling : levering.getBestellingen())
                 {
                     bestelling.setBestelling(DBConnection.getSQLDBproduct(bestelling));
+
                 }
             }
         }
