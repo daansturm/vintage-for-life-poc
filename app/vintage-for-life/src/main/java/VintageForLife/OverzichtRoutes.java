@@ -1,8 +1,7 @@
 package VintageForLife;
 
-import VintageForLife.DB.DBConnection;
-import VintageForLife.DB.DBadres;
-import VintageForLife.DB.DBlevering;
+import VintageForLife.DB.*;
+import VintageForLife.Routes.APPRoutes;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -23,7 +22,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class OverzichtRoutes {
+public class OverzichtRoutes implements RouteListener{
 
     private final Connection connection;
     private SceneController Scene = new SceneController();
@@ -40,6 +39,11 @@ public class OverzichtRoutes {
     private Scene scene;
     private Parent root;
 
+
+    List<RouteInfo> routeInfoList = new ArrayList<>();
+    List<DBroute> routeList = new ArrayList<>();
+    List<DBlevering> leveringList = new ArrayList<>();
+
     List<Node> Levering = new ArrayList<>();
     List<Node> Retour = new ArrayList<>();
     List<Node> Route = new ArrayList<>();
@@ -51,22 +55,30 @@ public class OverzichtRoutes {
     }
 
     @FXML
-    private void initialize() throws SQLException {
+    private void initialize() throws SQLException, IOException {
         // Voeg inhoud toe aan de ScrollPane nadat de pagina is geladen
+        APPRoutes.SQLRoutes();
+        APPRoutes.SQLUnAssignedLeveringen();
+        routeList = APPRoutes.getRoutes();
+        leveringList = APPRoutes.getUnAssignedLevering();
 
         addRoutes();
         addLeveringen();
     }
 
+
     public void addRoutes()
     {
-
-
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < routeList.size(); i++) {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("RouteInfo.fxml"));
                 Parent content = loader.load();
                 Route.add(content);
+
+                RouteInfo controller = loader.getController();
+                routeInfoList.add(controller);
+                controller.setRouteSelectionListener(this);
+
                 //((VBox) Leveringen.getContent()).getChildren().add(content);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -77,47 +89,36 @@ public class OverzichtRoutes {
             items.getChildren().addAll(Route);
             items.prefWidthProperty().bind(Routes.widthProperty());
             Routes.setContent(items);
+
+            if (routeInfoList != null)
+                routeInfoList.get(0).setSelected();
         }
     }
 
 
-    public void addLeveringen() throws SQLException {
+    public void addLeveringen() throws SQLException, IOException {
 
-        List<DBlevering> DB_leveringen = DBConnection.getSQLDBlevering();
-        for (int i = 0; i < DB_leveringen.size(); i++) {
-             DB_leveringen.get(i).setLevering(DBConnection.getSQLDBbestelling(DB_leveringen.get(i)));
-             for (int t = 0; t < DB_leveringen.get(i).getBestellingCount(); t++)
-             {
-                 DB_leveringen.get(i).getBestelling(t).setBestelling(DBConnection.getSQLDBproduct(DB_leveringen.get(i).getBestelling(t)));
-             }
-
-        }
-
-        for (int i = 0; i < DB_leveringen.size(); i++) {
-            try {
-
-
+        for(DBroute route : routeList)
+        {
+            int i = 0;
+            for(DBlevering levering : route.getLeveringen())
+            {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("LeveringRetour.fxml"));
-                DBadres adres = DB_leveringen.get(i).getFirstAdres();
-
-
-
                 Parent content = loader.load();
+                content.setVisible(false);
                 Levering.add(content);
 
+                DBadres adres = levering.getFirstAdres();
                 LeveringRetour controller = loader.getController();
-                controller.getLeveringLabel().setText("Levering: " + i );
+                controller.getLeveringLabel().setText("Levering: " + i);
                 controller.getPlaatstLabel().setText("Plaats: " + adres.getPlaats() );
+                controller.getAdrestLabel().setText("adres: " + adres.getStraat() + " " +adres.getHuisnummer());
+                controller.getPostcodetxt().setText("Postcode: " + adres.getPostcode());
+                controller.getLandLabel().setText("Land: " + adres.getLand() );
 
-
-
-
-                } catch (IOException e) {
-                e.printStackTrace();
-
+                i++;
             }
         }
-
         VBox items = new VBox(Leveringen.getWidth());
         items.getChildren().addAll(Levering);
         items.prefWidthProperty().bind(Leveringen.widthProperty());
@@ -127,7 +128,14 @@ public class OverzichtRoutes {
     }
 
 
+    public void onRouteSelected() {
+        // Logica om de achtergrond te verwijderen
+        for(int i = 0; i < routeInfoList.size(); i++)
+        {
+            routeInfoList.get(i).setUnseleced();
 
+        }
+    }
 
 
 

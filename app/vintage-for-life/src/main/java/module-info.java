@@ -21,6 +21,8 @@ module VintageForLife {
     exports VintageForLife.API;
     exports VintageForLife.DB;
     opens VintageForLife.DB to javafx.fxml;
+    exports VintageForLife.Routes;
+    opens VintageForLife.Routes to javafx.fxml;
 
 
 }

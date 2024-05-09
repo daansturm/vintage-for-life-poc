@@ -12,6 +12,16 @@ public class LeveringRetour {
     private Label LeveringRetourtxt;
     @FXML
     private Label plaatstxt;
+    @FXML
+    private Label adrestxt;
+    @FXML
+    private Label postcodetxt;
+    @FXML
+    private Label landtxt;
+
+    private int id;
+
+
 
 
     // Methode om de label te retourneren
@@ -23,4 +33,24 @@ public class LeveringRetour {
         return plaatstxt;
     }
 
+    public Label getAdrestLabel() {
+        return adrestxt;
+    }
+
+    public Label getLandLabel() {
+        return landtxt;
+
+    }
+
+    public Label getPostcodetxt() {
+        return postcodetxt;
+    }
+
+    public void setID(int id) {
+        this.id = id;
+    }
+
+    public int getId(){
+        return id;
+    }
 }

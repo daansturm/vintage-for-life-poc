@@ -76,4 +76,7 @@ public class DBlevering {
         return bestellingen.get(index);
     }
 
+    public List<DBbestelling> getBestellingen() {
+        return bestellingen;
+    }
 }
