@@ -44,7 +44,9 @@ public class OverzichtRoutes implements RouteListener{
     List<DBroute> routeList = new ArrayList<>();
     List<DBlevering> leveringList = new ArrayList<>();
 
-    List<Node> Levering = new ArrayList<>();
+    List<VBox> routeLevering = new ArrayList<>();
+    List<VBox> routeRetour = new ArrayList<>();
+
     List<Node> Retour = new ArrayList<>();
     List<Node> Route = new ArrayList<>();
 
@@ -63,14 +65,14 @@ public class OverzichtRoutes implements RouteListener{
         APPRoutes.MakeRoute();
         routeList = APPRoutes.getRoutes();
         leveringList = APPRoutes.getUnAssignedLevering();
-        System.out.println(routeList.toString());
+
 
         addRoutes();
         addLeveringen();
     }
 
 
-    public void addRoutes()
+    private void addRoutes()
     {
         for (int i = 0; i < routeList.size(); i++) {
             try {
@@ -99,16 +101,18 @@ public class OverzichtRoutes implements RouteListener{
     }
 
 
-    public void addLeveringen() throws SQLException, IOException {
+    private void addLeveringen() throws SQLException, IOException {
 
         for(DBroute route : routeList)
         {
+            List<Node> Levering = new ArrayList<>();
+            VBox _routeLevering = new VBox();
             int i = 0;
             for(DBlevering levering : route.getLeveringen())
             {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("LeveringRetour.fxml"));
                 Parent content = loader.load();
-                content.setVisible(false);
+                content.setVisible(true);
                 Levering.add(content);
 
                 DBadres adres = levering.getFirstAdres();
@@ -121,22 +125,84 @@ public class OverzichtRoutes implements RouteListener{
 
                 i++;
             }
+            _routeLevering.getChildren().addAll(Levering);
+            routeLevering.add(_routeLevering);
+
         }
-        VBox items = new VBox(Leveringen.getWidth());
-        items.getChildren().addAll(Levering);
-        items.prefWidthProperty().bind(Leveringen.widthProperty());
-        Leveringen.setContent(items);
+
+        if(!routeLevering.isEmpty()) {
+            routeLevering.get(0).prefWidthProperty().bind(Leveringen.widthProperty());
+            Leveringen.setContent(routeLevering.get(0));
+        }
+        //VBox items = new VBox(Leveringen.getWidth());
+        //items.getChildren().addAll(Levering);
+        //items.prefWidthProperty().bind(Leveringen.widthProperty());
+        //Leveringen.setContent(items);
+
+
+    }
+
+    private void addRetour() throws SQLException, IOException {
+
+        for(DBroute route : routeList)
+        {
+            List<Node> Retour = new ArrayList<>();
+            VBox _routeRetour = new VBox();
+            int i = 0;
+            for(DBretour retour : route.getRetouren())
+            {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("LeveringRetour.fxml"));
+                Parent content = loader.load();
+                content.setVisible(true);
+                Retour.add(content);
+
+                DBadres adres = retour.getAdres();
+                LeveringRetour controller = loader.getController();
+                controller.getLeveringLabel().setText("Levering: " + i);
+                controller.getPlaatstLabel().setText("Plaats: " + adres.getPlaats() );
+                controller.getAdrestLabel().setText("adres: " + adres.getStraat() + " " +adres.getHuisnummer());
+                controller.getPostcodetxt().setText("Postcode: " + adres.getPostcode());
+                controller.getLandLabel().setText("Land: " + adres.getLand() );
+
+                i++;
+            }
+            _routeRetour.getChildren().addAll(Retour);
+            routeRetour.add(_routeRetour);
+
+        }
+
+        if(!routeRetour.isEmpty()) {
+            routeRetour.get(0).prefWidthProperty().bind(Retouren.widthProperty());
+            Retouren.setContent(routeRetour.get(0));
+        }
+        //VBox items = new VBox(Leveringen.getWidth());
+        //items.getChildren().addAll(Levering);
+        //items.prefWidthProperty().bind(Leveringen.widthProperty());
+        //Leveringen.setContent(items);
 
 
     }
 
 
-    public void onRouteSelected() {
+
+
+    public void onRouteSelected(int ID) {
         // Logica om de achtergrond te verwijderen
         for(int i = 0; i < routeInfoList.size(); i++)
         {
             routeInfoList.get(i).setUnseleced();
 
+
+        }
+        System.out.println(ID);
+        if(!routeLevering.isEmpty() && ID < routeLevering.size()) {
+            routeLevering.get(ID).prefWidthProperty().bind(Leveringen.widthProperty());
+            Leveringen.setContent(routeLevering.get(ID));
+        }
+
+        if(!routeRetour.isEmpty() && ID < routeRetour.size()) {
+            routeRetour.get(ID).prefWidthProperty().bind(Retouren.widthProperty());
+            Retouren.setContent(routeLevering.get(ID));
         }
     }
 

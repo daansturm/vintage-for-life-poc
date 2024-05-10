@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane  fx:id="borderpane" onMouseClicked="#Select" style="-fx-border-color: lightgrey; -fx-border-width: 2; -fx-border-style: solid; -fx-border-radius: 1;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="VintageForLife.RouteInfo">
+<BorderPane fx:id="borderpane" onMouseClicked="#Select" style="-fx-border-color: lightgrey; -fx-border-width: 2; -fx-border-style: solid; -fx-border-radius: 1;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="VintageForLife.RouteInfo">
    <center>
       <AnchorPane>
          <children>
@@ -23,7 +23,7 @@
       </AnchorPane>
    </center>
    <right>
-      <Button mnemonicParsing="false" BorderPane.alignment="CENTER">
+      <Button mnemonicParsing="false" onAction="#ShowVisualisation" BorderPane.alignment="CENTER">
          <graphic>
             <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                <image>
