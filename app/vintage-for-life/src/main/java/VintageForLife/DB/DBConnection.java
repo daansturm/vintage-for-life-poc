@@ -181,9 +181,6 @@ public class DBConnection {
             pstmt.setString(5,"1");
             pstmt.setString(6, id);
             int row = pstmt.executeUpdate();
-
-
-
         }
         else
         {

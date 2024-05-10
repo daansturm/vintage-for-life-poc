@@ -3,6 +3,7 @@ package VintageForLife.DB;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class DBroute {
@@ -14,7 +15,9 @@ public class DBroute {
     private List<DBretour> retouren;
     private DBadres beginadres;
     private DBadres eindadres;
+    private List<GrapphopperLocatie> locaties;
 
+    private List<String> prio_index;
 
     public DBroute(int id, String status, String datum, String priotisering)
     {
@@ -24,6 +27,8 @@ public class DBroute {
         this.datum = LocalDateTime.parse(datum, format);
         this.priotisering = priotisering;
         this.leveringen = new ArrayList<DBlevering>();
+        this.locaties = new ArrayList<>();
+
     }
 
     public DBroute(int id, String status, LocalDateTime datum, String priotisering)
@@ -34,7 +39,32 @@ public class DBroute {
         this.datum = datum;
         this.priotisering = priotisering;
         this.leveringen = new ArrayList<DBlevering>();
+        this.locaties = new ArrayList<>();
+
     }
+
+
+
+    private void MaakGrapphopperList()
+    {
+        prio_index = Arrays.asList(priotisering.split(":"));
+
+        for(String prio :  prio_index)
+        {
+            int index;
+
+            if (prio.contains("l_"))
+            {
+                index = prio.indexOf("l_");
+
+            }
+            if (prio.contains("r_"))
+            {
+                index = prio.indexOf("r_");
+            }
+        }
+    }
+
 
     public void setRoute(DBroute route)
     {
@@ -67,6 +97,8 @@ public class DBroute {
     public void voegRetourToe(DBretour retour) {
         this.retouren.add(retour);
     }
+
+
 
     public DBadres getBeginadres() {
         return beginadres;
