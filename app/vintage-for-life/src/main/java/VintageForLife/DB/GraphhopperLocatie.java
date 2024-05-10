@@ -5,28 +5,31 @@ public class GraphhopperLocatie {
     private String lon;
     private String lat;
     private String id;
+    private String naam;
 
 
-    public GraphhopperLocatie(DBadres adres, String lon, String lat, String id) {
+    public GraphhopperLocatie(DBadres adres, String lon, String lat, String id, String naam) {
         this.adres = adres;
         this.lon = lon;
         this.lat = lat;
         this.id = id;
+        this.naam = naam;
     }
 
-    public GraphhopperLocatie(DBadres adres, String id) {
+    public GraphhopperLocatie(DBadres adres, String id, String naam) {
         this.adres = adres;
         this.lon = "";
         this.lat = "";
         this.id = id;
+        this.naam = naam;
     }
 
-    public GraphhopperLocatie(DBlevering levering, String id) {
-        this(levering.getFirstAdres(), id);
+    public GraphhopperLocatie(DBlevering levering, String id, String naam) {
+        this(levering.getFirstAdres(), id, naam);
     }
-    public GraphhopperLocatie(DBretour retour, String id)
+    public GraphhopperLocatie(DBretour retour, String id, String naam)
     {
-        this(retour.getAdres(), id);
+        this(retour.getAdres(), id, naam);
     }
 
 
@@ -40,5 +43,10 @@ public class GraphhopperLocatie {
     }
 
 
-
+    public String getId()
+    {
+        return id;
     }
+    }
+
+

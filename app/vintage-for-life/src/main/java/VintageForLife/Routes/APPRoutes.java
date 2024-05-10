@@ -85,7 +85,7 @@ public class APPRoutes {
 
         route.setBeginadres(DBConnection.getSQLBeginEindAdress(1));
         route.setEindadres(DBConnection.getSQLBeginEindAdress(1));
-        route.MaakGrapphopperList();
+        route.MaakGraphhopperList();
 
         routeList.add(route);
 

@@ -57,45 +57,45 @@ public class DBroute {
 
 
 
-    public void MaakGrapphopperList()
+    public void MaakGraphhopperList()
     {
         prio_index = Arrays.asList(priotisering.split(":"));
-        boolean correct = checkGrapphopperList(prio_index);
+        boolean correct = checkGraphhopperList(prio_index);
         String index;
 
         if(correct) {
-            locaties.add(new GrapphopperLocatie(beginadres, "b_1", "Begin Adres"));
+            locaties.add(new GraphhopperLocatie(beginadres, "b_1", "Begin Adres"));
             for (String prio : prio_index) {
 
                 if (prio.contains("l_")) {
                     index = prio.replace("l_", "");
-                    locaties.add(new GrapphopperLocatie(leveringen.get(Integer.parseInt(index)), prio, "Levering: " + index));
+                    locaties.add(new GraphhopperLocatie(leveringen.get(Integer.parseInt(index)), prio, "Levering: " + index));
 
                 }
                 if (prio.contains("r_")) {
                     index = prio.replace("l_", "");
-                    locaties.add(new GrapphopperLocatie(retouren.get(Integer.parseInt(index)), prio, "Retour: " + index));
+                    locaties.add(new GraphhopperLocatie(retouren.get(Integer.parseInt(index)), prio, "Retour: " + index));
                 }
             }
 
-            locaties.add(new GrapphopperLocatie(eindadres, "e_1", "Eind Adres"));
+            locaties.add(new GraphhopperLocatie(eindadres, "e_1", "Eind Adres"));
         }
         else
         {
-            locaties.add(new GrapphopperLocatie(beginadres, "b_1", "Begin Adres"));
+            locaties.add(new GraphhopperLocatie(beginadres, "b_1", "Begin Adres"));
 
             for(DBlevering levering : leveringen)
-                locaties.add(new GrapphopperLocatie(levering, "l_" + levering.getId(), "Levering: " + levering.getId()));
+                locaties.add(new GraphhopperLocatie(levering, "l_" + levering.getId(), "Levering: " + levering.getId()));
             for(DBretour retour : retouren)
-                locaties.add(new GrapphopperLocatie(retour, "r_" + retour.getId(), "Retour: " + retour.getId()));
+                locaties.add(new GraphhopperLocatie(retour, "r_" + retour.getId(), "Retour: " + retour.getId()));
 
-            locaties.add(new GrapphopperLocatie(eindadres, "e_1", "Eind Adres"));
+            locaties.add(new GraphhopperLocatie(eindadres, "e_1", "Eind Adres"));
 
-            // TODO DAAN grapphopper call om VRP opnieuw uit te voeren, alleen locaties die goed zijn mee terug geven
+            // TODO DAAN Graphhopper call om VRP opnieuw uit te voeren, alleen locaties die goed zijn mee terug geven
 
             maakPriotisering(locaties);
 
-            for(GrapphopperLocatie locatie : locaties)
+            for(GraphhopperLocatie locatie : locaties)
             {
                 System.out.println(locatie.getAdres().getPlaats());
                 System.out.println(locatie.getId());
@@ -106,7 +106,7 @@ public class DBroute {
     }
 
 
-    private boolean checkGrapphopperList(List<String> prio_index)
+    private boolean checkGraphhopperList(List<String> prio_index)
     {
         int count = 0;
         int item_count = leveringen.size() + retouren.size();
@@ -154,10 +154,10 @@ public class DBroute {
     }
 
 
-    private void maakPriotisering(List<GrapphopperLocatie> locaties)
+    private void maakPriotisering(List<GraphhopperLocatie> locaties)
     {
         priotisering = "";
-        for (GrapphopperLocatie loc : locaties) {
+        for (GraphhopperLocatie loc : locaties) {
             priotisering += loc.getId() + ":";
 
         }
@@ -168,7 +168,7 @@ public class DBroute {
         while (leveringIterator.hasNext()) {
             DBlevering levering = leveringIterator.next();
             boolean gevonden = false;
-            for (GrapphopperLocatie loc : locaties) {
+            for (GraphhopperLocatie loc : locaties) {
                 if (loc.getId().equals("l_" + levering.getId())) {
                     gevonden = true;
                     break;
@@ -184,7 +184,7 @@ public class DBroute {
         while (retourIterator.hasNext()) {
             DBretour retour = retourIterator.next();
             boolean gevonden = false;
-            for (GrapphopperLocatie loc : locaties) {
+            for (GraphhopperLocatie loc : locaties) {
                 if (loc.getId().equals("r_" + retour.getId())) {
                     gevonden = true;
                     break;
@@ -207,7 +207,7 @@ public class DBroute {
         this.leveringen = route.leveringen;
         this.beginadres = route.beginadres;
         this.eindadres = route.eindadres;
-        MaakGrapphopperList();
+        MaakGraphhopperList();
 
     }
 
@@ -280,7 +280,7 @@ public class DBroute {
         return String.valueOf(id);
     }
 
-    public List<GrapphopperLocatie> getLocaties() {
+    public List<GraphhopperLocatie> getLocaties() {
         return locaties;
     }
 

@@ -1,7 +1,7 @@
 package VintageForLife;
 
 import VintageForLife.DB.DBroute;
-import VintageForLife.DB.GrapphopperLocatie;
+import VintageForLife.DB.GraphhopperLocatie;
 import VintageForLife.Routes.APPRoutes;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -46,7 +46,7 @@ public class RouteVisualisatie {
         }
         DBroute route = routeList.get(routeID);
 
-        for (GrapphopperLocatie locatie : route.getLocaties())
+        for (GraphhopperLocatie locatie : route.getLocaties())
         {
 
         }
