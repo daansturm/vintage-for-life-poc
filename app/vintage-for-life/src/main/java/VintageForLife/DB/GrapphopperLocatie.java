@@ -14,9 +14,14 @@ public class GrapphopperLocatie {
         this.id = id;
     }
 
+
     public void setLonLan (float lon, float lat) {
         this.lon = lon;
         this.lat = lat;
+    }
+
+    public DBadres getAdres() {
+        return adres;
     }
 
 
