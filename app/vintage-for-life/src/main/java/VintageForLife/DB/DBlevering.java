@@ -2,6 +2,7 @@ package VintageForLife.DB;
 
 import kotlin.text.UStringsKt;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -63,6 +64,10 @@ public class DBlevering {
            return String.valueOf(this.id);
     }
 
+    public LocalDateTime getBezorgdatum() {
+        return bezorgdatum;
+    }
+
     public int getBestellingCount()
     {
         return bestellingen.size();
@@ -78,5 +83,12 @@ public class DBlevering {
 
     public List<DBbestelling> getBestellingen() {
         return bestellingen;
+    }
+
+    public boolean equalsDate(LocalDateTime datum)
+    {
+        LocalDate _datum = LocalDate.from(bezorgdatum);
+        LocalDate __datum = LocalDate.from(datum);
+        return _datum.equals(__datum);
     }
 }

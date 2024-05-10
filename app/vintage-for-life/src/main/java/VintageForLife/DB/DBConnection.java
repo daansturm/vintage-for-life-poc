@@ -76,7 +76,7 @@ public class DBConnection {
 
     public static List<DBlevering> getSQLDBlevering() throws SQLException {
 
-        String sql = "SELECT * FROM levering where status = 'nieuw'";
+        String sql = "SELECT * FROM levering where id not in (select levering_id From levering_route )";
         PreparedStatement pstmt = connection.prepareStatement(sql);
         ResultSet resultSet = pstmt.executeQuery();
 
@@ -106,6 +106,33 @@ public class DBConnection {
 
 
         return route;
+
+    }
+
+    public static List<DBretour> getSQLDBRetour() throws SQLException {
+        String sql = "SELECT * FROM retour where id not in (select retour_id From retour_route )";
+        PreparedStatement pstmt = connection.prepareStatement(sql);
+        ResultSet resultSet = pstmt.executeQuery();
+
+        List<DBretour> retouren = new ArrayList<>();
+        while (resultSet.next()) {
+            String id = resultSet.getString("id");
+            String bestelling_id = resultSet.getString("klant_id");
+            String status = resultSet.getString("status");
+            String reden = resultSet.getString("reden");
+            String opmerking = resultSet.getString("opmerking");
+            String retourdatum = resultSet.getString("retourdatum");
+            String straat = resultSet.getString("straat");
+            String huisnummer = resultSet.getString("huisnummer");
+            String plaats = resultSet.getString("plaats");
+            String postcode = resultSet.getString("postcode");
+            String land = resultSet.getString("land");
+            retouren.add(new DBretour(id,bestelling_id,status,reden,opmerking,retourdatum,straat,huisnummer,plaats,postcode,land));
+
+
+        }
+        return retouren;
+
 
     }
 
@@ -154,9 +181,29 @@ public class DBConnection {
 
         }
 
-
-
         return routes;
+    }
+
+    public static DBadres getSQLBeginEindAdress(int id) throws SQLException
+    {
+        String sql = "SELECT * FROM begin_eindadres where id = ? ";
+        PreparedStatement pstmt = connection.prepareStatement(sql);
+        pstmt.setString(1, String.valueOf(id));
+        ResultSet resultSet = pstmt.executeQuery();
+
+        DBadres adres = null;
+        while (resultSet.next()) {
+            String straat = resultSet.getString("straat");
+            String huisnummer = resultSet.getString("huisnummer");
+            String plaats = resultSet.getString("plaats");
+            String postcode = resultSet.getString("postcode");
+            String land = resultSet.getString("land");
+            adres = new DBadres(straat,huisnummer,plaats,postcode,land);
+
+        }
+
+        return adres;
+
     }
 
     public static void setSQLDBlevering(DBlevering levering)
@@ -204,9 +251,35 @@ public class DBConnection {
 
 
         }
-        //TODO Julian
-        //delete koppel tabel waar alle referenties naar id staan in levering en retour
-        //insert nieuwe lijst met koppelingen naar levering en retour
+
+        String sql = "DELETE retour_route where route_id = ?" ;
+        PreparedStatement pstmt = connection.prepareStatement(sql);
+        pstmt.setString(1, route.getId());
+        pstmt.executeUpdate();
+
+        sql = "DELETE levering_route where route_id = ?" ;
+        pstmt = connection.prepareStatement(sql);
+        pstmt.setString(1, route.getId());
+        pstmt.executeUpdate();
+
+        for(DBlevering levering : route.getLeveringen())
+        {
+            sql = "INSERT INTO levering_route (route_id, levering_id ) values (?,?)";
+            pstmt = connection.prepareStatement(sql);
+            pstmt.setString(1, route.getId());
+            pstmt.setString(2, levering.getId());
+            pstmt.executeUpdate();
+        }
+
+        for(DBretour retour : route.getRetouren())
+        {
+            sql = "INSERT INTO retour_route (route_id, retour_id ) values (?,?)";
+            pstmt = connection.prepareStatement(sql);
+            pstmt.setString(1, route.getId());
+            pstmt.setString(2, retour.getId());
+            pstmt.executeUpdate();
+        }
+
 
       return route;
     }
