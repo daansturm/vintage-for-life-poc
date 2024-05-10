@@ -31,7 +31,7 @@ public class SceneController {
     }
 
     public void ShowRouteVisualisatie(ActionEvent event, int routeID) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("RouteVisualisation.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("RouteVisualisatie.fxml"));
         root = loader.load();
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         RouteVisualisatie controller = loader.getController();
