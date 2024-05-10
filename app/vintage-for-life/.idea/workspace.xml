@@ -5,6 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d637be1f-35f0-485b-9159-f7bd3e5dc037" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/VintageForLife/API/Geocode.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../../.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../.idea/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../../.idea/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../.idea/compiler.xml" afterDir="false" />
@@ -12,6 +13,7 @@
       <change beforePath="$PROJECT_DIR$/../../.idea/jarRepositories.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../.idea/jarRepositories.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../.idea/sqldialects.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../.idea/sqldialects.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../.idea/uiDesigner.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../.idea/uiDesigner.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../.idea/vintage-for-life-poc.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../../.idea/vintage-for-life-poc.iml" afterDir="false" />
@@ -25,14 +27,27 @@
       <change beforePath="$PROJECT_DIR$/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/.mvn/wrapper/maven-wrapper.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/VintageForLife/API/Router.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/VintageForLife/API/Router.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/VintageForLife/LoginScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/VintageForLife/LoginScreen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/VintageForLife/DB/DBConnection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/VintageForLife/DB/DBConnection.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/VintageForLife/DB/DBadres.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/VintageForLife/DB/DBadres.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/VintageForLife/DB/DBbestelling.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/VintageForLife/DB/DBbestelling.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/VintageForLife/DB/DBlevering.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/VintageForLife/DB/DBlevering.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/VintageForLife/DB/DBproduct.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/VintageForLife/DB/DBproduct.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/VintageForLife/DB/DBretour.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/VintageForLife/DB/DBretour.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/VintageForLife/DB/DBroute.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/VintageForLife/DB/DBroute.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/VintageForLife/DB/GrapphopperLocatie.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/VintageForLife/DB/GraphhopperLocatie.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/VintageForLife/LeveringRetour.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/VintageForLife/LeveringRetour.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/VintageForLife/OverzichtRoutes.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/VintageForLife/OverzichtRoutes.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/VintageForLife/RouteInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/VintageForLife/RouteInfo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/VintageForLife/RouteListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/VintageForLife/RouteListener.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/VintageForLife/RouteVisualisatie.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/VintageForLife/RouteVisualisatie.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/VintageForLife/Routes/APPRoutes.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/VintageForLife/Routes/APPRoutes.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/VintageForLife/SceneController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/VintageForLife/SceneController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/VintageForLife/VintageForLifeAPP.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/VintageForLife/VintageForLifeAPP.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/VintageForLife/LeveringRetour.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/VintageForLife/LeveringRetour.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/VintageForLife/LoginScreen.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/VintageForLife/LoginScreen.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/VintageForLife/OverzichtRoutes.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/VintageForLife/OverzichtRoutes.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/VintageForLife/RouteInfo.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/VintageForLife/RouteInfo.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/VintageForLife/RouteVisualisatie.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/VintageForLife/RouteVisualisatie.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../../docker-compose.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../graphhopper/graphhopper.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../../graphhopper/graphhopper.yml" afterDir="false" />
@@ -61,25 +76,57 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.VintageForLifeAPP.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;router-naar-file&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;Errors&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.VintageForLifeAPP.executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "Geocode",
+    "kotlin-language-version-configured": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "Errors",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
+  <component name="RdControllerToolWindowsLayoutState" isNewUi="true">
+    <layout>
+      <window_info id="Bookmarks" show_stripe_button="false" side_tool="true" />
+      <window_info id="Merge Requests" show_stripe_button="false" />
+      <window_info id="Commit_Guest" show_stripe_button="false" />
+      <window_info id="Pull Requests" show_stripe_button="false" />
+      <window_info id="Learn" show_stripe_button="false" />
+      <window_info content_ui="combo" id="Project" order="0" weight="0.66036505" />
+      <window_info id="Commit" order="1" weight="0.25" />
+      <window_info id="Structure" order="2" side_tool="true" weight="0.25" />
+      <window_info anchor="bottom" id="Database Changes" show_stripe_button="false" />
+      <window_info anchor="bottom" id="TypeScript" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Profiler" show_stripe_button="false" />
+      <window_info anchor="bottom" id="TODO" show_stripe_button="false" />
+      <window_info anchor="bottom" id="File Transfer" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" order="0" />
+      <window_info anchor="bottom" id="Problems" order="1" />
+      <window_info anchor="bottom" id="Problems View" order="2" />
+      <window_info anchor="bottom" id="Terminal" order="3" />
+      <window_info anchor="bottom" id="Build" order="4" weight="0.3294956" />
+      <window_info anchor="bottom" id="Run" order="4" weight="0.3294956" />
+      <window_info anchor="bottom" id="Services" order="4" />
+      <window_info anchor="bottom" id="Find" order="4" weight="0.3294956" />
+      <window_info anchor="right" id="Endpoints" show_stripe_button="false" />
+      <window_info anchor="right" id="Coverage" show_stripe_button="false" side_tool="true" />
+      <window_info anchor="right" content_ui="combo" id="Notifications" order="0" weight="0.25" />
+      <window_info anchor="right" id="AIAssistant" order="1" weight="0.25" />
+      <window_info anchor="right" id="Database" order="2" weight="0.25" />
+      <window_info anchor="right" id="Gradle" order="3" weight="0.25" />
+      <window_info anchor="right" id="Maven" order="4" weight="0.25" />
+    </layout>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -106,5 +153,9 @@
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>

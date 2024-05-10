@@ -14,7 +14,7 @@ public class DBroute {
     private List<DBretour> retouren;
     private DBadres beginadres;
     private DBadres eindadres;
-    private List<GrapphopperLocatie> locaties;
+    private List<GraphhopperLocatie> locaties;
 
     private List<String> prio_index;
 
