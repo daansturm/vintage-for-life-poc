@@ -59,8 +59,11 @@ public class OverzichtRoutes implements RouteListener{
         // Voeg inhoud toe aan de ScrollPane nadat de pagina is geladen
         APPRoutes.SQLRoutes();
         APPRoutes.SQLUnAssignedLeveringen();
+
+        APPRoutes.MakeRoute();
         routeList = APPRoutes.getRoutes();
         leveringList = APPRoutes.getUnAssignedLevering();
+        System.out.println(routeList.toString());
 
         addRoutes();
         addLeveringen();

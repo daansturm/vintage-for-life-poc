@@ -1,13 +1,12 @@
 package VintageForLife.Routes;
 
-import VintageForLife.DB.DBConnection;
-import VintageForLife.DB.DBbestelling;
-import VintageForLife.DB.DBlevering;
-import VintageForLife.DB.DBroute;
+import VintageForLife.DB.*;
 
 
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class APPRoutes {
@@ -15,6 +14,7 @@ public class APPRoutes {
 
     private static List<DBroute> routeList = new ArrayList<>();
     private static List<DBlevering> leveringList = new ArrayList<>();
+    private static List<DBretour> retourList = new ArrayList<>();
 
 
     public static void SQLRoutes() throws SQLException {
@@ -47,8 +47,58 @@ public class APPRoutes {
         }
     }
 
+    public static void SQLUnAssignedRetour() throws SQLException {
+        retourList = DBConnection.getSQLDBRetour();
+
+    }
+
+    public static void MakeRoute() throws SQLException {
+
+        DBroute route;
+        LocalDate datum = LocalDate.now();
+
+        if (leveringList.isEmpty() && retourList.isEmpty())
+        {
+            return;
+        }
+
+        if(!leveringList.isEmpty())
+            datum = LocalDate.from(leveringList.getFirst().getBezorgdatum());
+        else if(!retourList.isEmpty())
+            datum = LocalDate.from(retourList.getFirst().getRetourdatum());
+
+        route = new DBroute(datum);
+
+        for(DBlevering levering : leveringList)
+        {
+            if(levering.equalsDate(route.getDatumTijd()))
+                route.voegLeveringToe(levering);
+
+        }
+
+        for(DBretour retour : retourList)
+        {
+            if(retour.equalsDate(route.getDatumTijd()))
+                route.voegRetourToe(retour);
+
+        }
+
+        route.setBeginadres(DBConnection.getSQLBeginEindAdress(1));
+        route.setEindadres(DBConnection.getSQLBeginEindAdress(1));
+        route.MaakGrapphopperList();
+
+        routeList.add(route);
+
+
+
+    }
+
     public static List<DBlevering> getUnAssignedLevering() {
         return leveringList;
+    }
+
+    public static List<DBretour> getUnAssignedRetour() {
+        return retourList;
     }
 
     public static List<DBroute> getRoutes() {
