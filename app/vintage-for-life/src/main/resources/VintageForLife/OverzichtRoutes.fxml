@@ -28,7 +28,7 @@
                   <Font size="18.0" />
                </font>
             </Button>
-            <Button mnemonicParsing="false" prefHeight="39.0" prefWidth="165.0" text="Routes">
+            <Button mnemonicParsing="false" onAction="#Routes" prefHeight="39.0" prefWidth="165.0" text="Routes">
                <font>
                   <Font size="18.0" />
                </font>

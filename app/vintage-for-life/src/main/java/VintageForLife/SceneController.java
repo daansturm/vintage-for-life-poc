@@ -30,9 +30,12 @@ public class SceneController {
         stage.show();
     }
 
-    public void ShowRouteVisualisatie(ActionEvent event) throws IOException {
-        root = FXMLLoader.load(getClass().getResource("RouteVisualisatie.fxml"));
+    public void ShowRouteVisualisatie(ActionEvent event, int routeID) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("RouteVisualisation.fxml"));
+        root = loader.load();
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        RouteVisualisatie controller = loader.getController();
+        controller.setRouteID(routeID); // Stel het routeID in op de controller
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();

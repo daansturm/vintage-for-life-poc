@@ -74,7 +74,7 @@ public class OverzichtRoutes implements RouteListener{
 
     private void addRoutes()
     {
-        for (int i = 0; i < routeList.size(); i++) {
+        for (DBroute route : routeList) {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("RouteInfo.fxml"));
                 Parent content = loader.load();
@@ -83,6 +83,7 @@ public class OverzichtRoutes implements RouteListener{
                 RouteInfo controller = loader.getController();
                 routeInfoList.add(controller);
                 controller.setRouteSelectionListener(this);
+                controller.setDBroute(route);
 
                 //((VBox) Leveringen.getContent()).getChildren().add(content);
             } catch (IOException e) {
@@ -217,6 +218,11 @@ public class OverzichtRoutes implements RouteListener{
     @FXML
     void Logout(ActionEvent event) throws IOException {
         Scene.ShowLoginScreen(event);
+
+    }
+    @FXML
+    void Routes(ActionEvent event) throws IOException {
+        Scene.ShowOverzichtRoutes(event);
 
     }
 }

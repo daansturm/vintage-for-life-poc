@@ -1,6 +1,7 @@
 package VintageForLife;
 
 
+import VintageForLife.DB.DBroute;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
@@ -28,6 +29,7 @@ public class RouteInfo {
 
     private int ID;
     private SceneController Scene = new SceneController();
+    private DBroute dBroute = new DBroute();
 
     @FXML
     void Select(MouseEvent event) {
@@ -41,7 +43,8 @@ public class RouteInfo {
 
     @FXML
     void ShowVisualisation(ActionEvent event) throws IOException {
-        Scene.ShowRouteVisualisatie(event);
+        System.out.println(this.ID);
+        Scene.ShowRouteVisualisatie(event, this.ID);
 
     }
 
@@ -52,6 +55,13 @@ public class RouteInfo {
 
     public void setRouteSelectionListener(RouteListener listener) {
         this.listener = listener;
+    }
+
+    public void setDBroute(DBroute route) {
+        this.dBroute = route;
+        this.route.setText("Route: " + dBroute.getId());
+        this.route_info.setText(dBroute.getRoute_info());
+        this.ID = Integer.parseInt(route.getId());
     }
 
 

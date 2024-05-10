@@ -5,6 +5,7 @@ public class GrapphopperLocatie {
     private float lon;
     private float lat;
     private String id;
+    private String naam;
 
 
     public GrapphopperLocatie(DBadres adres, float lon, float lat, String id) {
@@ -13,19 +14,20 @@ public class GrapphopperLocatie {
         this.lat = lat;
         this.id = id;
     }
-    public GrapphopperLocatie(DBadres adres, String id) {
+    public GrapphopperLocatie(DBadres adres, String id, String naam) {
         this.adres = adres;
         this.lon = 0;
         this.lat = 0;
         this.id = id;
+        this.naam = naam;
     }
 
-    public GrapphopperLocatie(DBlevering levering, String id) {
-        this(levering.getFirstAdres(), id);
+    public GrapphopperLocatie(DBlevering levering, String id, String naam) {
+        this(levering.getFirstAdres(), id, naam);
     }
-    public GrapphopperLocatie(DBretour retour, String id)
+    public GrapphopperLocatie(DBretour retour, String id, String naam)
     {
-        this(retour.getAdres(), id);
+        this(retour.getAdres(), id, naam);
     }
 
 

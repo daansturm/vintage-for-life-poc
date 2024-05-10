@@ -60,40 +60,47 @@ public class DBroute {
     public void MaakGrapphopperList()
     {
         prio_index = Arrays.asList(priotisering.split(":"));
-        locaties.add(new GrapphopperLocatie(beginadres, "b_1"));
         boolean correct = checkGrapphopperList(prio_index);
         String index;
 
         if(correct) {
+            locaties.add(new GrapphopperLocatie(beginadres, "b_1", "Begin Adres"));
             for (String prio : prio_index) {
 
                 if (prio.contains("l_")) {
                     index = prio.replace("l_", "");
-                    locaties.add(new GrapphopperLocatie(leveringen.get(Integer.parseInt(index)), prio));
+                    locaties.add(new GrapphopperLocatie(leveringen.get(Integer.parseInt(index)), prio, "Levering: " + index));
 
                 }
                 if (prio.contains("r_")) {
                     index = prio.replace("l_", "");
-                    locaties.add(new GrapphopperLocatie(retouren.get(Integer.parseInt(index)), prio));
+                    locaties.add(new GrapphopperLocatie(retouren.get(Integer.parseInt(index)), prio, "Retour: " + index));
                 }
             }
 
-            locaties.add(new GrapphopperLocatie(eindadres, "e_1"));
+            locaties.add(new GrapphopperLocatie(eindadres, "e_1", "Eind Adres"));
         }
         else
         {
-            locaties.add(new GrapphopperLocatie(beginadres, "b_1"));
+            locaties.add(new GrapphopperLocatie(beginadres, "b_1", "Begin Adres"));
 
             for(DBlevering levering : leveringen)
-                locaties.add(new GrapphopperLocatie(levering, "l_" + levering.getId()));
+                locaties.add(new GrapphopperLocatie(levering, "l_" + levering.getId(), "Levering: " + levering.getId()));
             for(DBretour retour : retouren)
-                locaties.add(new GrapphopperLocatie(retour, "r_" + retour.getId()));
+                locaties.add(new GrapphopperLocatie(retour, "r_" + retour.getId(), "Retour: " + retour.getId()));
 
-            locaties.add(new GrapphopperLocatie(eindadres, "e_1"));
+            locaties.add(new GrapphopperLocatie(eindadres, "e_1", "Eind Adres"));
 
             // TODO DAAN grapphopper call om VRP opnieuw uit te voeren, alleen locaties die goed zijn mee terug geven
 
             maakPriotisering(locaties);
+
+            for(GrapphopperLocatie locatie : locaties)
+            {
+                System.out.println(locatie.getAdres().getPlaats());
+                System.out.println(locatie.getId());
+            }
+
 
         }
     }
@@ -273,8 +280,14 @@ public class DBroute {
         return String.valueOf(id);
     }
 
+    public List<GrapphopperLocatie> getLocaties() {
+        return locaties;
+    }
 
+    public String getRoute_info()
+    {
+        return this.locaties.get(1).getAdres().getPlaats() + " <> " + this.locaties.get(locaties.size() - 2).getAdres().getPlaats();
 
-
+    }
 }
 
