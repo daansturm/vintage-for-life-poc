@@ -22,10 +22,13 @@ public class RouteVisualisatie {
     private DBroute route;
 
     @FXML
-    private Label route_info;
+    private Label routetxt;
 
     @FXML
-    private ScrollPane locaties = new ScrollPane();
+    private Label route_infotxt;
+
+    @FXML
+    private ScrollPane SPlocaties = new ScrollPane();
 
     private int routeID = -1;
 
@@ -35,14 +38,16 @@ public class RouteVisualisatie {
     public void setRoute(DBroute route, int id) {
         this.routeID = id;
         this.route = route;
+        routetxt.setText("Route: " + route.getId());
+        route_infotxt.setText(route.getRoute_info());
+        for (GraphhopperLocatie locatie : route.getLocaties())
+          {
+
+          }
     }
 
     public void initialize() {
 
-       // for (GraphhopperLocatie locatie : route.getLocaties())
-     //   {
-
-     //   }
 
     }
 

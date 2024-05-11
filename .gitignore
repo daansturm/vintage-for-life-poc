@@ -25,3 +25,5 @@ replay_pid*
 
 # Custom files
 /graphhopper/netherlands.osm.pbf
+.idea/php.xml
+.idea/.name
