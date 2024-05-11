@@ -218,8 +218,8 @@ public class DBConnection {
         String id = route.getId();
 
         //update
-        if(id != "" || id == null) {
-            String sql = "UPDATE route SET  status = ?, datum = ?, priotisering = ?, beginadres = ?, eindadreswhere = ? where id = ?";
+        if(id.equals("-1") || id == null) {
+            String sql = "UPDATE route SET  status = ?, datum = ?, priotisering = ?, beginadres = ?, eindadres = ? where id = ?";
             PreparedStatement pstmt = connection.prepareStatement(sql);
             pstmt.setString(1, route.getStatus());
             pstmt.setString(2, route.getDatum());
@@ -232,7 +232,7 @@ public class DBConnection {
         else
         {
             String sql = "INSERT into route (status, datum, priotisering, beginadres, eindadres) values (?, ?, ?, ?, ?)";
-            PreparedStatement pstmt = connection.prepareStatement(sql);
+            PreparedStatement pstmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             pstmt.setString(1, route.getStatus());
             pstmt.setString(2, route.getDatum());
             pstmt.setString(3, route.getPriotisering());

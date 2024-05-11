@@ -1,5 +1,6 @@
 package VintageForLife;
 
+import VintageForLife.DB.DBroute;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -30,12 +31,12 @@ public class SceneController {
         stage.show();
     }
 
-    public void ShowRouteVisualisatie(ActionEvent event, int routeID) throws IOException {
+    public void ShowRouteVisualisatie(ActionEvent event, DBroute route, int ID) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("RouteVisualisatie.fxml"));
         root = loader.load();
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         RouteVisualisatie controller = loader.getController();
-        controller.setRouteID(routeID); // Stel het routeID in op de controller
+        controller.setRoute(route, ID); // Stel het routeID in op de controller
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();

@@ -95,6 +95,9 @@ public class DBroute {
 
             maakPriotisering(locaties);
 
+
+
+
             for(GraphhopperLocatie locatie : locaties)
             {
                 System.out.println(locatie.getAdres().getPlaats());
