@@ -212,76 +212,74 @@ public class DBConnection {
 
     }
 
-    public static DBroute setSQLRoute(DBroute route) throws SQLException {
-
-
+    public static DBroute setSQLRoute(DBroute route, Connection connection) throws SQLException {
         String id = route.getId();
 
-        //update
-        if(id.equals("-1") || id == null) {
-            String sql = "UPDATE route SET  status = ?, datum = ?, priotisering = ?, beginadres = ?, eindadres = ? where id = ?";
-            PreparedStatement pstmt = connection.prepareStatement(sql);
-            pstmt.setString(1, route.getStatus());
-            pstmt.setString(2, route.getDatum());
-            pstmt.setString(3, route.getPriotisering());
-            pstmt.setString(4,"1");
-            pstmt.setString(5,"1");
-            pstmt.setString(6, id);
-            int row = pstmt.executeUpdate();
-        }
-        else
-        {
-            String sql = "INSERT into route (status, datum, priotisering, beginadres, eindadres) values (?, ?, ?, ?, ?)";
-            PreparedStatement pstmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            pstmt.setString(1, route.getStatus());
-            pstmt.setString(2, route.getDatum());
-            pstmt.setString(3, route.getPriotisering());
-            pstmt.setString(4,"1");
-            pstmt.setString(5,"1");
-            int rowsInserted = pstmt.executeUpdate();
+        if (id == null || id.equals("-1")) {
+            String sql = "INSERT INTO route (status, datum, priotisering, beginadres, eindadres) VALUES (?, ?, ?, ?, ?)";
+            try (PreparedStatement pstmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+                pstmt.setString(1, route.getStatus());
+                pstmt.setString(2, route.getDatum());
+                pstmt.setString(3, route.getPriotisering());
+                pstmt.setString(4, "1");
+                pstmt.setString(5, "1");
 
-            if (rowsInserted > 0) {
-                ResultSet generatedKeys = pstmt.getGeneratedKeys();
-                if (generatedKeys.next()) {
-                    route.setId(generatedKeys.getInt(1));
-
+                if (pstmt.executeUpdate() > 0) {
+                    try (ResultSet generatedKeys = pstmt.getGeneratedKeys()) {
+                        if (generatedKeys.next()) {
+                            route.setId(generatedKeys.getInt(1));
+                        }
+                    }
                 }
             }
+        } else {
+            String sql = "UPDATE route SET status = ?, datum = ?, priotisering = ?, beginadres = ?, eindadres = ? WHERE id = ?";
+            try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+                pstmt.setString(1, route.getStatus());
+                pstmt.setString(2, route.getDatum());
+                pstmt.setString(3, route.getPriotisering());
+                pstmt.setString(4, "1");
+                pstmt.setString(5, "1");
+                pstmt.setString(6, id);
 
-
-
+                pstmt.executeUpdate();
+            }
         }
 
-        String sql = "DELETE retour_route where route_id = ?" ;
-        PreparedStatement pstmt = connection.prepareStatement(sql);
-        pstmt.setString(1, route.getId());
-        pstmt.executeUpdate();
-
-        sql = "DELETE levering_route where route_id = ?" ;
-        pstmt = connection.prepareStatement(sql);
-        pstmt.setString(1, route.getId());
-        pstmt.executeUpdate();
-
-        for(DBlevering levering : route.getLeveringen())
-        {
-            sql = "INSERT INTO levering_route (route_id, levering_id ) values (?,?)";
-            pstmt = connection.prepareStatement(sql);
-            pstmt.setString(1, route.getId());
-            pstmt.setString(2, levering.getId());
-            pstmt.executeUpdate();
+        // Delete all existing retour routes with a matching route id.
+        String deleteRetourSql = "DELETE FROM retour_route WHERE route_id = ?";
+        try (PreparedStatement deleteRetourStmt = connection.prepareStatement(deleteRetourSql)) {
+            deleteRetourStmt.setString(1, id);
+            deleteRetourStmt.executeUpdate();
         }
 
-        for(DBretour retour : route.getRetouren())
-        {
-            sql = "INSERT INTO retour_route (route_id, retour_id ) values (?,?)";
-            pstmt = connection.prepareStatement(sql);
-            pstmt.setString(1, route.getId());
-            pstmt.setString(2, retour.getId());
-            pstmt.executeUpdate();
+        // Delete all existing levering routes with a matching route id.
+        String deleteLeveringSql = "DELETE FROM levering_route WHERE route_id = ?";
+        try (PreparedStatement deleteLeveringStmt = connection.prepareStatement(deleteLeveringSql)) {
+            deleteLeveringStmt.setString(1, id);
+            deleteLeveringStmt.executeUpdate();
         }
 
+        // Insert new levering routes
+        String insertLeveringSql = "INSERT INTO levering_route (route_id, levering_id) VALUES (?, ?)";
+        try (PreparedStatement insertLeveringStmt = connection.prepareStatement(insertLeveringSql)) {
+            for (DBlevering levering : route.getLeveringen()) {
+                insertLeveringStmt.setString(1, id);
+                insertLeveringStmt.setString(2, levering.getId());
+                insertLeveringStmt.executeUpdate();
+            }
+        }
 
-      return route;
+        // Insert new retour routes
+        String insertRetourSql = "INSERT INTO retour_route (route_id, retour_id) VALUES (?, ?)";
+        try (PreparedStatement insertRetourStmt = connection.prepareStatement(insertRetourSql)) {
+            for (DBretour retour : route.getRetouren()) {
+                insertRetourStmt.setString(1, id);
+                insertRetourStmt.setString(2, retour.getId());
+                insertRetourStmt.executeUpdate();
+            }
+        }
+
+        return route;
     }
-
 }
