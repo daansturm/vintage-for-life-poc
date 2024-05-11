@@ -105,8 +105,7 @@ public class OverzichtRoutes implements RouteListener{
 
     private void addLeveringen() throws SQLException, IOException {
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("LeveringRetour.fxml"));
-        Parent content = loader.load();
+
 
         for(DBroute route : routeList)
         {
@@ -115,6 +114,8 @@ public class OverzichtRoutes implements RouteListener{
             int i = 0;
             for(DBlevering levering : route.getLeveringen())
             {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("LeveringRetour.fxml"));
+                Parent content = loader.load();
 
                 content.setVisible(true);
                 Levering.add(content);
@@ -148,8 +149,7 @@ public class OverzichtRoutes implements RouteListener{
 
     private void addRetour() throws SQLException, IOException {
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("LeveringRetour.fxml"));
-        Parent content = loader.load();
+
 
         for(DBroute route : routeList)
         {
@@ -158,6 +158,8 @@ public class OverzichtRoutes implements RouteListener{
             int i = 0;
             for(DBretour retour : route.getRetouren())
             {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("LeveringRetour.fxml"));
+                Parent content = loader.load();
 
                 content.setVisible(true);
                 Retour.add(content);
