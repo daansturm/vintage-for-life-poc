@@ -285,8 +285,8 @@ public class DBConnection {
             }
             deleteLeveringStmt.executeUpdate();
         }
-     /*
-        // Verwijder retour routes die niet meer in de lijst staan
+
+         // Verwijder retour routes die niet meer in de lijst staan
         String deleteRetourSql = "DELETE FROM retour_route WHERE route_id = ? AND retour_id NOT IN (" + String.join(",", Collections.nCopies(route.getRetouren().size(), "?")) + ")";
         try (PreparedStatement deleteRetourStmt = connection.prepareStatement(deleteRetourSql)) {
             deleteRetourStmt.setString(1, id);
@@ -296,7 +296,7 @@ public class DBConnection {
             }
             deleteRetourStmt.executeUpdate();
         }
-        */
+
 
 
         return route;
