@@ -1,0 +1,105 @@
+@startuml
+class APPRoutes {
+- {static} List<DBroute> routeList
+- {static} List<DBlevering> leveringList
+- {static} List<DBretour> retourList
++ {static} void SQLRoutes()
++ {static} void SQLUnAssignedLeveringen()
++ {static} void SQLUnAssignedRetour()
++ {static} void MakeRoute()
++ {static} List<DBlevering> getUnAssignedLevering()
++ {static} List<DBretour> getUnAssignedRetour()
++ {static} List<DBroute> getRoutes()
+}
+
+
+class SceneController {
+- {static} Stage stage
+- {static} Scene scene
+- {static} Parent root
++ void ShowLoginScreen(ActionEvent)
++ void ShowOverzichtRoutes(ActionEvent)
++ void ShowRouteVisualisatie(ActionEvent,DBroute,int)
+}
+
+
+class RouteInfo {
+- RouteListener listener
+- BorderPane borderpane
+- Label route
+- Label route_info
+- int ID
+- SceneController Scene
+- DBroute dBroute
+~ void Select(MouseEvent)
+~ void ShowVisualisation(ActionEvent)
++ void setID(int)
++ void setRouteSelectionListener(RouteListener)
++ void setDBroute(DBroute,int)
++ void setSelected()
++ void setUnseleced()
++ void getID(int)
+}
+
+
+class LeveringRetour {
+- Label LeveringRetourtxt
+- Label plaatstxt
+- Label adrestxt
+- Label postcodetxt
+- Label landtxt
+- int id
++ Label getLeveringLabel()
++ Label getPlaatstLabel()
++ Label getAdrestLabel()
++ Label getLandLabel()
++ Label getPostcodetxt()
++ void setID(int)
++ int getId()
+}
+
+
+class OverzichtRoutes {
+- Connection connection
+- SceneController Scene
+- ScrollPane Leveringen
+- ScrollPane Retouren
+- ScrollPane Routes
+- Stage stage
+- Scene scene
+- Parent root
+~ List<RouteInfo> routeInfoList
+~ List<DBroute> routeList
+~ List<DBlevering> leveringList
+~ List<VBox> routeLevering
+~ List<VBox> routeRetour
+~ List<Node> Route
++ <<Create>> OverzichtRoutes()
+- void initialize()
+- void addRoutes()
+- void addLeveringen()
+- void addRetour()
++ void onRouteSelected(int)
+~ void Logout(ActionEvent)
+~ void Routes(ActionEvent)
+}
+
+
+interface RouteListener {
+~ void onRouteSelected(int)
+}
+
+
+
+OverzichtRoutes  -[#595959,dashed]->  APPRoutes
+OverzichtRoutes  -[#595959,dashed]->  LeveringRetour
+OverzichtRoutes "1" *-[#595959,plain]-> "routeInfoList\n*" RouteInfo
+OverzichtRoutes  -[#008200,dashed]-^  RouteListener
+OverzichtRoutes  -[#595959,dashed]->  SceneController : "«create»"
+OverzichtRoutes "1" *-[#595959,plain]-> "Scene\n1" SceneController
+RouteInfo       "1" *-[#595959,plain]-> "listener\n1" RouteListener
+RouteInfo       "1" *-[#595959,plain]-> "Scene\n1" SceneController
+RouteInfo        -[#595959,dashed]->  SceneController : "«create»"
+@enduml
+
+

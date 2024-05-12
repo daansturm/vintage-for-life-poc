@@ -1,0 +1,187 @@
+@startuml
+class DBadres {
+- int id
+- String straat
+- String huisnummer
+- String plaats
+- String postcode
+- String land
++ <<Create>> DBadres(String,String,String,String,String)
++ <<Create>> DBadres(String,String,String,String,String,String)
++ String getStraat()
++ String getHuisnummer()
++ String getPlaats()
++ String getPostcode()
++ String getLand()
++ String getId()
++ void Print()
+}
+
+
+class DBbestelling {
+- int id
+- int klantId
+- String status
+- boolean installatieservice
+- DBadres adres
+- List<DBproduct> producten
++ <<Create>> DBbestelling(int,int,String,boolean,String,String,String,String,String)
++ void voegProductToe(String,String,String,String,String,String)
++ void setBestelling(DBbestelling)
++ DBadres getAdres()
++ DBproduct getProduct(int)
++ String getId()
++ int getProductCount()
++ void Print()
+}
+
+
+interface DBobject {
++ String getId()
++ void Print()
+}
+
+class DBlevering {
+- int id
+- String status
+~ LocalDateTime bezorgdatum
+- float lon
+- float lat
+- List<DBbestelling> bestellingen
++ <<Create>> DBlevering(int,String,String)
++ void voegBestellingToe(String,String,String,String,String,String,String,String,String)
++ void setLonLan(float,float)
++ void setLevering(DBlevering)
++ DBadres getFirstAdres()
++ String getId()
++ LocalDateTime getBezorgdatum()
++ int getBestellingCount()
++ DBbestelling getBestelling(int)
++ List<DBbestelling> getBestellingen()
++ boolean equalsDate(LocalDateTime)
++ void Print()
+}
+
+
+class DBretour {
+- int id
+- int bestelling_id
+- String status
+- String reden
+- String opmerking
+- LocalDateTime retourdatum
+- DBadres adres
+- DBbestelling bestelling
++ <<Create>> DBretour(int,int,String,String,String,LocalDateTime,String,String,String,String,String)
++ <<Create>> DBretour(String,String,String,String,String,String,String,String,String,String,String)
++ void VoegBestellingToe(String,String,String,String,String,String,String,String,String)
++ DBadres getAdres()
++ LocalDateTime getRetourdatum()
++ String getId()
++ boolean equalsDate(LocalDateTime)
++ void Print()
+}
+
+
+class DBroute {
+- int id
+- String status
+- LocalDateTime datum
+- String priotisering
+- List<DBlevering> leveringen
+- List<DBretour> retouren
+- DBadres beginadres
+- DBadres eindadres
+- List<GraphhopperLocatie> locaties
+- List<String> prio_index
+- Geocode gc
++ <<Create>> DBroute()
++ <<Create>> DBroute(LocalDate)
++ <<Create>> DBroute(int,String,String,String)
++ <<Create>> DBroute(int,String,LocalDateTime,String)
++ void MaakGraphhopperList()
+- boolean checkGrapphopperList(List<String>)
+- void maakPriotisering(List<GraphhopperLocatie>)
++ void setRoute(DBroute)
++ void setId(int)
++ void setBeginadres(DBadres)
++ void setEindadres(DBadres)
++ void voegLeveringToe(DBlevering)
++ void voegRetourToe(DBretour)
++ DBadres getBeginadres()
++ DBadres getEindadres()
++ String getStatus()
++ String getPriotisering()
++ String getDatum()
++ LocalDateTime getDatumTijd()
++ List<DBlevering> getLeveringen()
++ List<DBretour> getRetouren()
++ String getId()
++ List<GraphhopperLocatie> getLocaties()
++ String getRoute_info()
++ void Print()
+}
+
+
+class DBproduct {
+- int id
+- String naam
+- String beschrijving
+- String afmeting
+- String gewicht
+- int aantal
+~ <<Create>> DBproduct(int,String,String,String,String,int)
++ String getId()
++ void Print()
+}
+
+
+class GraphhopperLocatie {
+- DBadres adres
+- String lon
+- String lat
+- String id
+- String naam
++ <<Create>> GraphhopperLocatie(DBadres,String,String,String)
++ <<Create>> GraphhopperLocatie(DBadres,String,String)
++ <<Create>> GraphhopperLocatie(DBlevering,String,String)
++ <<Create>> GraphhopperLocatie(DBretour,String,String)
++ void setGraphhopperLocatie(GraphhopperLocatie)
++ void setLonLan(String,String)
++ DBadres getAdres()
++ String getLon()
++ String getLat()
++ String getNaam()
++ String getId()
++ void Print()
+}
+
+
+
+DBadres             -[#008200,dashed]-^  DBobject
+DBbestelling       "1" *-[#595959,plain]-> "adres\n1" DBadres
+DBbestelling        -[#595959,dashed]->  DBadres            : "«create»"
+DBbestelling        -[#008200,dashed]-^  DBobject
+DBbestelling        -[#595959,dashed]->  DBproduct          : "«create»"
+DBbestelling       "1" *-[#595959,plain]-> "producten\n*" DBproduct
+DBlevering          -[#595959,dashed]->  DBadres
+DBlevering         "1" *-[#595959,plain]-> "bestellingen\n*" DBbestelling
+DBlevering          -[#595959,dashed]->  DBbestelling       : "«create»"
+DBlevering          -[#008200,dashed]-^  DBobject
+DBproduct           -[#008200,dashed]-^  DBobject
+DBretour           "1" *-[#595959,plain]-> "adres\n1" DBadres
+DBretour            -[#595959,dashed]->  DBadres            : "«create»"
+DBretour           "1" *-[#595959,plain]-> "bestelling\n1" DBbestelling
+DBretour            -[#595959,dashed]->  DBbestelling       : "«create»"
+DBretour            -[#008200,dashed]-^  DBobject
+DBroute            "1" *-[#595959,plain]-> "beginadres\n1" DBadres
+DBroute            "1" *-[#595959,plain]-> "leveringen\n*" DBlevering
+DBroute             -[#008200,dashed]-^  DBobject
+DBroute            "1" *-[#595959,plain]-> "retouren\n*" DBretour
+DBroute            "1" *-[#595959,plain]-> "locaties\n*" GraphhopperLocatie
+DBroute             -[#595959,dashed]->  GraphhopperLocatie : "«create»"
+GraphhopperLocatie "1" *-[#595959,plain]-> "adres\n1" DBadres
+GraphhopperLocatie  -[#595959,dashed]->  DBlevering
+GraphhopperLocatie  -[#008200,dashed]-^  DBobject
+GraphhopperLocatie  -[#595959,dashed]->  DBretour
+@enduml

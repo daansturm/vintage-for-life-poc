@@ -1,0 +1,19 @@
+@startuml
+class LeveringRetour {
+- Label LeveringRetourtxt
+- Label plaatstxt
+- Label adrestxt
+- Label postcodetxt
+- Label landtxt
+- int id
++ Label getLeveringLabel()
++ Label getPlaatstLabel()
++ Label getAdrestLabel()
++ Label getLandLabel()
++ Label getPostcodetxt()
++ void setID(int)
++ int getId()
+}
+
+
+@enduml

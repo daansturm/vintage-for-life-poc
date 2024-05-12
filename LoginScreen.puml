@@ -1,0 +1,44 @@
+@startuml
+class DBConnection {
+- {static} Connection connection
++ {static} Connection getConnection()
++ {static} DBbestelling getSQLDBproduct(DBbestelling)
++ {static} DBlevering getSQLDBbestelling(DBlevering)
++ {static} List<DBlevering> getSQLDBlevering()
++ {static} DBroute getSQLDBlevering(DBroute)
++ {static} List<DBretour> getSQLDBRetour()
++ {static} DBroute getSQLDBRetour(DBroute)
++ {static} List<DBroute> getSQLDBroute()
++ {static} DBadres getSQLBeginEindAdress(int)
++ {static} void setSQLDBlevering(DBlevering)
++ {static} DBroute setSQLRoute(DBroute)
+}
+
+
+class SceneController {
+- {static} Stage stage
+- {static} Scene scene
+- {static} Parent root
++ void ShowLoginScreen(ActionEvent)
++ void ShowOverzichtRoutes(ActionEvent)
++ void ShowRouteVisualisatie(ActionEvent,DBroute,int)
+}
+
+
+class LoginScreen {
++ TextField emailTextField
++ PasswordField passwordField
++ Label notificationLabel
+- SceneController sceneController
+- Connection connection
+~ void Login(ActionEvent)
+- boolean authenticateUser(String,String)
+}
+
+
+
+LoginScreen      -[#595959,dashed]->  DBConnection
+LoginScreen      -[#595959,dashed]->  SceneController : "«create»"
+LoginScreen     "1" *-[#595959,plain]-> "sceneController\n1" SceneController
+
+@enduml

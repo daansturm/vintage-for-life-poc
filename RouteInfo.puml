@@ -1,0 +1,26 @@
+@startuml
+class RouteInfo {
+- RouteListener listener
+- BorderPane borderpane
+- Label route
+- Label route_info
+- int ID
+- SceneController Scene
+- DBroute dBroute
+~ void Select(MouseEvent)
+~ void ShowVisualisation(ActionEvent)
++ void setID(int)
++ void setRouteSelectionListener(RouteListener)
++ void setDBroute(DBroute,int)
++ void setSelected()
++ void setUnseleced()
++ void getID(int)
+}
+
+interface RouteListener {
+~ void onRouteSelected(int)
+}
+
+RouteInfo     "1" *-[#595959,plain]-> "listener\n1" RouteListener
+
+@enduml

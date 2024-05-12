@@ -1,0 +1,114 @@
+@startuml
+class VintageForLifeAPP {
+- Connection connection
++ void start(Stage)
++ {static} void main(String[])
+}
+
+
+class APPRoutes {
+- {static} List<DBroute> routeList
+- {static} List<DBlevering> leveringList
+- {static} List<DBretour> retourList
++ {static} void SQLRoutes()
++ {static} void SQLUnAssignedLeveringen()
++ {static} void SQLUnAssignedRetour()
++ {static} void MakeRoute()
++ {static} List<DBlevering> getUnAssignedLevering()
++ {static} List<DBretour> getUnAssignedRetour()
++ {static} List<DBroute> getRoutes()
+}
+
+
+class DBlevering {
+- int id
+- String status
+~ LocalDateTime bezorgdatum
+- float lon
+- float lat
+- List<DBbestelling> bestellingen
++ <<Create>> DBlevering(int,String,String)
++ void voegBestellingToe(String,String,String,String,String,String,String,String,String)
++ void setLonLan(float,float)
++ void setLevering(DBlevering)
++ DBadres getFirstAdres()
++ String getId()
++ LocalDateTime getBezorgdatum()
++ int getBestellingCount()
++ DBbestelling getBestelling(int)
++ List<DBbestelling> getBestellingen()
++ boolean equalsDate(LocalDateTime)
++ void Print()
+}
+
+
+class DBroute {
+- int id
+- String status
+- LocalDateTime datum
+- String priotisering
+- List<DBlevering> leveringen
+- List<DBretour> retouren
+- DBadres beginadres
+- DBadres eindadres
+- List<GraphhopperLocatie> locaties
+- List<String> prio_index
+- Geocode gc
++ <<Create>> DBroute()
++ <<Create>> DBroute(LocalDate)
++ <<Create>> DBroute(int,String,String,String)
++ <<Create>> DBroute(int,String,LocalDateTime,String)
++ void MaakGraphhopperList()
+- boolean checkGrapphopperList(List<String>)
+- void maakPriotisering(List<GraphhopperLocatie>)
++ void setRoute(DBroute)
++ void setId(int)
++ void setBeginadres(DBadres)
++ void setEindadres(DBadres)
++ void voegLeveringToe(DBlevering)
++ void voegRetourToe(DBretour)
++ DBadres getBeginadres()
++ DBadres getEindadres()
++ String getStatus()
++ String getPriotisering()
++ String getDatum()
++ LocalDateTime getDatumTijd()
++ List<DBlevering> getLeveringen()
++ List<DBretour> getRetouren()
++ String getId()
++ List<GraphhopperLocatie> getLocaties()
++ String getRoute_info()
++ void Print()
+}
+
+
+class DBretour {
+- int id
+- int bestelling_id
+- String status
+- String reden
+- String opmerking
+- LocalDateTime retourdatum
+- DBadres adres
+- DBbestelling bestelling
++ <<Create>> DBretour(int,int,String,String,String,LocalDateTime,String,String,String,String,String)
++ <<Create>> DBretour(String,String,String,String,String,String,String,String,String,String,String)
++ void VoegBestellingToe(String,String,String,String,String,String,String,String,String)
++ DBadres getAdres()
++ LocalDateTime getRetourdatum()
++ String getId()
++ boolean equalsDate(LocalDateTime)
++ void Print()
+}
+
+
+
+
+APPRoutes         "1" *-[#595959,plain]-> "leveringList\n*" DBlevering
+APPRoutes         "1" *-[#595959,plain]-> "retourList\n*" DBretour
+APPRoutes         "1" *-[#595959,plain]-> "routeList\n*" DBroute
+APPRoutes          -[#595959,dashed]->  DBroute           : "«create»"
+DBroute           "1" *-[#595959,plain]-> "leveringen\n*" DBlevering
+DBroute           "1" *-[#595959,plain]-> "retouren\n*" DBretour
+VintageForLifeAPP  -[#595959,dashed]->  APPRoutes
+@enduml
