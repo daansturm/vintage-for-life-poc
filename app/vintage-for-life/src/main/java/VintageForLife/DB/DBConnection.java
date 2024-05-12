@@ -219,7 +219,7 @@ public class DBConnection {
         String id = route.getId();
 
         //update
-        if(id != "-1" ) {
+        if(!id.equals("-1") ) {
             String sql = "UPDATE route SET  status = ?, datum = ?, priotisering = ?, beginadres = ?, eindadres = ? where id = ?";
             PreparedStatement pstmt = connection.prepareStatement(sql);
             pstmt.setString(1, route.getStatus());
