@@ -219,8 +219,8 @@ public class DBConnection {
         String id = route.getId();
 
         //update
-        if(id != "" || id == null) {
-            String sql = "UPDATE route SET  status = ?, datum = ?, priotisering = ?, beginadres = ?, eindadreswhere = ? where id = ?";
+        if(id != "-1" ) {
+            String sql = "UPDATE route SET  status = ?, datum = ?, priotisering = ?, beginadres = ?, eindadres = ? where id = ?";
             PreparedStatement pstmt = connection.prepareStatement(sql);
             pstmt.setString(1, route.getStatus());
             pstmt.setString(2, route.getDatum());
