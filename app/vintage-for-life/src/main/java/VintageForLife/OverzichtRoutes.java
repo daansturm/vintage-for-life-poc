@@ -71,6 +71,7 @@ public class OverzichtRoutes implements RouteListener{
 
     private void addRoutes()
     {
+        int id = 0;
         for (DBroute route : routeList) {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("RouteInfo.fxml"));
@@ -80,8 +81,8 @@ public class OverzichtRoutes implements RouteListener{
                 RouteInfo controller = loader.getController();
                 routeInfoList.add(controller);
                 controller.setRouteSelectionListener(this);
-                controller.setDBroute(route);
-
+                controller.setDBroute(route, id);
+                id++;
                 //((VBox) Leveringen.getContent()).getChildren().add(content);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -101,6 +102,8 @@ public class OverzichtRoutes implements RouteListener{
 
     private void addLeveringen() throws SQLException, IOException {
 
+
+
         for(DBroute route : routeList)
         {
             List<Node> Levering = new ArrayList<>();
@@ -110,6 +113,7 @@ public class OverzichtRoutes implements RouteListener{
             {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("LeveringRetour.fxml"));
                 Parent content = loader.load();
+
                 content.setVisible(true);
                 Levering.add(content);
 
@@ -142,6 +146,8 @@ public class OverzichtRoutes implements RouteListener{
 
     private void addRetour() throws SQLException, IOException {
 
+
+
         for(DBroute route : routeList)
         {
             List<Node> Retour = new ArrayList<>();
@@ -151,6 +157,7 @@ public class OverzichtRoutes implements RouteListener{
             {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("LeveringRetour.fxml"));
                 Parent content = loader.load();
+
                 content.setVisible(true);
                 Retour.add(content);
 

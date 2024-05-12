@@ -7,13 +7,11 @@ import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.CornerRadii;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 
 import java.io.IOException;
+import java.util.List;
 
 public class RouteInfo {
    private RouteListener listener;
@@ -31,6 +29,7 @@ public class RouteInfo {
     private SceneController Scene = new SceneController();
     private DBroute dBroute = new DBroute();
 
+
     @FXML
     void Select(MouseEvent event) {
 
@@ -44,7 +43,7 @@ public class RouteInfo {
     @FXML
     void ShowVisualisation(ActionEvent event) throws IOException {
         System.out.println(this.ID);
-        Scene.ShowRouteVisualisatie(event, this.ID);
+        Scene.ShowRouteVisualisatie(event, this.dBroute, ID);
 
     }
 
@@ -57,11 +56,11 @@ public class RouteInfo {
         this.listener = listener;
     }
 
-    public void setDBroute(DBroute route) {
+    public void setDBroute(DBroute route, int id ) {
         this.dBroute = route;
         this.route.setText("Route: " + dBroute.getId());
         this.route_info.setText(dBroute.getRoute_info());
-        this.ID = Integer.parseInt(route.getId());
+        this.ID = id;
     }
 
 
