@@ -16,7 +16,7 @@ public class DBroute implements DBobject{
     private List<DBretour> retouren;
     private DBadres beginadres;
     private DBadres eindadres;
-    private List<GrapphopperLocatie> locaties;
+    private List<GraphhopperLocatie> locaties;
 
     private List<String> prio_index;
 
@@ -69,87 +69,57 @@ public class DBroute implements DBobject{
         String index;
 
         if(correct) {
-<<<<<<< Updated upstream
-            locaties.add(new GrapphopperLocatie(beginadres, "b_1", "Begin Adres"));
-=======
+
             locaties.add(gc.convertAdres(new GraphhopperLocatie(beginadres, "b_1", "Begin Adres")));
->>>>>>> Stashed changes
             for (String prio : prio_index) {
 
                 if (prio.contains("l_")) {
                     index = prio.replace("l_", "");
-<<<<<<< Updated upstream
-                    locaties.add(new GrapphopperLocatie(leveringen.get(Integer.parseInt(index)), prio, "Levering: " + index));
-=======
+
                     for(DBlevering levering : leveringen) {
                         if (levering.getId().equals(index))
                         {
                             locaties.add(gc.convertAdres(new GraphhopperLocatie(levering, prio, "Levering: " + index)));
                             break;
                         }
->>>>>>> Stashed changes
 
                     }
                 }
                 if (prio.contains("r_")) {
-                    index = prio.replace("l_", "");
-<<<<<<< Updated upstream
-                    locaties.add(new GrapphopperLocatie(retouren.get(Integer.parseInt(index)), prio, "Retour: " + index));
-                }
-            }
-
-            locaties.add(new GrapphopperLocatie(eindadres, "e_1", "Eind Adres"));
-        }
-        else
-        {
-            locaties.add(new GrapphopperLocatie(beginadres, "b_1", "Begin Adres"));
-
-            for(DBlevering levering : leveringen)
-                locaties.add(new GrapphopperLocatie(levering, "l_" + levering.getId(), "Levering: " + levering.getId()));
-            for(DBretour retour : retouren)
-                locaties.add(new GrapphopperLocatie(retour, "r_" + retour.getId(), "Retour: " + retour.getId()));
-
-            locaties.add(new GrapphopperLocatie(eindadres, "e_1", "Eind Adres"));
-=======
+                    index = prio.replace("r_", "");
                     for(DBretour retour : retouren) {
-                        if (retour.getId().equals(index))
-                        {
+                        if (retour.getId().equals(index)) {
                             locaties.add(gc.convertAdres(new GraphhopperLocatie(retour, prio, "Levering: " + index)));
                             break;
                         }
-
                     }
                 }
             }
 
-            locaties.add(gc.convertAdres(new GraphhopperLocatie(eindadres, "e_1", "Eind Adres")));
+            locaties.add(new GraphhopperLocatie(eindadres, "e_1", "Eind Adres"));
         }
         else
         {
-            locaties.add(gc.convertAdres(new GraphhopperLocatie(beginadres, "b_1", "Begin Adres")));
+            locaties.add(new GraphhopperLocatie(beginadres, "b_1", "Begin Adres"));
 
             for(DBlevering levering : leveringen)
-                locaties.add(gc.convertAdres(new GraphhopperLocatie(levering, "l_" + levering.getId(), "Levering: " + levering.getId())));
+                locaties.add(new GraphhopperLocatie(levering, "l_" + levering.getId(), "Levering: " + levering.getId()));
             for(DBretour retour : retouren)
-                locaties.add(gc.convertAdres(new GraphhopperLocatie(retour, "r_" + retour.getId(), "Retour: " + retour.getId())));
+                locaties.add(new GraphhopperLocatie(retour, "r_" + retour.getId(), "Retour: " + retour.getId()));
 
-            locaties.add(gc.convertAdres(new GraphhopperLocatie(eindadres, "e_1", "Eind Adres")));
->>>>>>> Stashed changes
+            locaties.add(new GraphhopperLocatie(eindadres, "e_1", "Eind Adres"));
+
 
             // TODO DAAN grapphopper call om VRP opnieuw uit te voeren, alleen locaties die goed zijn mee terug geven
 
             maakPriotisering(locaties);
 
-<<<<<<< Updated upstream
-            for(GrapphopperLocatie locatie : locaties)
+
+            for(GraphhopperLocatie locatie : locaties)
             {
                 System.out.println(locatie.getAdres().getPlaats());
                 System.out.println(locatie.getId());
             }
-=======
-
->>>>>>> Stashed changes
-
 
         }
 
@@ -205,10 +175,10 @@ public class DBroute implements DBobject{
     }
 
 
-    private void maakPriotisering(List<GrapphopperLocatie> locaties)
+    private void maakPriotisering(List<GraphhopperLocatie> locaties)
     {
         priotisering = "";
-        for (GrapphopperLocatie loc : locaties) {
+        for (GraphhopperLocatie loc : locaties) {
             priotisering += loc.getId() + ":";
 
         }
@@ -219,7 +189,7 @@ public class DBroute implements DBobject{
         while (leveringIterator.hasNext()) {
             DBlevering levering = leveringIterator.next();
             boolean gevonden = false;
-            for (GrapphopperLocatie loc : locaties) {
+            for (GraphhopperLocatie loc : locaties) {
                 if (loc.getId().equals("l_" + levering.getId())) {
                     gevonden = true;
                     break;
@@ -235,7 +205,7 @@ public class DBroute implements DBobject{
         while (retourIterator.hasNext()) {
             DBretour retour = retourIterator.next();
             boolean gevonden = false;
-            for (GrapphopperLocatie loc : locaties) {
+            for (GraphhopperLocatie loc : locaties) {
                 if (loc.getId().equals("r_" + retour.getId())) {
                     gevonden = true;
                     break;
@@ -258,11 +228,6 @@ public class DBroute implements DBobject{
         this.leveringen = route.leveringen;
         this.beginadres = route.beginadres;
         this.eindadres = route.eindadres;
-<<<<<<< Updated upstream
-        MaakGrapphopperList();
-=======
-
->>>>>>> Stashed changes
 
     }
 
@@ -335,7 +300,7 @@ public class DBroute implements DBobject{
         return String.valueOf(id);
     }
 
-    public List<GrapphopperLocatie> getLocaties() {
+    public List<GraphhopperLocatie> getLocaties() {
         return locaties;
     }
 

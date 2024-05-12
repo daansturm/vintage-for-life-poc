@@ -215,11 +215,7 @@ public class DBConnection {
     }
 
     public static DBroute setSQLRoute(DBroute route) throws SQLException {
-<<<<<<< Updated upstream
 
-
-=======
->>>>>>> Stashed changes
         String id = route.getId();
 
         //update
@@ -237,7 +233,7 @@ public class DBConnection {
         else
         {
             String sql = "INSERT into route (status, datum, priotisering, beginadres, eindadres) values (?, ?, ?, ?, ?)";
-            PreparedStatement pstmt = connection.prepareStatement(sql);
+            PreparedStatement pstmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             pstmt.setString(1, route.getStatus());
             pstmt.setString(2, route.getDatum());
             pstmt.setString(3, route.getPriotisering());
@@ -257,41 +253,6 @@ public class DBConnection {
 
         }
 
-<<<<<<< Updated upstream
-        String sql = "DELETE retour_route where route_id = ?" ;
-        PreparedStatement pstmt = connection.prepareStatement(sql);
-        pstmt.setString(1, route.getId());
-        pstmt.executeUpdate();
-
-        sql = "DELETE levering_route where route_id = ?" ;
-        pstmt = connection.prepareStatement(sql);
-        pstmt.setString(1, route.getId());
-        pstmt.executeUpdate();
-
-        for(DBlevering levering : route.getLeveringen())
-        {
-            sql = "INSERT INTO levering_route (route_id, levering_id ) values (?,?)";
-            pstmt = connection.prepareStatement(sql);
-            pstmt.setString(1, route.getId());
-            pstmt.setString(2, levering.getId());
-            pstmt.executeUpdate();
-        }
-
-        for(DBretour retour : route.getRetouren())
-        {
-            sql = "INSERT INTO retour_route (route_id, retour_id ) values (?,?)";
-            pstmt = connection.prepareStatement(sql);
-            pstmt.setString(1, route.getId());
-            pstmt.setString(2, retour.getId());
-            pstmt.executeUpdate();
-        }
-
-
-      return route;
-    }
-
-}
-=======
         id = route.getId();
 
         // Update levering routes
@@ -342,4 +303,4 @@ public class DBConnection {
     }
 
 }
->>>>>>> Stashed changes
+
