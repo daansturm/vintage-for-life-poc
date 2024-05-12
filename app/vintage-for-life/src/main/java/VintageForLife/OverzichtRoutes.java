@@ -47,7 +47,6 @@ public class OverzichtRoutes implements RouteListener{
     List<VBox> routeLevering = new ArrayList<>();
     List<VBox> routeRetour = new ArrayList<>();
 
-    List<Node> Retour = new ArrayList<>();
     List<Node> Route = new ArrayList<>();
 
     public OverzichtRoutes() throws IOException {
@@ -63,31 +62,30 @@ public class OverzichtRoutes implements RouteListener{
         routeList = APPRoutes.getRoutes();
         leveringList = APPRoutes.getUnAssignedLevering();
 
+        for(DBroute route : routeList){
+            route.Print();
+        }
 
         addRoutes();
         addLeveringen();
     }
 
 
-    private void addRoutes()
-    {
+    private void addRoutes() throws IOException {
         int id = 0;
         for (DBroute route : routeList) {
-            try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("RouteInfo.fxml"));
-                Parent content = loader.load();
-                Route.add(content);
 
-                RouteInfo controller = loader.getController();
-                routeInfoList.add(controller);
-                controller.setRouteSelectionListener(this);
-                controller.setDBroute(route, id);
-                id++;
-                //((VBox) Leveringen.getContent()).getChildren().add(content);
-            } catch (IOException e) {
-                e.printStackTrace();
-                // Behandel de fout
-            }
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("RouteInfo.fxml"));
+            Parent content = loader.load();
+            Route.add(content);
+
+            RouteInfo controller = loader.getController();
+            controller.setRouteSelectionListener(this);
+            controller.setDBroute(route, id);
+            routeInfoList.add(controller);
+            id++;
+            //((VBox) Leveringen.getContent()).getChildren().add(content);
+        }
 
             VBox items = new VBox(Routes.getWidth());
             items.getChildren().addAll(Route);
@@ -96,7 +94,7 @@ public class OverzichtRoutes implements RouteListener{
 
             if (routeInfoList != null)
                 routeInfoList.get(0).setSelected();
-        }
+
     }
 
 
