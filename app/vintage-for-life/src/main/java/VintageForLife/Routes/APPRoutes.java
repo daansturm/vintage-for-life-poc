@@ -96,15 +96,12 @@ public class APPRoutes {
 
         route.setBeginadres(DBConnection.getSQLBeginEindAdress(1));
         route.setEindadres(DBConnection.getSQLBeginEindAdress(1));
-<<<<<<< Updated upstream
-        route.MaakGrapphopperList();
-=======
 
         route.MaakGraphhopperList();
         route.Print();
 
         route.setRoute(DBConnection.setSQLRoute(route));
->>>>>>> Stashed changes
+
 
         routeList.add(route);
 

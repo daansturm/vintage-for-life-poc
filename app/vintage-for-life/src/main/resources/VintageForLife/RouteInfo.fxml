@@ -15,8 +15,8 @@
          <children>
             <VBox alignment="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
-                  <Label fx:id="route" text="Route:" />
-                  <Label fx:id="route_info" text="Route info:" />
+                  <Label fx:id="routetxt" text="Route:" />
+                  <Label fx:id="route_infotxt" text="Route info:" />
                </children>
             </VBox>
          </children>

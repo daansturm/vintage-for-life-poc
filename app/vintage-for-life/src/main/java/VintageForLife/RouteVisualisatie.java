@@ -19,37 +19,31 @@ public class RouteVisualisatie {
 
 
     @FXML
-    private Label route;
+    private Label routetxt;
 
     @FXML
-    private Label route_info;
+    private Label route_infotxt;
 
     @FXML
     private ScrollPane locaties = new ScrollPane();
 
-    List<DBroute> routeList = new ArrayList<>();
+    private DBroute DBroute;
     private int routeID = -1;
 
 
 
 
 
-    public void setRouteID(int routeID) {
+
+    public void setRoute(DBroute route , int routeID) {
+        this.DBroute = route;
         this.routeID = routeID;
+        routetxt.setText("Route: " + route.getId());
+        route_infotxt.setText(route.getRoute_info());
     }
 
     public void initialize() {
-        routeList = APPRoutes.getRoutes();
 
-        if (routeList.isEmpty() || routeID == -1 || routeID > routeList.size())  {
-            return;
-        }
-        DBroute route = routeList.get(routeID);
-
-        for (GraphhopperLocatie locatie : route.getLocaties())
-        {
-
-        }
 
     }
 
