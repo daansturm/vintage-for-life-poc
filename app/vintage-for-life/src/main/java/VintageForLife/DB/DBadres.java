@@ -1,6 +1,6 @@
 package VintageForLife.DB;
 
-public class DBadres {
+public class DBadres implements DBobject{
     private int id;
     private String straat;
     private String huisnummer;
@@ -45,6 +45,22 @@ public class DBadres {
 
     public String getLand() {
         return land;
+    }
+
+
+    public String getId() {
+        return String.valueOf(id);
+    }
+
+    public void Print()
+    {
+        System.out.println("Adres:");
+        System.out.println("straat: " + straat);
+        System.out.println("huisnummer: " + huisnummer);
+        System.out.println("plaats: " + plaats);
+        System.out.println("postcode: " + postcode);
+        System.out.println("land: " + land);
+
     }
 
 }

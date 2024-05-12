@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class DBretour {
+public class DBretour implements DBobject {
     private int id;
     private int bestelling_id;
     private String status;
@@ -67,4 +67,14 @@ public class DBretour {
     }
 
 
+    public void Print() {
+       System.out.println("Retour ID: " + id + " Bestelling: " + bestelling_id);
+       System.out.println("Status: " + status);
+       System.out.println("Reden: " + reden);
+       System.out.println("Opmerking: " + opmerking);
+       System.out.println("Retourdatum: " + retourdatum.toString());
+       System.out.println("Adres: ");
+       adres.Print();
+
+    }
 }

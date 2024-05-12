@@ -3,6 +3,7 @@ package VintageForLife.Routes;
 import VintageForLife.DB.*;
 
 
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ public class APPRoutes {
 
     public static void SQLRoutes() throws SQLException {
 
+
         routeList = DBConnection.getSQLDBroute();
         for (DBroute route : routeList) {
             route.setRoute(DBConnection.getSQLDBlevering(route));
@@ -32,7 +34,14 @@ public class APPRoutes {
 
                 }
             }
+
+            route.setBeginadres(DBConnection.getSQLBeginEindAdress(1));
+            route.setEindadres(DBConnection.getSQLBeginEindAdress(1));
+            route.Print();
+            route.MaakGraphhopperList();
         }
+
+
     }
 
     public static void SQLUnAssignedLeveringen() throws SQLException {
@@ -44,6 +53,8 @@ public class APPRoutes {
             {
                 bestelling.setBestelling(DBConnection.getSQLDBproduct(bestelling));
             }
+
+            levering.Print();
         }
     }
 
@@ -85,7 +96,15 @@ public class APPRoutes {
 
         route.setBeginadres(DBConnection.getSQLBeginEindAdress(1));
         route.setEindadres(DBConnection.getSQLBeginEindAdress(1));
+<<<<<<< Updated upstream
         route.MaakGrapphopperList();
+=======
+
+        route.MaakGraphhopperList();
+        route.Print();
+
+        route.setRoute(DBConnection.setSQLRoute(route));
+>>>>>>> Stashed changes
 
         routeList.add(route);
 

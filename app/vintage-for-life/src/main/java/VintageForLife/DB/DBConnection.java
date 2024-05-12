@@ -2,7 +2,9 @@ package VintageForLife.DB;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class DBConnection {
     private static Connection connection;
@@ -94,7 +96,7 @@ public class DBConnection {
     public static DBroute getSQLDBlevering(DBroute route) throws SQLException {
 
         String id = route.getId();
-        String sql = "SELECT * FROM levering inner join levering_route lr on levering.id = lr.id where route_id = ?";
+        String sql = "SELECT * FROM levering inner join levering_route lr on levering.id = lr.levering_id where route_id = ?"; //verkeerde id nummer terug
         PreparedStatement pstmt = connection.prepareStatement(sql);
         pstmt.setString(1, id);
         ResultSet resultSet = pstmt.executeQuery();
@@ -213,8 +215,11 @@ public class DBConnection {
     }
 
     public static DBroute setSQLRoute(DBroute route) throws SQLException {
+<<<<<<< Updated upstream
 
 
+=======
+>>>>>>> Stashed changes
         String id = route.getId();
 
         //update
@@ -252,6 +257,7 @@ public class DBConnection {
 
         }
 
+<<<<<<< Updated upstream
         String sql = "DELETE retour_route where route_id = ?" ;
         PreparedStatement pstmt = connection.prepareStatement(sql);
         pstmt.setString(1, route.getId());
@@ -285,3 +291,55 @@ public class DBConnection {
     }
 
 }
+=======
+        id = route.getId();
+
+        // Update levering routes
+        String insertLeveringSql = "INSERT INTO levering_route (route_id, levering_id) VALUES (?, ?) ON DUPLICATE KEY UPDATE route_id = VALUES(route_id), levering_id = VALUES(levering_id)";
+        try (PreparedStatement insertLeveringStmt = connection.prepareStatement(insertLeveringSql)) {
+            for (DBlevering levering : route.getLeveringen()) {
+                insertLeveringStmt.setString(1, id);
+                insertLeveringStmt.setString(2, levering.getId());
+                insertLeveringStmt.executeUpdate();
+            }
+        }
+
+        // Update retour routes
+        String insertRetourSql = "INSERT INTO retour_route (route_id, retour_id) VALUES (?, ?) ON DUPLICATE KEY UPDATE route_id = VALUES(route_id), retour_id = VALUES(retour_id)";
+        try (PreparedStatement insertRetourStmt = connection.prepareStatement(insertRetourSql)) {
+            for (DBretour retour : route.getRetouren()) {
+                insertRetourStmt.setString(1, id);
+                insertRetourStmt.setString(2, retour.getId());
+                insertRetourStmt.executeUpdate();
+            }
+        }
+
+        // Verwijder levering routes die niet meer in de lijst staan
+        String deleteLeveringSql = "DELETE FROM levering_route WHERE route_id = ? AND levering_id NOT IN (" + String.join(",", Collections.nCopies(route.getLeveringen().size(), "?")) + ")";
+        try (PreparedStatement deleteLeveringStmt = connection.prepareStatement(deleteLeveringSql)) {
+            deleteLeveringStmt.setString(1, id);
+            int parameterIndex = 2;
+            for (DBlevering levering : route.getLeveringen()) {
+                deleteLeveringStmt.setString(parameterIndex++, levering.getId());
+            }
+            deleteLeveringStmt.executeUpdate();
+        }
+     /*
+        // Verwijder retour routes die niet meer in de lijst staan
+        String deleteRetourSql = "DELETE FROM retour_route WHERE route_id = ? AND retour_id NOT IN (" + String.join(",", Collections.nCopies(route.getRetouren().size(), "?")) + ")";
+        try (PreparedStatement deleteRetourStmt = connection.prepareStatement(deleteRetourSql)) {
+            deleteRetourStmt.setString(1, id);
+            int parameterIndex = 2;
+            for (DBretour retour : route.getRetouren()) {
+                deleteRetourStmt.setString(parameterIndex++, retour.getId());
+            }
+            deleteRetourStmt.executeUpdate();
+        }
+        */
+
+
+        return route;
+    }
+
+}
+>>>>>>> Stashed changes

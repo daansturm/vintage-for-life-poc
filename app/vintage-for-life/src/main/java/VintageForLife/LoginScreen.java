@@ -1,6 +1,7 @@
 package VintageForLife;
 
 import VintageForLife.DB.DBConnection;
+import VintageForLife.Routes.APPRoutes;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -21,9 +22,10 @@ public class LoginScreen {
     private SceneController sceneController;
     private final Connection connection;
 
-    public LoginScreen() {
+    public LoginScreen() throws SQLException {
         sceneController = new SceneController();
         connection = DBConnection.getConnection();
+
     }
 
     @FXML

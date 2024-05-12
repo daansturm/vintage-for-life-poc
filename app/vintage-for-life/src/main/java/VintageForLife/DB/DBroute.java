@@ -1,11 +1,13 @@
 package VintageForLife.DB;
 
+import VintageForLife.API.Geocode;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
-public class DBroute {
+public class DBroute implements DBobject{
     private int id;
     private String status;
     private LocalDateTime datum;
@@ -17,6 +19,8 @@ public class DBroute {
     private List<GrapphopperLocatie> locaties;
 
     private List<String> prio_index;
+
+    private Geocode gc = new Geocode();
 
 
     public DBroute()
@@ -59,21 +63,37 @@ public class DBroute {
 
     public void MaakGrapphopperList()
     {
+        System.out.println();
         prio_index = Arrays.asList(priotisering.split(":"));
         boolean correct = checkGrapphopperList(prio_index);
         String index;
 
         if(correct) {
+<<<<<<< Updated upstream
             locaties.add(new GrapphopperLocatie(beginadres, "b_1", "Begin Adres"));
+=======
+            locaties.add(gc.convertAdres(new GraphhopperLocatie(beginadres, "b_1", "Begin Adres")));
+>>>>>>> Stashed changes
             for (String prio : prio_index) {
 
                 if (prio.contains("l_")) {
                     index = prio.replace("l_", "");
+<<<<<<< Updated upstream
                     locaties.add(new GrapphopperLocatie(leveringen.get(Integer.parseInt(index)), prio, "Levering: " + index));
+=======
+                    for(DBlevering levering : leveringen) {
+                        if (levering.getId().equals(index))
+                        {
+                            locaties.add(gc.convertAdres(new GraphhopperLocatie(levering, prio, "Levering: " + index)));
+                            break;
+                        }
+>>>>>>> Stashed changes
 
+                    }
                 }
                 if (prio.contains("r_")) {
                     index = prio.replace("l_", "");
+<<<<<<< Updated upstream
                     locaties.add(new GrapphopperLocatie(retouren.get(Integer.parseInt(index)), prio, "Retour: " + index));
                 }
             }
@@ -90,19 +110,50 @@ public class DBroute {
                 locaties.add(new GrapphopperLocatie(retour, "r_" + retour.getId(), "Retour: " + retour.getId()));
 
             locaties.add(new GrapphopperLocatie(eindadres, "e_1", "Eind Adres"));
+=======
+                    for(DBretour retour : retouren) {
+                        if (retour.getId().equals(index))
+                        {
+                            locaties.add(gc.convertAdres(new GraphhopperLocatie(retour, prio, "Levering: " + index)));
+                            break;
+                        }
+
+                    }
+                }
+            }
+
+            locaties.add(gc.convertAdres(new GraphhopperLocatie(eindadres, "e_1", "Eind Adres")));
+        }
+        else
+        {
+            locaties.add(gc.convertAdres(new GraphhopperLocatie(beginadres, "b_1", "Begin Adres")));
+
+            for(DBlevering levering : leveringen)
+                locaties.add(gc.convertAdres(new GraphhopperLocatie(levering, "l_" + levering.getId(), "Levering: " + levering.getId())));
+            for(DBretour retour : retouren)
+                locaties.add(gc.convertAdres(new GraphhopperLocatie(retour, "r_" + retour.getId(), "Retour: " + retour.getId())));
+
+            locaties.add(gc.convertAdres(new GraphhopperLocatie(eindadres, "e_1", "Eind Adres")));
+>>>>>>> Stashed changes
 
             // TODO DAAN grapphopper call om VRP opnieuw uit te voeren, alleen locaties die goed zijn mee terug geven
 
             maakPriotisering(locaties);
 
+<<<<<<< Updated upstream
             for(GrapphopperLocatie locatie : locaties)
             {
                 System.out.println(locatie.getAdres().getPlaats());
                 System.out.println(locatie.getId());
             }
+=======
+
+>>>>>>> Stashed changes
 
 
         }
+
+
     }
 
 
@@ -207,7 +258,11 @@ public class DBroute {
         this.leveringen = route.leveringen;
         this.beginadres = route.beginadres;
         this.eindadres = route.eindadres;
+<<<<<<< Updated upstream
         MaakGrapphopperList();
+=======
+
+>>>>>>> Stashed changes
 
     }
 
@@ -287,6 +342,26 @@ public class DBroute {
     public String getRoute_info()
     {
         return this.locaties.get(1).getAdres().getPlaats() + " <> " + this.locaties.get(locaties.size() - 2).getAdres().getPlaats();
+
+    }
+
+
+    public void Print() {
+        System.out.println("------------------------------------------------------");
+        System.out.println("Route ID: " + this.id);
+        System.out.println("Status: " + this.status);
+        System.out.println("Datum: " + this.datum.toString());
+        System.out.println("Priotisering: " + this.priotisering);
+        System.out.println("Leveringen: ");
+        for (DBlevering levering : leveringen)
+            levering.Print();
+
+        System.out.println("Retour: ");
+        for(DBretour retour : retouren)
+            retour.Print();
+
+        System.out.println("------------------------------------------------------");
+
 
     }
 }

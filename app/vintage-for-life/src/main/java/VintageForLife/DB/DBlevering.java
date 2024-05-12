@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class DBlevering {
+public class DBlevering implements DBobject{
     private int id;
     private String status;
     LocalDateTime bezorgdatum;
@@ -90,5 +90,15 @@ public class DBlevering {
         LocalDate _datum = LocalDate.from(bezorgdatum);
         LocalDate __datum = LocalDate.from(datum);
         return _datum.equals(__datum);
+    }
+
+
+    public void Print() {
+        System.out.println("Levering ID: " + this.id + " status: " + this.status + " datum: " + this.bezorgdatum.toString());
+        System.out.println("lon: " + this.lon + " lat: " + this.lat);
+        System.out.println("bestellingen: ");
+        for(DBbestelling bestelling : bestellingen)
+            bestelling.Print();
+
     }
 }

@@ -1,6 +1,6 @@
 package VintageForLife.DB;
 
-public class DBproduct {
+public class DBproduct implements DBobject{
     private int id;
     private String naam;
     private String beschrijving;
@@ -16,5 +16,20 @@ public class DBproduct {
         this.afmeting = afmeting;
         this.gewicht = gewicht;
         this.aantal = aantal;
+    }
+
+
+    public String getId() {
+        return String.valueOf(id);
+    }
+
+
+    public void Print() {
+        System.out.println("Product ID: " + id);
+        System.out.println("Naam: " + naam);
+        System.out.println("Beschrijving: " + beschrijving);
+        System.out.println("Afmeting: " + afmeting);
+        System.out.println("Gewicht: " + gewicht);
+        System.out.println("Aantal: " + aantal);
     }
 }

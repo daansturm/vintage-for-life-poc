@@ -3,7 +3,7 @@ package VintageForLife.DB;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DBbestelling {
+public class DBbestelling implements DBobject{
     private int id;
     private int klantId;
     private String status;
@@ -59,4 +59,16 @@ public class DBbestelling {
         return producten.size();
     }
 
+
+    public void Print() {
+        System.out.println("Bestelling ID: " + this.id + " Klant ID: " + this.klantId);
+        System.out.println("Status: " + this.status);
+        System.out.println("Installatieservice: " + this.installatieservice);
+        System.out.println("Adres: ");
+        this.adres.Print();
+        System.out.println("Producten: ");
+        for(DBproduct p : producten)
+            p.Print();
+
+    }
 }

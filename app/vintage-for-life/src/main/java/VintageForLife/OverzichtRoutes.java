@@ -59,10 +59,7 @@ public class OverzichtRoutes implements RouteListener{
     @FXML
     private void initialize() throws SQLException, IOException {
         // Voeg inhoud toe aan de ScrollPane nadat de pagina is geladen
-        APPRoutes.SQLRoutes();
-        APPRoutes.SQLUnAssignedLeveringen();
 
-        APPRoutes.MakeRoute();
         routeList = APPRoutes.getRoutes();
         leveringList = APPRoutes.getUnAssignedLevering();
 
