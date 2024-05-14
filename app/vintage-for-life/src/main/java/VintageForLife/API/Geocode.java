@@ -66,7 +66,7 @@ public class Geocode {
             JSONArray hits = responseObject.getJSONArray("hits");
             JSONObject point = hits.getJSONObject(0).getJSONObject("point");
 
-            gl.setLonLan(point.getBigDecimal("lat").toString(), point.getBigDecimal("lng").toString());
+            gl.setLonLan(point.getDouble("lng"), point.getDouble("lat"));
             return gl;
         } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);

@@ -3,13 +3,19 @@ package VintageForLife.DB;
 
 public class GraphhopperLocatie implements DBobject{
     private DBadres adres;
-    private String lon;
-    private String lat;
+    private double lon;
+    private double lat;
     private String id;
     private String naam;
 
 
-    public GraphhopperLocatie(DBadres adres, String lon, String lat, String id) {
+    public GraphhopperLocatie(double lon, double lat, String id) {
+        this.lon = lon;
+        this.lat = lat;
+        this.id = id;
+    }
+
+    public GraphhopperLocatie(DBadres adres, double lon, double lat, String id) {
         this.adres = adres;
         this.lon = lon;
         this.lat = lat;
@@ -17,8 +23,8 @@ public class GraphhopperLocatie implements DBobject{
     }
     public GraphhopperLocatie(DBadres adres, String id, String naam) {
         this.adres = adres;
-        this.lon = "";
-        this.lat = "";
+        this.lon = 0;
+        this.lat = 0;
         this.id = id;
         this.naam = naam;
     }
@@ -43,7 +49,7 @@ public class GraphhopperLocatie implements DBobject{
     }
 
 
-    public void setLonLan (String lon, String lat) {
+    public void setLonLan (double lon, double lat) {
         this.lon = lon;
         this.lat = lat;
     }
@@ -53,11 +59,11 @@ public class GraphhopperLocatie implements DBobject{
         return adres;
     }
 
-    public String getLon()
+    public double getLon()
     {
         return lon;
     }
-    public String getLat()
+    public double getLat()
     {
         return lat;
     }
