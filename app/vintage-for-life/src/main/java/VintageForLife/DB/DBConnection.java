@@ -119,7 +119,7 @@ public class DBConnection {
         List<DBretour> retouren = new ArrayList<>();
         while (resultSet.next()) {
             String id = resultSet.getString("id");
-            String bestelling_id = resultSet.getString("klant_id");
+            String bestelling_id = resultSet.getString("bestelling_id");
             String status = resultSet.getString("status");
             String reden = resultSet.getString("reden");
             String opmerking = resultSet.getString("opmerking");
@@ -141,7 +141,7 @@ public class DBConnection {
     public static DBroute getSQLDBRetour(DBroute route) throws SQLException {
 
         String id = route.getId();
-        String sql = "SELECT * FROM retour inner join retour_route lr on retour.id = lr.id where route_id = ?";
+        String sql = "SELECT * FROM retour inner join retour_route lr on retour.id = lr.retour_id where route_id = ?";
         PreparedStatement pstmt = connection.prepareStatement(sql);
         pstmt.setString(1, id);
         ResultSet resultSet = pstmt.executeQuery();
@@ -149,7 +149,7 @@ public class DBConnection {
 
         while (resultSet.next()) {
             id = resultSet.getString("id");
-            String bestelling_id = resultSet.getString("klant_id");
+            String bestelling_id = resultSet.getString("bestelling_id");
             String status = resultSet.getString("status");
             String reden = resultSet.getString("reden");
             String opmerking = resultSet.getString("opmerking");
@@ -255,46 +255,52 @@ public class DBConnection {
 
         id = route.getId();
 
-        // Update levering routes
-        String insertLeveringSql = "INSERT INTO levering_route (route_id, levering_id) VALUES (?, ?) ON DUPLICATE KEY UPDATE route_id = VALUES(route_id), levering_id = VALUES(levering_id)";
-        try (PreparedStatement insertLeveringStmt = connection.prepareStatement(insertLeveringSql)) {
-            for (DBlevering levering : route.getLeveringen()) {
-                insertLeveringStmt.setString(1, id);
-                insertLeveringStmt.setString(2, levering.getId());
-                insertLeveringStmt.executeUpdate();
+        if (!route.getLeveringen().isEmpty()) {
+            // Update levering routes
+            String insertLeveringSql = "INSERT INTO levering_route (route_id, levering_id) VALUES (?, ?) ON DUPLICATE KEY UPDATE route_id = VALUES(route_id), levering_id = VALUES(levering_id)";
+            try (PreparedStatement insertLeveringStmt = connection.prepareStatement(insertLeveringSql)) {
+                for (DBlevering levering : route.getLeveringen()) {
+                    insertLeveringStmt.setString(1, id);
+                    insertLeveringStmt.setString(2, levering.getId());
+                    insertLeveringStmt.executeUpdate();
+                }
             }
+
+            // Verwijder levering routes die niet meer in de lijst staan
+            String deleteLeveringSql = "DELETE FROM levering_route WHERE route_id = ? AND levering_id NOT IN (" + String.join(",", Collections.nCopies(route.getLeveringen().size(), "?")) + ")";
+            try (PreparedStatement deleteLeveringStmt = connection.prepareStatement(deleteLeveringSql)) {
+                deleteLeveringStmt.setString(1, id);
+                int parameterIndex = 2;
+                for (DBlevering levering : route.getLeveringen()) {
+                    deleteLeveringStmt.setString(parameterIndex++, levering.getId());
+                }
+                deleteLeveringStmt.executeUpdate();
+            }
+
         }
 
-        // Update retour routes
-        String insertRetourSql = "INSERT INTO retour_route (route_id, retour_id) VALUES (?, ?) ON DUPLICATE KEY UPDATE route_id = VALUES(route_id), retour_id = VALUES(retour_id)";
-        try (PreparedStatement insertRetourStmt = connection.prepareStatement(insertRetourSql)) {
-            for (DBretour retour : route.getRetouren()) {
-                insertRetourStmt.setString(1, id);
-                insertRetourStmt.setString(2, retour.getId());
-                insertRetourStmt.executeUpdate();
-            }
-        }
+        if (!route.getRetouren().isEmpty()) {
 
-        // Verwijder levering routes die niet meer in de lijst staan
-        String deleteLeveringSql = "DELETE FROM levering_route WHERE route_id = ? AND levering_id NOT IN (" + String.join(",", Collections.nCopies(route.getLeveringen().size(), "?")) + ")";
-        try (PreparedStatement deleteLeveringStmt = connection.prepareStatement(deleteLeveringSql)) {
-            deleteLeveringStmt.setString(1, id);
-            int parameterIndex = 2;
-            for (DBlevering levering : route.getLeveringen()) {
-                deleteLeveringStmt.setString(parameterIndex++, levering.getId());
+            // Update retour routes
+            String insertRetourSql = "INSERT INTO retour_route (route_id, retour_id) VALUES (?, ?) ON DUPLICATE KEY UPDATE route_id = VALUES(route_id), retour_id = VALUES(retour_id)";
+            try (PreparedStatement insertRetourStmt = connection.prepareStatement(insertRetourSql)) {
+                for (DBretour retour : route.getRetouren()) {
+                    insertRetourStmt.setString(1, id);
+                    insertRetourStmt.setString(2, retour.getId());
+                    insertRetourStmt.executeUpdate();
+                }
             }
-            deleteLeveringStmt.executeUpdate();
-        }
 
-         // Verwijder retour routes die niet meer in de lijst staan
-        String deleteRetourSql = "DELETE FROM retour_route WHERE route_id = ? AND retour_id NOT IN (" + String.join(",", Collections.nCopies(route.getRetouren().size(), "?")) + ")";
-        try (PreparedStatement deleteRetourStmt = connection.prepareStatement(deleteRetourSql)) {
-            deleteRetourStmt.setString(1, id);
-            int parameterIndex = 2;
-            for (DBretour retour : route.getRetouren()) {
-                deleteRetourStmt.setString(parameterIndex++, retour.getId());
+            // Verwijder retour routes die niet meer in de lijst staan
+            String deleteRetourSql = "DELETE FROM retour_route WHERE route_id = ? AND retour_id NOT IN (" + String.join(",", Collections.nCopies(route.getRetouren().size(), "?")) + ")";
+            try (PreparedStatement deleteRetourStmt = connection.prepareStatement(deleteRetourSql)) {
+                deleteRetourStmt.setString(1, id);
+                int parameterIndex = 2;
+                for (DBretour retour : route.getRetouren()) {
+                    deleteRetourStmt.setString(parameterIndex++, retour.getId());
+                }
+                deleteRetourStmt.executeUpdate();
             }
-            deleteRetourStmt.executeUpdate();
         }
 
 

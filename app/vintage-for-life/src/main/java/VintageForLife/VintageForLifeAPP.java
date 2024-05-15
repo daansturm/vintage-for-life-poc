@@ -23,6 +23,7 @@ public class VintageForLifeAPP extends Application {
         connection = DBConnection.getConnection();
         APPRoutes.SQLRoutes();
         APPRoutes.SQLUnAssignedLeveringen();
+        APPRoutes.SQLUnAssignedRetour();
 
         APPRoutes.MakeRoute();
 

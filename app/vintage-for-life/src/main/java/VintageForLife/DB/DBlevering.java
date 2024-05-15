@@ -54,7 +54,10 @@ public class DBlevering implements DBobject{
     public DBadres getFirstAdres()
     {
         if (bestellingen.size() == 0)
-            return null;
+            return new DBadres("NULL","NULL","NULL","NULL","NULL");
+
+        if (bestellingen.get(0).getAdres() == null)
+            return new DBadres("NULL","NULL","NULL","NULL","NULL");
 
         return bestellingen.get(0).getAdres();
     }

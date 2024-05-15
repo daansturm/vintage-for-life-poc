@@ -33,7 +33,10 @@ public class Geocode {
 
     public GraphhopperLocatie convertAdres(GraphhopperLocatie gl) {
 
-
+        if(gl.getAdres().getStraat().equals("NULL"))
+        {
+            return gl;
+        }
         System.out.println(gl.getId() + " " + gl.getNaam() + " " + gl.getAdres().getStraat());
 
         String apiUrl = "https://graphhopper.com/api/1/geocode";
