@@ -38,7 +38,7 @@ public class APPRoutes {
             route.setBeginadres(DBConnection.getSQLBeginEindAdress(1));
             route.setEindadres(DBConnection.getSQLBeginEindAdress(1));
             route.MaakGraphhopperList();
-            route.Print();
+            //route.Print();
         }
 
 
@@ -54,7 +54,7 @@ public class APPRoutes {
                 bestelling.setBestelling(DBConnection.getSQLDBproduct(bestelling));
             }
 
-            levering.Print();
+            //levering.Print();
         }
     }
 
@@ -98,7 +98,7 @@ public class APPRoutes {
         route.setEindadres(DBConnection.getSQLBeginEindAdress(1));
 
         route.MaakGraphhopperList();
-        route.Print();
+        //route.Print();
 
         route.setRoute(DBConnection.setSQLRoute(route));
 
