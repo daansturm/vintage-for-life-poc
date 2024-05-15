@@ -1,5 +1,5 @@
 CREATE DATABASE IF NOT EXISTS vintage_for_life_poc;
- 
+
 USE vintage_for_life_poc;
 
 
@@ -166,10 +166,12 @@ insert into product(id,naam, beschrijving, afmeting, gewicht) Values (2,'Vintage
 insert into product(id,naam, beschrijving, afmeting, gewicht) Values (3,'Vintage tafel lamp', 'Mooie klassieke bureaulamp / tafellamp. Een tijdloos model vervaardigd uit bronskleurig metaal en groen glas.', '30x20x40', '2kg'   );
 insert into product(id,naam, beschrijving, afmeting, gewicht) Values (4,'Vintage tafel', 'De Eettafel / Bartafel Crank 90 Warm Brown is een prachtig stuk meubilair dat zowel functioneel als esthetisch aantrekkelijk is.', '80x150x150', '50kg'   );
 
+
 insert into bestelling(id, klant_id, status, installatieservice, straat, huisnummer, plaats, postcode, land) Values (1,1,'Betaald',false, 'Populierenstraat', '18', 'Kampen', '8266 BK', 'Nederland');
 insert into bestelling(id, klant_id, status, installatieservice, straat, huisnummer, plaats, postcode, land) Values (2,2,'Betaald',false, 'De marke', '4', 'Lemelerveld', '8152 HM', 'Nederland');
 insert into bestelling(id, klant_id, status, installatieservice, straat, huisnummer, plaats, postcode, land) Values (3,3,'Betaald',false, 'Grotestraat', '24D', 'Raalte', '8102 CE', 'Nederland');
 insert into bestelling(id, klant_id, status, installatieservice, straat, huisnummer, plaats, postcode, land) Values (4,4,'Betaald',false, 'Dikkersstraat', '1', 'Ommen', '7731 DH', 'Nederland');
+insert into bestelling(id, klant_id, status, installatieservice, straat, huisnummer, plaats, postcode, land) Values (5,4,'Betaald',false, 'Voorstraat', '156', 'Nederhorst Den Berg', '1394 CT', 'Nederland');
 insert into bestelling(id, klant_id, status, installatieservice, straat, huisnummer, plaats, postcode, land) Values (6,1,'Betaald',false, 'Star Numanstraat', '34', 'Groningen', '9714 JH', 'Nederland');
 insert into bestelling(id, klant_id, status, installatieservice, straat, huisnummer, plaats, postcode, land) Values (7,2,'Betaald',false, 'Bilderdijkhof', '12', 'Uithoorn', '1422 DV', 'Nederland');
 insert into bestelling(id, klant_id, status, installatieservice, straat, huisnummer, plaats, postcode, land) Values (8,3,'Betaald',false, 'Uelserweg', '180', 'Tubbergen', '7651 KV', 'Nederland');
@@ -199,9 +201,10 @@ insert into bestelling_levering( id, bestelling_id,levering_id) Values (1, 1,1);
 insert into bestelling_levering( id, bestelling_id,levering_id) Values (2, 2,2);
 insert into bestelling_levering( id, bestelling_id,levering_id) Values (3, 3,3);
 insert into bestelling_levering( id, bestelling_id,levering_id) Values (4, 4,4);
+insert into bestelling_levering( id, bestelling_id,levering_id) Values (5, 5,5);
 insert into bestelling_levering( id, bestelling_id,levering_id) Values (6, 6,6);
 insert into bestelling_levering( id, bestelling_id,levering_id) Values (7, 7,7);
-insert into bestelling_levering( id, bestelling_id,levering_id) Values (8, 7,7);
+insert into bestelling_levering( id, bestelling_id,levering_id) Values (8, 8,8);
 
 
 
