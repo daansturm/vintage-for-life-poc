@@ -68,7 +68,7 @@ public class DBroute implements DBobject{
         boolean correct = checkGrapphopperList(prio_index);
         String index;
 
-        if(correct) {
+        /*if(correct) {
 
             locaties.add(gc.convertAdres(new GraphhopperLocatie(beginadres, "b_1", "Begin Adres")));
             for (String prio : prio_index) {
@@ -99,7 +99,7 @@ public class DBroute implements DBobject{
             locaties.add(new GraphhopperLocatie(eindadres, "e_1", "Eind Adres"));
         }
         else
-        {
+        {*/
             locaties.add(new GraphhopperLocatie(beginadres, "b_1", "Begin Adres"));
 
             for(DBlevering levering : leveringen)
@@ -121,7 +121,7 @@ public class DBroute implements DBobject{
                 System.out.println(locatie.getId());
             }
 
-        }
+        //}
 
 
     }
@@ -131,6 +131,8 @@ public class DBroute implements DBobject{
     {
         int count = 0;
         int item_count = leveringen.size() + retouren.size();
+
+
         String index;
         for(String prio :  prio_index)
         {
@@ -146,6 +148,7 @@ public class DBroute implements DBobject{
                         break;
                     }
                 }
+                System.out.println(gevonden);
                 if(!gevonden)
                     return false;
 
@@ -155,17 +158,22 @@ public class DBroute implements DBobject{
                 count++;
 
                 boolean gevonden = false;
-                for(DBlevering levering : leveringen)
+                for(DBretour retour : retouren)
                 {
-                    if(Objects.equals(levering.getId(), index)) {
+                    if(Objects.equals(retour.getId(), index)) {
                         gevonden = true;
                         break;
                     }
                 }
+                System.out.println(gevonden);
                 if(!gevonden)
                     return false;
             }
         }
+
+        System.out.println(item_count);
+        System.out.println(count);
+
 
         if(count != item_count)
             return false;

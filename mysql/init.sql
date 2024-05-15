@@ -170,24 +170,38 @@ insert into bestelling(id, klant_id, status, installatieservice, straat, huisnum
 insert into bestelling(id, klant_id, status, installatieservice, straat, huisnummer, plaats, postcode, land) Values (2,2,'Betaald',false, 'De marke', '4', 'Lemelerveld', '8152 HM', 'Nederland');
 insert into bestelling(id, klant_id, status, installatieservice, straat, huisnummer, plaats, postcode, land) Values (3,3,'Betaald',false, 'Grotestraat', '24D', 'Raalte', '8102 CE', 'Nederland');
 insert into bestelling(id, klant_id, status, installatieservice, straat, huisnummer, plaats, postcode, land) Values (4,4,'Betaald',false, 'Dikkersstraat', '1', 'Ommen', '7731 DH', 'Nederland');
-insert into bestelling(id, klant_id, status, installatieservice, straat, huisnummer, plaats, postcode, land) Values (5,5,'Betaald',false, 'Jupiterweg', '25', 'Donten', '8251 AW', 'Nederland');
+insert into bestelling(id, klant_id, status, installatieservice, straat, huisnummer, plaats, postcode, land) Values (6,1,'Betaald',false, 'Star Numanstraat', '34', 'Groningen', '9714 JH', 'Nederland');
+insert into bestelling(id, klant_id, status, installatieservice, straat, huisnummer, plaats, postcode, land) Values (7,2,'Betaald',false, 'Bilderdijkhof', '12', 'Uithoorn', '1422 DV', 'Nederland');
+insert into bestelling(id, klant_id, status, installatieservice, straat, huisnummer, plaats, postcode, land) Values (8,3,'Betaald',false, 'Uelserweg', '180', 'Tubbergen', '7651 KV', 'Nederland');
+
 
 insert into bestelling_regels(id, product_id, bestelling_id, aantal) Values(1, 3, 1, 2);
 insert into bestelling_regels(id, product_id, bestelling_id, aantal) Values(2, 1, 2, 1);
 insert into bestelling_regels(id, product_id, bestelling_id, aantal) Values(3, 2, 3, 1);
 insert into bestelling_regels(id, product_id, bestelling_id, aantal) Values(4, 2, 4, 2);
 insert into bestelling_regels(id, product_id, bestelling_id, aantal) Values(5, 4, 5, 1);
+insert into bestelling_regels(id, product_id, bestelling_id, aantal) Values(6, 2, 6, 1);
+insert into bestelling_regels(id, product_id, bestelling_id, aantal) Values(7, 3, 7, 1);
+insert into bestelling_regels(id, product_id, bestelling_id, aantal) Values(8, 1, 8, 1);
 
 insert into levering (id, status, bezorgdatum) Values(1,'nieuw', '2024-05-07 08:34:09' );
 insert into levering (id, status, bezorgdatum) Values(2,'nieuw', '2024-05-07 09:34:09' );
 insert into levering (id, status, bezorgdatum) Values(3,'nieuw', '2024-05-07 10:34:09' );
 insert into levering (id, status, bezorgdatum) Values(4,'nieuw', '2024-05-07 11:34:09' );
 insert into levering (id, status, bezorgdatum) Values(5,'nieuw', '2024-05-07 12:34:09' );
+insert into levering (id, status, bezorgdatum) Values(6,'nieuw', '2024-05-08 12:34:09' );
+insert into levering (id, status, bezorgdatum) Values(7,'nieuw', '2024-05-08 12:34:09' );
+insert into levering (id, status, bezorgdatum) Values(8,'nieuw', '2024-05-09 12:34:09' );
+
+insert into retour(id, bestelling_id, status, reden, opmerking, retourdatum, straat, huisnummer, plaats, postcode, land ) Values(1, 1, 'nieuw', 'beschadigd', 'pootje afgebroken tijdens levering', '2024-05-09 12:34:09', 'Populierenstraat', '18', 'Kampen', '8266 BK', 'Nederland' );
 
 insert into bestelling_levering( id, bestelling_id,levering_id) Values (1, 1,1);
 insert into bestelling_levering( id, bestelling_id,levering_id) Values (2, 2,2);
 insert into bestelling_levering( id, bestelling_id,levering_id) Values (3, 3,3);
 insert into bestelling_levering( id, bestelling_id,levering_id) Values (4, 4,4);
-insert into bestelling_levering( id, bestelling_id,levering_id) Values (5, 5,5);
+insert into bestelling_levering( id, bestelling_id,levering_id) Values (6, 6,6);
+insert into bestelling_levering( id, bestelling_id,levering_id) Values (7, 7,7);
+insert into bestelling_levering( id, bestelling_id,levering_id) Values (8, 7,7);
+
 
 

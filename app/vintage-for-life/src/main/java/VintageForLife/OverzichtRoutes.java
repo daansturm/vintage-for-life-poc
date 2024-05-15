@@ -28,11 +28,11 @@ public class OverzichtRoutes implements RouteListener{
     private SceneController Scene = new SceneController();
 
     @FXML
-    private ScrollPane Leveringen = new ScrollPane();
+    private ScrollPane Leveringen;
     @FXML
-    private ScrollPane Retouren = new ScrollPane();;
+    private ScrollPane Retouren;
     @FXML
-    private ScrollPane Routes = new ScrollPane();
+    private ScrollPane Routes ;
 
 
     private Stage stage;
@@ -48,6 +48,8 @@ public class OverzichtRoutes implements RouteListener{
     List<VBox> routeRetour = new ArrayList<>();
 
     List<Node> Route = new ArrayList<>();
+    List<Node> Retour = new ArrayList<>();
+    List<Node> Levering = new ArrayList<>();
 
     public OverzichtRoutes() throws IOException {
 
@@ -66,13 +68,17 @@ public class OverzichtRoutes implements RouteListener{
             route.Print();
         }
 
+        System.out.println("doe het nog een keer");
+
         addRoutes();
         addLeveringen();
+        addRetour();
     }
 
 
     private void addRoutes() throws IOException {
         int id = 0;
+        Route.clear();
         for (DBroute route : routeList) {
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("RouteInfo.fxml"));
@@ -100,11 +106,10 @@ public class OverzichtRoutes implements RouteListener{
 
     private void addLeveringen() throws SQLException, IOException {
 
-
-
+        routeLevering.clear();
         for(DBroute route : routeList)
         {
-            List<Node> Levering = new ArrayList<>();
+            Levering.clear();
             VBox _routeLevering = new VBox();
             int i = 0;
             for(DBlevering levering : route.getLeveringen())
@@ -134,21 +139,17 @@ public class OverzichtRoutes implements RouteListener{
             routeLevering.get(0).prefWidthProperty().bind(Leveringen.widthProperty());
             Leveringen.setContent(routeLevering.get(0));
         }
-        //VBox items = new VBox(Leveringen.getWidth());
-        //items.getChildren().addAll(Levering);
-        //items.prefWidthProperty().bind(Leveringen.widthProperty());
-        //Leveringen.setContent(items);
 
 
     }
 
     private void addRetour() throws SQLException, IOException {
-
-
+        routeRetour.clear();
+        Retour.clear();
 
         for(DBroute route : routeList)
         {
-            List<Node> Retour = new ArrayList<>();
+
             VBox _routeRetour = new VBox();
             int i = 0;
             for(DBretour retour : route.getRetouren())
@@ -161,7 +162,7 @@ public class OverzichtRoutes implements RouteListener{
 
                 DBadres adres = retour.getAdres();
                 LeveringRetour controller = loader.getController();
-                controller.getLeveringLabel().setText("Levering: " + i);
+                controller.getLeveringLabel().setText("Retour: " + i);
                 controller.getPlaatstLabel().setText("Plaats: " + adres.getPlaats() );
                 controller.getAdrestLabel().setText("adres: " + adres.getStraat() + " " +adres.getHuisnummer());
                 controller.getPostcodetxt().setText("Postcode: " + adres.getPostcode());
@@ -205,7 +206,7 @@ public class OverzichtRoutes implements RouteListener{
 
         if(!routeRetour.isEmpty() && ID < routeRetour.size()) {
             routeRetour.get(ID).prefWidthProperty().bind(Retouren.widthProperty());
-            Retouren.setContent(routeLevering.get(ID));
+            Retouren.setContent(routeRetour.get(ID));
         }
     }
 

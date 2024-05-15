@@ -46,8 +46,12 @@ public class DBretour implements DBobject {
 
     public DBadres getAdres()
     {
-        return adres;
+        if (adres != null)
+            return adres;
+        else
+            return adres = new DBadres("NULL", "NULL", "NULL", "NULL", "NULL");
     }
+
 
     public LocalDateTime getRetourdatum()
     {

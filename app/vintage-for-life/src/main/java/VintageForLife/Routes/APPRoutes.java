@@ -37,8 +37,8 @@ public class APPRoutes {
 
             route.setBeginadres(DBConnection.getSQLBeginEindAdress(1));
             route.setEindadres(DBConnection.getSQLBeginEindAdress(1));
-            route.Print();
             route.MaakGraphhopperList();
+            route.Print();
         }
 
 
