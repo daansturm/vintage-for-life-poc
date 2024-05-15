@@ -1,6 +1,7 @@
 package VintageForLife.DB;
 
 import VintageForLife.API.Geocode;
+import VintageForLife.API.RouterV2;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -99,18 +100,21 @@ public class DBroute implements DBobject{
             locaties.add(new GraphhopperLocatie(eindadres, "e_1", "Eind Adres"));
         }
         else
-        {*/
-            locaties.add(new GraphhopperLocatie(beginadres, "b_1", "Begin Adres"));
+
+            locaties.add(gc.convertAdres(new GraphhopperLocatie(beginadres, "b_1", "Begin Adres")));
 
             for(DBlevering levering : leveringen)
-                locaties.add(new GraphhopperLocatie(levering, "l_" + levering.getId(), "Levering: " + levering.getId()));
+                locaties.add(gc.convertAdres(new GraphhopperLocatie(levering, "l_" + levering.getId(), "Levering: " + levering.getId())));
             for(DBretour retour : retouren)
-                locaties.add(new GraphhopperLocatie(retour, "r_" + retour.getId(), "Retour: " + retour.getId()));
+                locaties.add(gc.convertAdres(new GraphhopperLocatie(retour, "r_" + retour.getId(), "Retour: " + retour.getId())));
 
-            locaties.add(new GraphhopperLocatie(eindadres, "e_1", "Eind Adres"));
+            locaties.add(gc.convertAdres(new GraphhopperLocatie(eindadres, "e_1", "Eind Adres")));
 
 
-            // TODO DAAN grapphopper call om VRP opnieuw uit te voeren, alleen locaties die goed zijn mee terug geven
+            List<GraphhopperLocatie> routerV2 = new RouterV2().getRoute("100213.12420", false, locaties);
+
+            locaties = routerV2;
+
 
             maakPriotisering(locaties);
 
