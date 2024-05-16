@@ -103,17 +103,12 @@ public class DBroute implements DBobject{
         {
          */
 
-            //locaties.add(gc.convertAdres(new GraphhopperLocatie(beginadres, "b_1", "Begin Adres")));
-
             for(DBlevering levering : leveringen)
                 locaties.add(gc.convertAdres(new GraphhopperLocatie(levering, "l_" + levering.getId(), "Levering: " + levering.getId())));
             for(DBretour retour : retouren)
                 locaties.add(gc.convertAdres(new GraphhopperLocatie(retour, "r_" + retour.getId(), "Retour: " + retour.getId())));
 
-            //locaties.add(gc.convertAdres(new GraphhopperLocatie(eindadres, "e_1", "Eind Adres")));
-
-
-            List<GraphhopperLocatie> routerV2 = new RouterV2().getRoute("100213.12420", false, locaties);
+            List<GraphhopperLocatie> routerV2 = new RouterV2().getRoute(gc.convertAdres(new GraphhopperLocatie(beginadres, "b_1", "Begin Adres")), false, locaties);
 
             locaties = routerV2;
 

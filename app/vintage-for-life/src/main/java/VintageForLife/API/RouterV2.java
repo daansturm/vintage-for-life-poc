@@ -17,12 +17,12 @@ public class RouterV2 {
     public RouterV2() {
     }
 
-    public List<GraphhopperLocatie> getRoute(String startLocation, boolean enabledPoints, List<GraphhopperLocatie> locations) {
+    public List<GraphhopperLocatie> getRoute(GraphhopperLocatie startLocation, boolean enabledPoints, List<GraphhopperLocatie> locations) {
         String apiUrl = "https://graphhopper.com/api/1/vrp?key=52f77ee9-9f8f-4c94-92ca-80cdbdfb3f44";
 
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(apiUrl))
-                .POST(HttpRequest.BodyPublishers.ofString(getRouteConfig(locations, enabledPoints).toString()))
+                .POST(HttpRequest.BodyPublishers.ofString(getRouteConfig(startLocation, locations, enabledPoints).toString()))
                 .header("Content-Type", "application/json")
                 .build();
 
@@ -39,7 +39,12 @@ public class RouterV2 {
 
         JSONObject responseObject = new JSONObject(jsonResponse);
         JSONArray routesArray = responseObject.getJSONObject("solution").getJSONArray("routes");
-        JSONObject routeObject = routesArray.getJSONObject(0); // Assuming only one route for simplicity
+
+        if (routesArray.length() == 0) {
+            return route;
+        }
+
+        JSONObject routeObject = routesArray.getJSONObject(0);
 
         JSONArray activitiesArray = routeObject.getJSONArray("activities");
 
@@ -50,7 +55,6 @@ public class RouterV2 {
             double lon = activity.getJSONObject("address").getDouble("lon");
             double lat = activity.getJSONObject("address").getDouble("lat");
 
-            // Assuming the time is in seconds since epoch
             long arrivalTime = activity.getLong("arr_time");
 
             GraphhopperLocatie locatie = new GraphhopperLocatie(lon, lat, locationId);
@@ -60,11 +64,11 @@ public class RouterV2 {
         return route;
     }
 
-    public static JSONObject getRouteConfig(List<GraphhopperLocatie> locations, boolean enabledPoints) {
+    public static JSONObject getRouteConfig(GraphhopperLocatie startLocation, List<GraphhopperLocatie> locations, boolean enabledPoints) {
         JSONObject startAddress = new JSONObject();
-        startAddress.put("location_id", "zwolle");
-        startAddress.put("lon", 6.08091);
-        startAddress.put("lat", 52.50003);
+        startAddress.put("location_id", "start");
+        startAddress.put("lon", startLocation.getLon());
+        startAddress.put("lat", startLocation.getLat());
 
         JSONArray services = new JSONArray();
         for (GraphhopperLocatie location : locations) {
