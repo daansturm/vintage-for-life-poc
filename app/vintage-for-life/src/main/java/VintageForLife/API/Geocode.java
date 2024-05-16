@@ -37,7 +37,6 @@ public class Geocode {
         {
             return gl;
         }
-        System.out.println(gl.getId() + " " + gl.getNaam() + " " + gl.getAdres().getStraat());
 
         String apiUrl = "https://graphhopper.com/api/1/geocode";
         String key = "b02f1fd2-0e8d-41c2-acd5-129bed768b98";

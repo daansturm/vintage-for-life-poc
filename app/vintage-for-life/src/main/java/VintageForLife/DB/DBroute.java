@@ -64,7 +64,7 @@ public class DBroute implements DBobject{
 
     public void MaakGraphhopperList()
     {
-        System.out.println();
+
         prio_index = Arrays.asList(priotisering.split(":"));
         boolean correct = checkGrapphopperList(prio_index);
         String index;
@@ -116,11 +116,6 @@ public class DBroute implements DBobject{
             maakPriotisering(locaties);
 
 
-            for(GraphhopperLocatie locatie : locaties)
-            {
-                System.out.println(locatie.getAdres().getPlaats());
-                System.out.println(locatie.getId());
-            }
 
         //}
 
@@ -149,7 +144,7 @@ public class DBroute implements DBobject{
                         break;
                     }
                 }
-                System.out.println(gevonden);
+
                 if(!gevonden)
                     return false;
 
@@ -166,14 +161,13 @@ public class DBroute implements DBobject{
                         break;
                     }
                 }
-                System.out.println(gevonden);
+
                 if(!gevonden)
                     return false;
             }
         }
 
-        System.out.println(item_count);
-        System.out.println(count);
+
 
 
         if(count != item_count)
