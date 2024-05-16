@@ -18,6 +18,10 @@ public class DBlevering implements DBobject{
     private float lat;
     private List<DBbestelling> bestellingen;
 
+    public DBlevering()
+    {
+        this(-1, "nieuw", LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+    }
 
     public DBlevering(int id, String status, String bezorgdatum)
     {
@@ -27,6 +31,11 @@ public class DBlevering implements DBobject{
         this.bezorgdatum = LocalDateTime.parse(bezorgdatum, format);
         this.bestellingen = new ArrayList<>();
 
+    }
+
+    public String getLevering_info()
+    {
+        return this.bestellingen.get(0).getAdres().getPlaats() + " <> " + this.bestellingen.get(bestellingen.size() - 1).getAdres().getPlaats();
     }
 
 
