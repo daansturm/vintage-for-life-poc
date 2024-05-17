@@ -13,6 +13,7 @@ module VintageForLife {
     requires java.net.http;
     requires java.sql;
     requires org.json;
+    requires jbcrypt;
 
     opens VintageForLife to javafx.fxml;
     exports VintageForLife;

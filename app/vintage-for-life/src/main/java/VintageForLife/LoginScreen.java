@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import org.mindrot.jbcrypt.BCrypt;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -15,6 +16,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class LoginScreen {
+    private final String SALT = "$2a$10$abcdefghijklmnopqrstuv";
     public TextField emailTextField;
     public PasswordField passwordField;
     public Label notificationLabel;
@@ -46,15 +48,17 @@ public class LoginScreen {
     }
 
     private boolean authenticateUser(String email, String password) {
+        String hashedPassword = BCrypt.hashpw(password, this.SALT);
+
         try {
             String sql = "SELECT * FROM gebruikers WHERE email = ? AND wachtwoord = ?";
             PreparedStatement pstmt = connection.prepareStatement(sql);
             pstmt.setString(1, email);
-            pstmt.setString(2, password);
+            pstmt.setString(2, hashedPassword);
             ResultSet resultSet = pstmt.executeQuery();
 
             if (resultSet.next()) {
-                return true;
+                return BCrypt.checkpw(password, hashedPassword);
             }
         } catch (SQLException e) {
             e.printStackTrace();

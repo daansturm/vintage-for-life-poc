@@ -151,8 +151,8 @@ create table IF NOT EXISTS levering_route(
 #    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 #);*/
 
-INSERT INTO gebruikers (naam, wachtwoord, email) VALUES ('admin', 'password', 'daansturm@gmail.com');
-INSERT INTO gebruikers (naam, wachtwoord, email) VALUES ('admin', 'password', 'julianvisscher@hotmail.com');
+INSERT INTO gebruikers (naam, wachtwoord, email) VALUES ('admin', '$2a$10$abcdefghijklmnopqrstuu5Lo0g67CiD3M4RpN1BmBb4Crp5w7dbK', 'daansturm@gmail.com');
+INSERT INTO gebruikers (naam, wachtwoord, email) VALUES ('admin', '$2a$10$abcdefghijklmnopqrstuu5Lo0g67CiD3M4RpN1BmBb4Crp5w7dbK', 'julianvisscher@hotmail.com');
 
 insert into begin_eindadres(straat,huisnummer,plaats,postcode,land) Values ('Campus','2',  'Zwolle', '8017 CA', 'Nederland');
 insert into klanten (id,voornaam, tussenvoegsel, achternaam, telefoonnummer) Values (1,'Daan', '', 'Sturm', '061729324');
