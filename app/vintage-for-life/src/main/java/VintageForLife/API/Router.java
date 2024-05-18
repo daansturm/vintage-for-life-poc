@@ -1,169 +1,129 @@
 package VintageForLife.API;
 
+import VintageForLife.DB.DBadres;
+import VintageForLife.DB.DBlevering;
+import VintageForLife.DB.GraphhopperLocatie;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.io.FileWriter;
-import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-/**
- * TODO:
- * - Add route preventions.
- * - Add routes for the Geocoding API.
- */
-
 public class Router {
-    private static Router instance; // Instance of this class.
-    private final List<double[]> points = new ArrayList<>(); // List that holds all the points for a route.
-    private String profile;
 
-    /**
-     * Private constructor to prevent external instantiation.
-     */
-    private Router() {
+    public Router() {
     }
 
-    /**
-     * Method to get the current instance of the Screens.Router class. If it doesn't exist, create a new instance.
-     *
-     * @return the current instance of the Screens.Router class
-     */
-    public static Router getInstance() {
-        return instance == null ? (instance = new Router()) : instance;
-    }
-
-    /**
-     * Add a point to the route.
-     *
-     * @param latitude  the latitude of the point
-     * @param longitude the longitude of the point
-     */
-    public void addPoint(float latitude, float longitude) {
-        points.add(new double[]{latitude, longitude});
-    }
-
-    /**
-     * Add multiple points to the route.
-     *
-     * @param newPoints the list of points to add to the route
-     */
-    public void addPoints(List<double[]> newPoints) {
-        points.addAll(newPoints);
-    }
-
-    /**
-     * Get the points of the route.
-     *
-     * @return the list of points defining the route
-     */
-    public List<double[]> getPoints() {
-        return points;
-    }
-
-    /**
-     * Set the profile of the route.
-     *
-     * @param newProfile the profile of the route
-     */
-    public void setProfile(String newProfile) {
-        profile = newProfile;
-    }
-
-    /**
-     * Get the profile of the route.
-     *
-     * @return the profile of the route
-     */
-    public String getProfile() {
-        return profile;
-    }
-
-    /**
-     * Send a POST request to the API endpoint to get the route.
-     */
-    public String getRoute() {
-        String apiUrl = "http://localhost:8989/route"; // TODO: Set API URL
-        JSONObject body = new JSONObject();
-        body.put("profile", profile);
-        body.put("points", new JSONArray(points));
+    public List<GraphhopperLocatie> getRoute(boolean enabledPoints, List<GraphhopperLocatie> locations) {
+        String apiUrl = "https://graphhopper.com/api/1/route?key=52f77ee9-9f8f-4c94-92ca-80cdbdfb3f44";
 
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(apiUrl))
-                .POST(HttpRequest.BodyPublishers.ofString(body.toString()))
+                .POST(HttpRequest.BodyPublishers.ofString(getRouteConfig(locations, enabledPoints).toString()))
                 .header("Content-Type", "application/json")
                 .build();
 
         try {
             HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
-            return response.body();
-        } catch (IOException | InterruptedException e) {
+
+            if (response.statusCode() != 200) {
+                throw new RuntimeException("Failed to get route from Graphhopper API: " + response.body());
+            }
+
+            return parseCoordinatesFromResponse(response.body());
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
-    /**
-     * Get coordinates from the API and generate an HTML file.
-     */
-    public void drawRouteOnMap() {
-        JSONObject pointList = new JSONObject(getPoints());
-        JSONArray paths = pointList.getJSONArray("paths");
-        JSONObject firstPath = paths.getJSONObject(0); // Assuming you are working with the first path
-        JSONObject pointsObject = firstPath.getJSONObject("points");
-        JSONArray coordinates = pointsObject.getJSONArray("coordinates");
-        int numPoints = coordinates.length();
+    private List<GraphhopperLocatie> parseCoordinatesFromResponse(String jsonResponse) {
+        List<GraphhopperLocatie> route = new ArrayList<>();
 
-        // Create an array for the coordinates
-        double[][] coordinatesArray = new double[numPoints][2];
+        JSONObject responseObject = new JSONObject(jsonResponse);
 
-        for (int i = 0; i < numPoints; i++) {
-            JSONArray coordinate = coordinates.getJSONArray(i);
-            double latitude = coordinate.getDouble(0); // Latitude is the first value
-            double longitude = coordinate.getDouble(1); // Longitude is the second value
-            coordinatesArray[i][0] = latitude;
-            coordinatesArray[i][1] = longitude;
+        // Log the response
+        System.out.println(responseObject);
+
+        JSONArray routesArray = responseObject.getJSONObject("paths").getJSONArray("points");
+
+        if (routesArray.length() == 0) {
+            return route;
         }
 
-        // Use the coordinates to draw the map with Leaflet
-        drawMap(coordinatesArray);
-    }
+        JSONObject routeObject = routesArray.getJSONObject(0);
 
-    /**
-     * Generate a map based on the given coordinates.
-     */
-    private void drawMap(double[][] coordinates) {
-        StringBuilder contentBuilder = new StringBuilder();
-        contentBuilder.append("<html>\n");
-        contentBuilder.append("<head>\n");
-        contentBuilder.append("<title>Gerouteerde route</title>\n");
-        contentBuilder.append("<link rel=\"stylesheet\" href=\"https://unpkg.com/leaflet@1.7.1/dist/leaflet.css\" />\n");
-        contentBuilder.append("<script src=\"https://unpkg.com/leaflet@1.7.1/dist/leaflet.js\"></script>\n");
-        contentBuilder.append("</head>\n");
-        contentBuilder.append("<body>\n");
-        contentBuilder.append("<div id=\"map\" style=\"height: 600px;\"></div>\n");
-        contentBuilder.append("<script>\n");
-        contentBuilder.append("var map = L.map('map').setView([").append(coordinates[0][0]).append(", ").append(coordinates[0][1]).append("], 13);\n");
-        contentBuilder.append("L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);\n");
-        contentBuilder.append("L.polyline(").append(Arrays.deepToString(coordinates)).append(", {color: 'blue'}).addTo(map);\n");
-        contentBuilder.append("</script>\n");
-        contentBuilder.append("</body>\n");
-        contentBuilder.append("</html>\n");
+        JSONArray activitiesArray = routeObject.getJSONArray("activities");
 
-        try (FileWriter fileWriter = new FileWriter("map.html")) {
-            fileWriter.write(contentBuilder.toString());
-        } catch (IOException e) {
-            System.err.println("Fout bij schrijven naar het bestand: " + e.getMessage());
+        for (int i = 0; i < activitiesArray.length(); i++) {
+            JSONObject activity = activitiesArray.getJSONObject(i);
+
+            String locationId = activity.getString("location_id");
+            double lon = activity.getJSONObject("address").getDouble("lon");
+            double lat = activity.getJSONObject("address").getDouble("lat");
+
+            route.add(new GraphhopperLocatie(lon, lat, locationId));
         }
+
+        return route;
     }
 
+    public static JSONObject getRouteConfig(List<GraphhopperLocatie> locations, boolean enabledPoints) {
+//        JSONObject startAddress = new JSONObject();
+//        startAddress.put("location_id", "start");
+//        startAddress.put("lon", startLocation.getLon());
+//        startAddress.put("lat", startLocation.getLat());
 
+        JSONArray points = new JSONArray();
+        for (GraphhopperLocatie location : locations) {
 
+            JSONArray coordinates = new JSONArray();
+            coordinates.put(location.getLon());
+            coordinates.put(location.getLat());
 
+            points.put(coordinates);
+        }
+
+        JSONObject vehicle = new JSONObject();
+        vehicle.put("vehicle_id", "vehicle-1");
+        vehicle.put("type_id", "small_truck1");
+//        vehicle.put("start_address", startAddress);
+        vehicle.put("earliest_start", 1715227200);
+        vehicle.put("latest_end", 1715256000);
+        vehicle.put("max_jobs", 10);
+        vehicle.put("return_to_depot", true);
+
+        JSONArray vehicles = new JSONArray();
+        vehicles.put(vehicle);
+
+        JSONObject vehicleType = new JSONObject();
+        vehicleType.put("type_id", "small_truck1");
+        vehicleType.put("capacity", new JSONArray().put(10));
+        vehicleType.put("profile", "small_truck");
+
+        JSONArray vehicleTypes = new JSONArray();
+        vehicleTypes.put(vehicleType);
+
+        JSONArray objectives = new JSONArray();
+        objectives.put(new JSONObject().put("type", "min").put("value", "vehicles"));
+        objectives.put(new JSONObject().put("type", "min").put("value", "completion_time"));
+
+        JSONObject routingConfig = new JSONObject();
+        routingConfig.put("calc_points", enabledPoints);
+        routingConfig.put("return_snapped_waypoints", enabledPoints);
+
+        JSONObject configuration = new JSONObject();
+        configuration.put("routing", routingConfig);
+
+        JSONObject routeConfig = new JSONObject();
+        routeConfig.put("vehicles", vehicles);
+        routeConfig.put("vehicle_types", vehicleTypes);
+        routeConfig.put("objectives", objectives);
+        routeConfig.put("configuration", configuration);
+
+        return routeConfig;
+    }
 }
-
