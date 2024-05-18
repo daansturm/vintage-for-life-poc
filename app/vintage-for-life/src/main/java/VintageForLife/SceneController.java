@@ -9,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 public class SceneController {
     static private Stage stage;
@@ -31,7 +32,7 @@ public class SceneController {
         stage.show();
     }
 
-    public void ShowRouteVisualisatie(ActionEvent event, DBroute route, int ID) throws IOException {
+    public void ShowRouteVisualisatie(ActionEvent event, DBroute route, int ID) throws SQLException, IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("RouteVisualisatie.fxml"));
         root = loader.load();
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();

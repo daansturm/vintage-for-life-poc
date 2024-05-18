@@ -60,7 +60,7 @@
                         <Label fx:id="route_infotxt" text="Route Info" GridPane.rowIndex="1" />
                      </children>
                   </GridPane>
-                  <ScrollPane fx:id="SPlocaties" layoutX="54.0" layoutY="114.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="62.0">
+                  <ScrollPane fx:id="Routes" layoutX="54.0" layoutY="114.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="62.0">
                     <content>
                       <AnchorPane />
                     </content>
