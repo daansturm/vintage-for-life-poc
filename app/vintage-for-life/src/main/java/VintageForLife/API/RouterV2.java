@@ -17,7 +17,7 @@ public class RouterV2 {
     public RouterV2() {
     }
 
-    public List<GraphhopperLocatie> getRoute(GraphhopperLocatie startLocation, boolean enabledPoints, List<GraphhopperLocatie> locations) {
+    public List<GraphhopperLocatie> getRouteVrp(GraphhopperLocatie startLocation, boolean enabledPoints, List<GraphhopperLocatie> locations) {
         String apiUrl = "https://graphhopper.com/api/1/vrp?key=52f77ee9-9f8f-4c94-92ca-80cdbdfb3f44";
 
         HttpRequest request = HttpRequest.newBuilder()
@@ -28,13 +28,30 @@ public class RouterV2 {
 
         try {
             HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
-            return parseRouteResponse(response.body());
+
+            if (response.statusCode() != 200) {
+                throw new RuntimeException("Failed to get route from Graphhopper API: " + response.body());
+            }
+
+            List<GraphhopperLocatie> route = parseActivitiesFromResponse(response.body());
+
+            for(GraphhopperLocatie locatie : route)
+            {
+                for(GraphhopperLocatie input : locations ) {
+                    if (locatie.getId().equals(input.getId()))
+                    {
+                        locatie.setGraphhopperLocatie(new GraphhopperLocatie(input.getAdres(),locatie.getLon(),locatie.getLon(),locatie.getId()));
+                    }
+                }
+            }
+
+            return route;
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
-    private List<GraphhopperLocatie> parseRouteResponse(String jsonResponse) {
+    private List<GraphhopperLocatie> parseActivitiesFromResponse(String jsonResponse) {
         List<GraphhopperLocatie> route = new ArrayList<>();
 
         JSONObject responseObject = new JSONObject(jsonResponse);

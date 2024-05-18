@@ -44,11 +44,6 @@ public class APPRoutes {
 
     }
 
-    public static List<DBlevering> getLeveringenByRoute(DBroute route) throws SQLException {
-        return DBConnection.getSQLDBleveringByRoute(route);
-    }
-
-
     public static void SQLUnAssignedLeveringen() throws SQLException {
 
         leveringList = DBConnection.getSQLDBlevering();

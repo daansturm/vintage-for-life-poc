@@ -33,12 +33,6 @@ public class DBlevering implements DBobject{
 
     }
 
-    public String getLevering_info()
-    {
-        return this.bestellingen.get(0).getAdres().getPlaats() + " <> " + this.bestellingen.get(bestellingen.size() - 1).getAdres().getPlaats();
-    }
-
-
     public void voegBestellingToe(String id, String klant_id, String status, String installatieservice, String straat, String huisnummer, String plaats, String postcode, String land)
     {
         bestellingen.add(new DBbestelling(Integer.parseInt(id) , Integer.parseInt(klant_id), status, Boolean.getBoolean(installatieservice), straat, huisnummer, plaats, postcode, land));

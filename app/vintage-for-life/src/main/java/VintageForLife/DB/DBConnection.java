@@ -111,29 +111,6 @@ public class DBConnection {
 
     }
 
-    public static List<DBlevering> getSQLDBleveringByRoute(DBroute route) throws SQLException {
-
-        List<DBlevering> leveringen = new ArrayList<>();
-
-        String id = route.getId();
-        String sql = "SELECT * FROM levering inner join levering_route lr on levering.id = lr.levering_id where route_id = ?"; //verkeerde id nummer terug
-        PreparedStatement pstmt = connection.prepareStatement(sql);
-        pstmt.setString(1, id);
-        ResultSet resultSet = pstmt.executeQuery();
-
-
-        while (resultSet.next()) {
-            id = resultSet.getString("id");
-
-            String status = resultSet.getString("status");
-            String bezorgdatum = resultSet.getString("bezorgdatum");
-
-            leveringen.add(new DBlevering(Integer.parseInt(id),status,bezorgdatum));
-        }
-
-        return leveringen;
-    }
-
     public static List<DBretour> getSQLDBRetour() throws SQLException {
         String sql = "SELECT * FROM retour where id not in (select retour_id From retour_route )";
         PreparedStatement pstmt = connection.prepareStatement(sql);

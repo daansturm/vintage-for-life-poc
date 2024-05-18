@@ -1,0 +1,15 @@
+<html>
+<head>
+<title>Gerouteerde route</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+</head>
+<body>
+<div id="map" style="height: 600px;"></div>
+<script>
+var map = L.map('map').setView([51.505, -0.09], 13);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+L.polyline([[51.505, -0.09], [51.51, -0.1], [51.51, -0.12]], {color: 'blue'}).addTo(map);
+</script>
+</body>
+</html>
