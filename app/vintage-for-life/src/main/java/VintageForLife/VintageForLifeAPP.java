@@ -19,13 +19,17 @@ public class VintageForLifeAPP extends Application {
 
     @Override
     public void start(Stage stage) throws IOException, SQLException {
-
         connection = DBConnection.getConnection();
-        APPRoutes.SQLRoutes();
         APPRoutes.SQLUnAssignedLeveringen();
         APPRoutes.SQLUnAssignedRetour();
+        APPRoutes.SQLRoutes();
+        while(!APPRoutes.getUnAssignedLevering().isEmpty() && !APPRoutes.getUnAssignedRetour().isEmpty()) {
 
-        APPRoutes.MakeRoute();
+
+            APPRoutes.MakeRoute();
+            APPRoutes.SQLUnAssignedLeveringen();
+            APPRoutes.SQLUnAssignedRetour();
+        }
 
 
 

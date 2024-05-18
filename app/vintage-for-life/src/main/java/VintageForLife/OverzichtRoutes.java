@@ -64,11 +64,6 @@ public class OverzichtRoutes implements RouteListener{
         routeList = APPRoutes.getRoutes();
         leveringList = APPRoutes.getUnAssignedLevering();
 
-        for(DBroute route : routeList){
-            route.Print();
-        }
-
-        System.out.println("doe het nog een keer");
 
         addRoutes();
         addLeveringen();
@@ -198,7 +193,6 @@ public class OverzichtRoutes implements RouteListener{
 
 
         }
-        System.out.println(ID);
         if(!routeLevering.isEmpty() && ID < routeLevering.size()) {
             routeLevering.get(ID).prefWidthProperty().bind(Leveringen.widthProperty());
             Leveringen.setContent(routeLevering.get(ID));
