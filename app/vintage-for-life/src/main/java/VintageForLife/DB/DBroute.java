@@ -293,6 +293,44 @@ public class DBroute implements DBobject{
         return leveringen;
     }
 
+    public DBlevering getLeveringEnVerwijder(String leveringId )
+    {
+        DBlevering ReturnLevering = null;
+        for (DBlevering levering : leveringen) {
+            if (levering.getId().equals(leveringId)) {
+                ReturnLevering = levering;
+
+            }
+        }
+        boolean gelukt = false;
+        if (ReturnLevering != null)
+          gelukt = leveringen.remove(ReturnLevering);
+
+        if(!gelukt)
+            return null;
+        return ReturnLevering;
+    }
+    public DBretour getRetourEnVerwijder(String retourId )
+    {
+        DBretour ReturnRetour = null;
+        for (DBretour retour : retouren) {
+            if (retour.getId().equals(retourId)) {
+                ReturnRetour = retour;
+
+            }
+        }
+
+        boolean gelukt = false;
+        if ( ReturnRetour != null)
+            gelukt = retouren.remove(ReturnRetour);
+
+        if(!gelukt)
+            return null;
+
+        return  ReturnRetour;
+    }
+
+
     public List<DBretour> getRetouren()
     {
         return retouren;
@@ -309,7 +347,7 @@ public class DBroute implements DBobject{
 
     public String getRoute_info()
     {
-        return this.locaties.get(1).getAdres().getPlaats() + " <> " + this.locaties.get(locaties.size() - 2).getAdres().getPlaats();
+        return this.locaties.getFirst().getAdres().getPlaats() + " <> " + this.locaties.getLast().getAdres().getPlaats();
 
     }
 

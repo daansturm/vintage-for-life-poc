@@ -126,6 +126,7 @@ create table IF NOT EXISTS retour_route(
     id bigint AUTO_INCREMENT primary key,
     retour_id bigint not null,
     route_id bigint not null,
+    CONSTRAINT retour_route_unique UNIQUE (retour_id, route_id),
     foreign key (retour_id) references retour(id),
     foreign key (route_id) references route(id)
 );
@@ -134,6 +135,7 @@ create table IF NOT EXISTS levering_route(
     id bigint AUTO_INCREMENT primary key,
     levering_id bigint not null,
     route_id bigint not null,
+    CONSTRAINT levering_route_unique UNIQUE (levering_id, route_id),
     foreign key (levering_id) references levering(id),
     foreign key (route_id) references route(id)
 );

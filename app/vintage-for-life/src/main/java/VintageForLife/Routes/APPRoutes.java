@@ -35,6 +35,11 @@ public class APPRoutes {
                 }
             }
 
+            if(route.getLeveringen().isEmpty() && route.getRetouren().isEmpty()) {
+                DBConnection.DeleteRoute(route);
+                break;
+            }
+
             route.setBeginadres(DBConnection.getSQLBeginEindAdress(1));
             route.setEindadres(DBConnection.getSQLBeginEindAdress(1));
             route.MaakGraphhopperList();

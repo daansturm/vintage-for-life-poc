@@ -1,5 +1,6 @@
 package VintageForLife.DB;
 
+import javax.swing.*;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -214,6 +215,33 @@ public class DBConnection {
 
     }
 
+    public static void DeleteRoute(DBroute route) throws SQLException {
+
+
+        if(route.getLeveringen().isEmpty()) {
+            String sql = "DELETE FROM levering_route WHERE route_id  = ? ";
+            PreparedStatement pstmt = connection.prepareStatement(sql);
+            pstmt.setString(1, route.getId());
+            pstmt.executeUpdate();
+        }
+
+        if (route.getRetouren().isEmpty()) {
+            String sql = "DELETE FROM retour_route WHERE route_id  = ? ";
+            PreparedStatement pstmt = connection.prepareStatement(sql);
+            pstmt.setString(1, route.getId());
+            pstmt.executeUpdate();
+        }
+
+        if(route.getLeveringen().isEmpty() && route.getRetouren().isEmpty()) {
+            String sql = "DELETE FROM route WHERE id  = ? ";
+            PreparedStatement pstmt = connection.prepareStatement(sql);
+            pstmt.setString(1, route.getId());
+            pstmt.executeUpdate();
+        }
+
+
+    }
+
     public static void DeleteRoute(List<DBroute> routes) throws SQLException {
 
         List<String> routeSQLIDs = new ArrayList<>();
@@ -276,8 +304,10 @@ public class DBConnection {
 
         String id = route.getId();
 
+
         //update
         if(!id.equals("-1") ) {
+
             String sql = "UPDATE route SET  status = ?, datum = ?, priotisering = ?, beginadres = ?, eindadres = ? where id = ?";
             PreparedStatement pstmt = connection.prepareStatement(sql);
             pstmt.setString(1, route.getStatus());
@@ -337,6 +367,9 @@ public class DBConnection {
 
         }
 
+
+
+
         if (!route.getRetouren().isEmpty()) {
 
             // Update retour routes
@@ -360,6 +393,11 @@ public class DBConnection {
                 deleteRetourStmt.executeUpdate();
             }
         }
+
+
+
+        DeleteRoute(route);
+
 
 
 
