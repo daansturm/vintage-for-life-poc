@@ -5,8 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d637be1f-35f0-485b-9159-f7bd3e5dc037" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/map.html" beforeDir="false" afterPath="$PROJECT_DIR$/map.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/VintageForLife/API/Router.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/VintageForLife/API/Router.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/VintageForLife/API/RouterV2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/VintageForLife/API/RouterVRP.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/VintageForLife/DB/DBroute.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/VintageForLife/DB/DBroute.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/VintageForLife/RouteVisualisatie.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/VintageForLife/RouteVisualisatie.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -37,7 +41,8 @@
     "Application.VintageForLifeAPP.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "add-map-to-route-visualisatie-page",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
