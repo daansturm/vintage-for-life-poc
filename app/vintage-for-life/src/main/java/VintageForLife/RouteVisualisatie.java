@@ -21,6 +21,8 @@ import org.json.JSONObject;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -156,12 +158,10 @@ public class RouteVisualisatie implements RouteListener {
         contentBuilder.append("</body>\n");
         contentBuilder.append("</html>\n");
 
-        try (FileWriter fileWriter = new FileWriter("map.html")) {
-            fileWriter.write(contentBuilder.toString());
-            WebEngine webEngine = mapView.getEngine();
-            webEngine.load(getClass().getResource("map.html").toExternalForm());
-        } catch (IOException e) {
-            System.err.println("Fout bij schrijven naar het bestand: " + e.getMessage());
-        }
+
+
+        WebEngine webEngine = mapView.getEngine();
+        webEngine.loadContent(contentBuilder.toString());
+
     }
 }
