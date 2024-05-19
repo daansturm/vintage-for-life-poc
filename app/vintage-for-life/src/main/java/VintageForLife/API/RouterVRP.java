@@ -1,6 +1,5 @@
 package VintageForLife.API;
 
-import VintageForLife.DB.DBadres;
 import VintageForLife.DB.GraphhopperLocatie;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -12,9 +11,9 @@ import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RouterV2 {
+public class RouterVRP {
 
-    public RouterV2() {
+    public RouterVRP() {
     }
 
     public List<GraphhopperLocatie> getRouteVrp(GraphhopperLocatie startLocation, boolean enabledPoints, List<GraphhopperLocatie> locations) {
@@ -37,12 +36,10 @@ public class RouterV2 {
 
             for(GraphhopperLocatie locatie : route)
             {
-                System.out.println("VRP " + locatie.getId());
                 for(GraphhopperLocatie input : locations ) {
                     if (locatie.getId().equals(input.getId()))
                     {
-                        System.out.println("input " + input.getId());
-                        locatie.setGraphhopperLocatie(new GraphhopperLocatie(input.getAdres(),locatie.getLon(),locatie.getLon(),locatie.getId()));
+                        locatie.setGraphhopperLocatie(new GraphhopperLocatie(input.getAdres(),locatie.getLon(),locatie.getLat(),locatie.getId()));
                     }
                 }
             }
@@ -100,7 +97,6 @@ public class RouterV2 {
             serviceLocation.put("id", location.getId());
             serviceLocation.put("address", serviceAddress);
 
-            System.out.println(serviceLocation);
             services.put(serviceLocation);
         }
 

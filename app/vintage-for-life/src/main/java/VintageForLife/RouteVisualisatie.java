@@ -21,6 +21,8 @@ import org.json.JSONObject;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -31,6 +33,8 @@ public class RouteVisualisatie implements RouteListener {
     private SceneController Scene = new SceneController();
 
     List<GraphhopperLocatie> locationList = new ArrayList<>();
+
+    List<double[]> coordinates = new ArrayList<>();
 
     List<GraphhopperLocatie> locatiesCor = new ArrayList<>();
     List<LocationInfo> routeInfoList = new ArrayList<>();
@@ -67,15 +71,15 @@ public class RouteVisualisatie implements RouteListener {
 
         locationList = DBroute.getLocaties();
 
-        List<GraphhopperLocatie> graphhopperLocaties = router.getRoute(true, locationList);
+        coordinates = router.getRoute(true, locationList);
 
 
-        System.out.println("RouteVisualisatie: " + graphhopperLocaties.size());
-        for (GraphhopperLocatie locatie : graphhopperLocaties) {
-            System.out.println(locatie);
-        }
+        System.out.println("RouteVisualisatie: " + coordinates.size());
+//        for (double[] locatie : graphhopperLocaties) {
+//            System.out.println("RouteVisualisatie: " + locatie[0] + " " + locatie[1]);
+//        }
 
-//        drawRouteOnMap();
+        drawRouteOnMap();
     }
 
     private void addLocations() throws IOException {
@@ -116,21 +120,21 @@ public class RouteVisualisatie implements RouteListener {
     public void drawRouteOnMap() {
         // TODO: Get the coordinates from the API
 
-//        int numPoints = coordinates.length();
-//
-//        // Create an array for the coordinates
-//        double[][] coordinatesArray = new double[numPoints][2];
-//
-//        for (int i = 0; i < numPoints; i++) {
-//            JSONArray coordinate = coordinates.getJSONArray(i);
-//            double latitude = coordinate.getDouble(0); // Latitude is the first value
-//            double longitude = coordinate.getDouble(1); // Longitude is the second value
-//            coordinatesArray[i][0] = latitude;
-//            coordinatesArray[i][1] = longitude;
-//        }
-//
-//        // Use the coordinates to draw the map with Leaflet
-//        drawMap(coordinatesArray);
+        int numPoints = coordinates.size();
+
+        // Create an array for the coordinates
+        double[][] coordinatesArray = new double[numPoints][2];
+
+        for (int i = 0; i < numPoints; i++) {
+            double[] coordinate = coordinates.get(i);
+            double latitude = coordinate[0];
+            double longitude = coordinate[1];
+            coordinatesArray[i][0] = latitude;
+            coordinatesArray[i][1] = longitude;
+        }
+
+        // Use the coordinates to draw the map with Leaflet
+        drawMap(coordinatesArray);
     }
 
     /**
@@ -154,29 +158,10 @@ public class RouteVisualisatie implements RouteListener {
         contentBuilder.append("</body>\n");
         contentBuilder.append("</html>\n");
 
-        try (FileWriter fileWriter = new FileWriter("map.html")) {
-            fileWriter.write(contentBuilder.toString());
-            WebEngine webEngine = mapView.getEngine();
-            webEngine.load(getClass().getResource("map.html").toExternalForm());
-        } catch (IOException e) {
-            System.err.println("Fout bij schrijven naar het bestand: " + e.getMessage());
-        }
-    }
 
-    // Dummy method to simulate getting points data
-    private String getPoints() {
-        return "{\n" +
-                "  \"paths\": [\n" +
-                "    {\n" +
-                "      \"points\": {\n" +
-                "        \"coordinates\": [\n" +
-                "          [51.505, -0.09],\n" +
-                "          [51.51, -0.1],\n" +
-                "          [51.51, -0.12]\n" +
-                "        ]\n" +
-                "      }\n" +
-                "    }\n" +
-                "  ]\n" +
-                "}";
+
+        WebEngine webEngine = mapView.getEngine();
+        webEngine.loadContent(contentBuilder.toString());
+
     }
 }
