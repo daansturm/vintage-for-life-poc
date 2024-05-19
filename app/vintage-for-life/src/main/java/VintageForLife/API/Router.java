@@ -17,7 +17,7 @@ public class Router {
     }
 
     public List<double[]> getRoute(boolean enabledPoints, List<GraphhopperLocatie> locations) {
-        String apiUrl = "https://graphhopper.com/api/1/route?key=52f77ee9-9f8f-4c94-92ca-80cdbdfb3f44";
+        String apiUrl = "https://graphhopper.com/api/1/route?key=5e9d86d6-a117-4d5a-8bde-a6ad07562cf3";
 
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(apiUrl))

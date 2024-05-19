@@ -64,6 +64,9 @@ public class DBroute implements DBobject{
 
     public void MaakGraphhopperList()
     {
+        locaties.clear();
+        if(leveringen.isEmpty() && retouren.isEmpty())
+            return;
 
         prio_index = Arrays.asList(priotisering.split(":"));
         boolean correct = checkGrapphopperList(prio_index);
@@ -107,6 +110,7 @@ public class DBroute implements DBobject{
                 locaties.add(gc.convertAdres(new GraphhopperLocatie(levering, "l_" + levering.getId(), "Levering: " + levering.getId())));
             for(DBretour retour : retouren)
                 locaties.add(gc.convertAdres(new GraphhopperLocatie(retour, "r_" + retour.getId(), "Retour: " + retour.getId())));
+
 
             List<GraphhopperLocatie> routerV2 = new RouterVRP().getRouteVrp(gc.convertAdres(new GraphhopperLocatie(beginadres, "b_1", "Begin Adres")), false, locaties);
 
@@ -289,6 +293,44 @@ public class DBroute implements DBobject{
         return leveringen;
     }
 
+    public DBlevering getLeveringEnVerwijder(String leveringId )
+    {
+        DBlevering ReturnLevering = null;
+        for (DBlevering levering : leveringen) {
+            if (levering.getId().equals(leveringId)) {
+                ReturnLevering = levering;
+
+            }
+        }
+        boolean gelukt = false;
+        if (ReturnLevering != null)
+          gelukt = leveringen.remove(ReturnLevering);
+
+        if(!gelukt)
+            return null;
+        return ReturnLevering;
+    }
+    public DBretour getRetourEnVerwijder(String retourId )
+    {
+        DBretour ReturnRetour = null;
+        for (DBretour retour : retouren) {
+            if (retour.getId().equals(retourId)) {
+                ReturnRetour = retour;
+
+            }
+        }
+
+        boolean gelukt = false;
+        if ( ReturnRetour != null)
+            gelukt = retouren.remove(ReturnRetour);
+
+        if(!gelukt)
+            return null;
+
+        return  ReturnRetour;
+    }
+
+
     public List<DBretour> getRetouren()
     {
         return retouren;
@@ -305,7 +347,13 @@ public class DBroute implements DBobject{
 
     public String getRoute_info()
     {
-        return this.locaties.get(1).getAdres().getPlaats() + " <> " + this.locaties.get(locaties.size() - 2).getAdres().getPlaats();
+        if(locaties.isEmpty())
+            return "NULL <> NULL";
+
+        if(locaties.size() < 2)
+            return "NULL <> NULL";
+
+         return this.locaties.get(1).getAdres().getPlaats() + " <> " + this.locaties.get(locaties.size() - 2).getAdres().getPlaats();
 
     }
 

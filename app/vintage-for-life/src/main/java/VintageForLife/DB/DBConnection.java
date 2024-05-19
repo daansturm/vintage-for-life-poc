@@ -1,5 +1,6 @@
 package VintageForLife.DB;
 
+import javax.swing.*;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -214,12 +215,99 @@ public class DBConnection {
 
     }
 
+    public static void DeleteRoute(DBroute route) throws SQLException {
+
+
+        if(route.getLeveringen().isEmpty()) {
+            String sql = "DELETE FROM levering_route WHERE route_id  = ? ";
+            PreparedStatement pstmt = connection.prepareStatement(sql);
+            pstmt.setString(1, route.getId());
+            pstmt.executeUpdate();
+        }
+
+        if (route.getRetouren().isEmpty()) {
+            String sql = "DELETE FROM retour_route WHERE route_id  = ? ";
+            PreparedStatement pstmt = connection.prepareStatement(sql);
+            pstmt.setString(1, route.getId());
+            pstmt.executeUpdate();
+        }
+
+        if(route.getLeveringen().isEmpty() && route.getRetouren().isEmpty()) {
+            String sql = "DELETE FROM route WHERE id  = ? ";
+            PreparedStatement pstmt = connection.prepareStatement(sql);
+            pstmt.setString(1, route.getId());
+            pstmt.executeUpdate();
+        }
+
+
+    }
+
+    public static void DeleteRoute(List<DBroute> routes) throws SQLException {
+
+        List<String> routeSQLIDs = new ArrayList<>();
+
+        String sql = "SELECT id FROM route";
+        PreparedStatement pstmt = connection.prepareStatement(sql);
+        ResultSet resultSet = pstmt.executeQuery();
+
+        while (resultSet.next()) {
+            routeSQLIDs.add(resultSet.getString("id"));
+        }
+
+        List<String> routeAPPIDs = routes.stream()
+                .map(DBroute::getId)
+                .toList();
+
+        List<String> routesToDelete = routeSQLIDs.stream()
+                .filter(id -> !routeAPPIDs.contains(id))
+                .toList();
+
+
+        if (!routesToDelete.isEmpty()) {
+            String routesToDeleteInClause = String.join(",", Collections.nCopies(routesToDelete.size(), "?"));
+
+            // Delete from levering_route
+            sql = "DELETE FROM levering_route WHERE route_id IN (" + routesToDeleteInClause + ")";
+            pstmt = connection.prepareStatement(sql);
+                for (int i = 0; i < routesToDelete.size(); i++) {
+                    pstmt.setString(i + 1, routesToDelete.get(i));
+                }
+                pstmt.executeUpdate();
+
+
+            // Delete from retour_route
+            sql = "DELETE FROM retour_route WHERE route_id IN (" + routesToDeleteInClause + ")";
+            pstmt = connection.prepareStatement(sql);
+                for (int i = 0; i < routesToDelete.size(); i++) {
+                    pstmt.setString(i + 1, routesToDelete.get(i));
+                }
+                pstmt.executeUpdate();
+
+
+            // Delete from route
+            sql = "DELETE FROM route WHERE id IN (" + routesToDeleteInClause + ")";
+            pstmt = connection.prepareStatement(sql);
+                for (int i = 0; i < routesToDelete.size(); i++) {
+                    pstmt.setString(i + 1, routesToDelete.get(i));
+                }
+                pstmt.executeUpdate();
+
+        }
+
+
+
+
+
+    }
+
     public static DBroute setSQLRoute(DBroute route) throws SQLException {
 
         String id = route.getId();
 
+
         //update
         if(!id.equals("-1") ) {
+
             String sql = "UPDATE route SET  status = ?, datum = ?, priotisering = ?, beginadres = ?, eindadres = ? where id = ?";
             PreparedStatement pstmt = connection.prepareStatement(sql);
             pstmt.setString(1, route.getStatus());
@@ -279,6 +367,9 @@ public class DBConnection {
 
         }
 
+
+
+
         if (!route.getRetouren().isEmpty()) {
 
             // Update retour routes
@@ -302,6 +393,11 @@ public class DBConnection {
                 deleteRetourStmt.executeUpdate();
             }
         }
+
+
+
+        DeleteRoute(route);
+
 
 
 

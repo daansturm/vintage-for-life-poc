@@ -14,6 +14,7 @@ module VintageForLife {
     requires java.sql;
     requires org.json;
     requires jbcrypt;
+    requires java.desktop;
 
     opens VintageForLife to javafx.fxml;
     exports VintageForLife;
