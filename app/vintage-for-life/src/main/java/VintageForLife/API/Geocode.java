@@ -39,7 +39,7 @@ public class Geocode {
         }
 
         String apiUrl = "https://graphhopper.com/api/1/geocode";
-        String key = "b02f1fd2-0e8d-41c2-acd5-129bed768b98";
+        String key = "5e9d86d6-a117-4d5a-8bde-a6ad07562cf3";
         DBadres adres = gl.getAdres();
         String query = URLEncoder.encode(
                 String.join(" ",

@@ -207,6 +207,53 @@ public class OverzichtRoutes implements RouteListener, LeveringRetourListener{
 
     }
 
+    private void refreshContent(int route_index) throws SQLException, IOException {
+        if (route_index < 0)
+            route_index = 0;
+
+        routeInfoList.clear();
+        routeLevering.clear();
+        routeRetour.clear();
+
+        APPRoutes.SQLRoutes();
+        routeList = APPRoutes.getRoutes();
+
+        addRoutes();
+        addLeveringen();
+        addRetour();
+
+        if (!routeInfoList.isEmpty()) {
+            route.prefWidthProperty().bind(Routes.widthProperty());
+            Routes.setContent(route);
+            if(routeInfoList.size() < route_index )
+                routeInfoList.get(0).setSelected();
+            else
+                routeInfoList.get(route_index).setSelected();
+        }
+
+        if (!routeRetour.isEmpty()) {
+
+            if(routeRetour.size() < route_index ) {
+                routeRetour.get(0).prefWidthProperty().bind(Retouren.widthProperty());
+                Retouren.setContent(routeRetour.get(0));
+            }
+            else {
+                routeRetour.get(route_index).prefWidthProperty().bind(Retouren.widthProperty());
+                Retouren.setContent(routeRetour.get(route_index));
+            }
+        }
+
+        if (!routeLevering.isEmpty()) {
+            if(routeLevering.size() < route_index ) {
+                routeLevering.get(0).prefWidthProperty().bind(Leveringen.widthProperty());
+                Leveringen.setContent(routeLevering.get(0));
+            }
+            else {
+                routeLevering.get(route_index).prefWidthProperty().bind(Leveringen.widthProperty());
+                Leveringen.setContent(routeLevering.get(route_index));
+            }
+        }
+    }
 
 
 
@@ -264,7 +311,6 @@ public class OverzichtRoutes implements RouteListener, LeveringRetourListener{
             if(ID.contains("L"))
             {
                 DBlevering levering = FromRoute.getLeveringEnVerwijder(ID.replace("L", ""));
-                levering.Print();
                 if (levering == null)
                     return;
                 ToRoute.voegLeveringToe(levering);
@@ -274,7 +320,6 @@ public class OverzichtRoutes implements RouteListener, LeveringRetourListener{
             if(ID.contains("R"))
             {
                 DBretour retour = FromRoute.getRetourEnVerwijder(ID.replace("R", ""));
-                retour.Print();
                 if (retour == null)
                     return;
                 ToRoute.voegRetourToe(retour);
@@ -293,10 +338,19 @@ public class OverzichtRoutes implements RouteListener, LeveringRetourListener{
 
                 APPRoutes.SQLRoutes();
                 routeList = APPRoutes.getRoutes();
+                int route_index = -1;
+                for(DBroute route : routeList)
+                {
+                    route_index++;
+                    if (route.getId().equals(ToRoute.getId()))
+                    {
+                        break;
+                    }
+                }
 
-                addRoutes();
-                addLeveringen();
-                addRetour();
+                System.out.println(route_index);
+                refreshContent(route_index);
+
 
             }
             catch (SQLException | IOException e) {
