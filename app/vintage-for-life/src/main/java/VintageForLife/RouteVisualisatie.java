@@ -67,13 +67,13 @@ public class RouteVisualisatie implements RouteListener {
 
         locationList = DBroute.getLocaties();
 
-        List<GraphhopperLocatie> graphhopperLocaties = router.getRoute(true, locationList);
+        String graphhopperLocaties = router.getRoute(true, locationList);
 
 
-        System.out.println("RouteVisualisatie: " + graphhopperLocaties.size());
-        for (GraphhopperLocatie locatie : graphhopperLocaties) {
-            System.out.println(locatie);
-        }
+//        System.out.println("RouteVisualisatie: " + graphhopperLocaties.size());
+//        for (GraphhopperLocatie locatie : graphhopperLocaties) {
+//            System.out.println(locatie);
+//        }
 
 //        drawRouteOnMap();
     }

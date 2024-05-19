@@ -6,9 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="d637be1f-35f0-485b-9159-f7bd3e5dc037" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/VintageForLife/DB/DBConnection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/VintageForLife/DB/DBConnection.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/VintageForLife/DB/DBlevering.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/VintageForLife/DB/DBlevering.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/VintageForLife/Routes/APPRoutes.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/VintageForLife/Routes/APPRoutes.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/VintageForLife/API/Router.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/VintageForLife/API/Router.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/VintageForLife/RouteVisualisatie.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/VintageForLife/RouteVisualisatie.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
