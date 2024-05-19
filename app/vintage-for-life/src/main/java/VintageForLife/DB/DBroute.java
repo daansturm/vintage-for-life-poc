@@ -64,6 +64,7 @@ public class DBroute implements DBobject{
 
     public void MaakGraphhopperList()
     {
+        locaties.clear();
 
         prio_index = Arrays.asList(priotisering.split(":"));
         boolean correct = checkGrapphopperList(prio_index);
