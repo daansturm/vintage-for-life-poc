@@ -3,6 +3,7 @@ package VintageForLife;
 
 import VintageForLife.DB.DBlevering;
 import VintageForLife.DB.DBroute;
+import VintageForLife.DB.GraphhopperLocatie;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
@@ -34,30 +35,12 @@ public class LocationInfo {
         this.ID = ID;
     }
 
-    public void setDBroute(DBlevering location, int id ) {
-        this.dBroute = location;
-        this.route.setText("Locatie: " + dBroute.getId());
-//        this.route_info.setText(dBroute.getLevering_info());
+    public void setDBroute(GraphhopperLocatie location, int id ) {
+        this.route.setText(location.getAdres().getStraat() + " " + location.getAdres().getHuisnummer() + " " + location.getAdres().getPlaats());
         this.ID = id;
     }
 
-
-    public void setSelected()
-    {
-        BackgroundFill background_fill = new BackgroundFill(Color.LIGHTBLUE, CornerRadii.EMPTY, Insets.EMPTY);
-        Background background = new Background(background_fill);
-        borderpane.setBackground(background);
+    public void setRouteInfo(String info) {
+        this.route_info.setText(info);
     }
-
-    public void setUnseleced()
-    {
-        BackgroundFill background_fill = new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY);
-        Background background = new Background(background_fill);
-        borderpane.setBackground(background);
-    }
-
-    public void getID(int ID) {
-        this.ID = ID;
-    }
-
 }

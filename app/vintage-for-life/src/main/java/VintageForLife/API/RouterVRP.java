@@ -42,6 +42,11 @@ public class RouterVRP {
                         locatie.setGraphhopperLocatie(new GraphhopperLocatie(input.getAdres(),locatie.getLon(),locatie.getLat(),locatie.getId()));
                     }
                 }
+
+                if (locatie.getId().equals("start") || locatie.getId().equals("end"))
+                {
+                    locatie.setGraphhopperLocatie(new GraphhopperLocatie(startLocation.getAdres(),locatie.getLon(),locatie.getLat(),locatie.getId()));
+                }
             }
 
             return route;
@@ -70,8 +75,6 @@ public class RouterVRP {
             String locationId = activity.getString("location_id");
             double lon = activity.getJSONObject("address").getDouble("lon");
             double lat = activity.getJSONObject("address").getDouble("lat");
-
-            long arrivalTime = activity.getLong("arr_time");
 
             GraphhopperLocatie locatie = new GraphhopperLocatie(lon, lat, locationId);
             route.add(locatie);
