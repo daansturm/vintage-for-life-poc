@@ -63,7 +63,7 @@ public class LeveringRetour {
             }
 
         }
-        MenuItem item = new MenuItem("verplaat naar nieuwe route");
+        MenuItem item = new MenuItem("verplaats naar nieuwe route");
         item.setId("nieuw");
         item.setOnAction(event -> MenuItemSelected("nieuw", this.route_id, this.id));
         items.add(item);
