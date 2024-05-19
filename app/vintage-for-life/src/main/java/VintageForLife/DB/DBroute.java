@@ -1,7 +1,7 @@
 package VintageForLife.DB;
 
 import VintageForLife.API.Geocode;
-import VintageForLife.API.RouterV2;
+import VintageForLife.API.RouterVRP;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -108,9 +108,9 @@ public class DBroute implements DBobject{
             for(DBretour retour : retouren)
                 locaties.add(gc.convertAdres(new GraphhopperLocatie(retour, "r_" + retour.getId(), "Retour: " + retour.getId())));
 
-            List<GraphhopperLocatie> routerV2 = new RouterV2().getRouteVrp(gc.convertAdres(new GraphhopperLocatie(beginadres, "b_1", "Begin Adres")), false, locaties);
+            List<GraphhopperLocatie> routerV2 = new RouterVRP().getRouteVrp(gc.convertAdres(new GraphhopperLocatie(beginadres, "b_1", "Begin Adres")), false, locaties);
 
-            locaties = routerV2;
+//            locaties = routerV2;
 
             maakPriotisering(locaties);
         //}

@@ -1,7 +1,5 @@
 package VintageForLife.API;
 
-import VintageForLife.DB.DBadres;
-import VintageForLife.DB.DBlevering;
 import VintageForLife.DB.GraphhopperLocatie;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -18,7 +16,7 @@ public class Router {
     public Router() {
     }
 
-    public String getRoute(boolean enabledPoints, List<GraphhopperLocatie> locations) {
+    public List<double[]> getRoute(boolean enabledPoints, List<GraphhopperLocatie> locations) {
         String apiUrl = "https://graphhopper.com/api/1/route?key=52f77ee9-9f8f-4c94-92ca-80cdbdfb3f44";
 
         HttpRequest request = HttpRequest.newBuilder()
@@ -34,7 +32,7 @@ public class Router {
                 throw new RuntimeException("Failed to get route from Graphhopper API: " + response.body());
             }
 
-            return response.body();
+            return parseCoordinates(response.body());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -51,14 +49,29 @@ public class Router {
 
         JSONObject routeConfig = new JSONObject();
         routeConfig.put("profile", "car");
-        routeConfig.put("instructions", enabledPoints);
+        routeConfig.put("instructions", false);
         routeConfig.put("points", points);
         routeConfig.put("calc_points", enabledPoints);
         routeConfig.put("points_encoded", false);
 
-        // Log the route config
-        System.out.println(routeConfig);
-
         return routeConfig;
+    }
+
+    public List<double[]> parseCoordinates(String jsonResponse) {
+        List<double[]> coordinatesList = new ArrayList<>();
+
+        JSONObject responseJson = new JSONObject(jsonResponse);
+        JSONArray paths = responseJson.getJSONArray("paths");
+        JSONObject path = paths.getJSONObject(0);
+        JSONArray coordinates = path.getJSONObject("points").getJSONArray("coordinates");
+
+        for (int i = 0; i < coordinates.length(); i++) {
+            JSONArray coord = coordinates.getJSONArray(i);
+            double lon = coord.getDouble(0);
+            double lat = coord.getDouble(1);
+            coordinatesList.add(new double[]{lat, lon});
+        }
+
+        return coordinatesList;
     }
 }
