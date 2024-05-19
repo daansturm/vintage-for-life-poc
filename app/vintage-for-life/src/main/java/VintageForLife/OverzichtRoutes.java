@@ -64,7 +64,7 @@ public class OverzichtRoutes implements RouteListener, LeveringRetourListener{
     @FXML
     private void initialize() throws SQLException, IOException {
         // Voeg inhoud toe aan de ScrollPane nadat de pagina is geladen
-
+        APPRoutes.SQLRoutes();
         routeList = APPRoutes.getRoutes();
 
 
@@ -282,18 +282,22 @@ public class OverzichtRoutes implements RouteListener, LeveringRetourListener{
             }
 
 
-
-            ToRoute.MaakGraphhopperList();
-            FromRoute.MaakGraphhopperList();
+             //alleen doen wanneer leveringen en retouren er zijn.
+             ToRoute.MaakGraphhopperList();
+             FromRoute.MaakGraphhopperList();
             try {
                 FromRoute.setRoute(DBConnection.setSQLRoute(FromRoute));
                 ToRoute.setRoute(DBConnection.setSQLRoute(ToRoute));
+
+
+
                 APPRoutes.SQLRoutes();
                 routeList = APPRoutes.getRoutes();
 
                 addRoutes();
                 addLeveringen();
                 addRetour();
+
             }
             catch (SQLException | IOException e) {
                 e.printStackTrace();

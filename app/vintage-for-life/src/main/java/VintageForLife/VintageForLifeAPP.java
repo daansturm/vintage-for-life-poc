@@ -31,10 +31,6 @@ public class VintageForLifeAPP extends Application {
             APPRoutes.SQLUnAssignedRetour();
         }
 
-
-
-
-
         FXMLLoader loader = new FXMLLoader(getClass().getResource("LoginScreen.fxml"));
         Parent root = loader.load();
 

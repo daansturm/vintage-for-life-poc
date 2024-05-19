@@ -65,6 +65,8 @@ public class DBroute implements DBobject{
     public void MaakGraphhopperList()
     {
         locaties.clear();
+        if(leveringen.isEmpty() && retouren.isEmpty())
+            return;
 
         prio_index = Arrays.asList(priotisering.split(":"));
         boolean correct = checkGrapphopperList(prio_index);
@@ -108,6 +110,7 @@ public class DBroute implements DBobject{
                 locaties.add(gc.convertAdres(new GraphhopperLocatie(levering, "l_" + levering.getId(), "Levering: " + levering.getId())));
             for(DBretour retour : retouren)
                 locaties.add(gc.convertAdres(new GraphhopperLocatie(retour, "r_" + retour.getId(), "Retour: " + retour.getId())));
+
 
             List<GraphhopperLocatie> routerV2 = new RouterVRP().getRouteVrp(gc.convertAdres(new GraphhopperLocatie(beginadres, "b_1", "Begin Adres")), false, locaties);
 
@@ -344,7 +347,13 @@ public class DBroute implements DBobject{
 
     public String getRoute_info()
     {
-        return this.locaties.getFirst().getAdres().getPlaats() + " <> " + this.locaties.getLast().getAdres().getPlaats();
+        if(locaties.isEmpty())
+            return "NULL <> NULL";
+
+        if(locaties.size() < 2)
+            return "NULL <> NULL";
+
+         return this.locaties.get(1).getAdres().getPlaats() + " <> " + this.locaties.get(locaties.size() - 2).getAdres().getPlaats();
 
     }
 
