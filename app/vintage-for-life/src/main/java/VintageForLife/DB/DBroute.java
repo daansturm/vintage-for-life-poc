@@ -110,7 +110,7 @@ public class DBroute implements DBobject{
 
             List<GraphhopperLocatie> routerV2 = new RouterVRP().getRouteVrp(gc.convertAdres(new GraphhopperLocatie(beginadres, "b_1", "Begin Adres")), false, locaties);
 
-//            locaties = routerV2;
+            locaties = routerV2;
 
             maakPriotisering(locaties);
         //}

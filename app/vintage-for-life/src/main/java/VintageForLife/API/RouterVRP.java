@@ -39,7 +39,7 @@ public class RouterVRP {
                 for(GraphhopperLocatie input : locations ) {
                     if (locatie.getId().equals(input.getId()))
                     {
-                        locatie.setGraphhopperLocatie(new GraphhopperLocatie(input.getAdres(),locatie.getLon(),locatie.getLon(),locatie.getId()));
+                        locatie.setGraphhopperLocatie(new GraphhopperLocatie(input.getAdres(),locatie.getLon(),locatie.getLat(),locatie.getId()));
                     }
                 }
             }
