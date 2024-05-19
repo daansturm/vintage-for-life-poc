@@ -72,9 +72,9 @@ public class DBroute implements DBobject{
         boolean correct = checkGrapphopperList(prio_index);
         String index;
 
-        /*if(correct) {
+        if(correct) {
 
-            locaties.add(gc.convertAdres(new GraphhopperLocatie(beginadres, "b_1", "Begin Adres")));
+            locaties.add(gc.convertAdres(new GraphhopperLocatie(beginadres, "start", "Begin Adres")));
             for (String prio : prio_index) {
 
                 if (prio.contains("l_")) {
@@ -100,11 +100,11 @@ public class DBroute implements DBobject{
                 }
             }
 
-            locaties.add(new GraphhopperLocatie(eindadres, "e_1", "Eind Adres"));
+            locaties.add(gc.convertAdres(new GraphhopperLocatie(eindadres, "start", "Eind Adres")));
         }
         else
         {
-         */
+
 
             for(DBlevering levering : leveringen)
                 locaties.add(gc.convertAdres(new GraphhopperLocatie(levering, "l_" + levering.getId(), "Levering: " + levering.getId())));
@@ -117,7 +117,7 @@ public class DBroute implements DBobject{
             locaties = routerV2;
 
             maakPriotisering(locaties);
-        //}
+        }
 
 
     }

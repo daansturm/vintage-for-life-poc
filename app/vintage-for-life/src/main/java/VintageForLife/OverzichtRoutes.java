@@ -334,7 +334,7 @@ public class OverzichtRoutes implements RouteListener, LeveringRetourListener{
                 FromRoute.setRoute(DBConnection.setSQLRoute(FromRoute));
                 ToRoute.setRoute(DBConnection.setSQLRoute(ToRoute));
 
-                
+                APPRoutes.getRoutes();
                 routeList = APPRoutes.getRoutes();
                 int route_index = -1;
                 for(DBroute route : routeList)

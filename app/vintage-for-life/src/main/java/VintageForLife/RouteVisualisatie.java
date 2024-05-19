@@ -70,6 +70,9 @@ public class RouteVisualisatie implements RouteListener {
         Router router = new Router();
 
         locationList = DBroute.getLocaties();
+        for(GraphhopperLocatie loc : locationList) {
+            loc.Print();
+        }
 
         coordinates = router.getRoute(true, locationList);
 
