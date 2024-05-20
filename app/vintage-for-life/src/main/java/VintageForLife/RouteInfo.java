@@ -33,19 +33,15 @@ public class RouteInfo {
 
     @FXML
     void Select(MouseEvent event) {
-
         if (listener != null)
             listener.onRouteSelected(this.ID);
 
         setSelected();
-
     }
 
     @FXML
     void ShowVisualisation(ActionEvent event) throws SQLException, IOException {
-        System.out.println(this.ID);
         Scene.ShowRouteVisualisatie(event, this.dBroute, ID);
-
     }
 
 

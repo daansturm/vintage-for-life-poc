@@ -24,8 +24,6 @@ public class VintageForLifeAPP extends Application {
         APPRoutes.SQLUnAssignedRetour();
         APPRoutes.SQLRoutes();
         while(!APPRoutes.getUnAssignedLevering().isEmpty() && !APPRoutes.getUnAssignedRetour().isEmpty()) {
-
-
             APPRoutes.MakeRoute();
             APPRoutes.SQLUnAssignedLeveringen();
             APPRoutes.SQLUnAssignedRetour();
@@ -42,9 +40,6 @@ public class VintageForLifeAPP extends Application {
     }
 
     public static void main(String[] args) {
-
         launch();
-
-
     }
 }
