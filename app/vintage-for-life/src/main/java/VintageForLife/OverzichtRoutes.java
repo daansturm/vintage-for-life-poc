@@ -346,7 +346,6 @@ public class OverzichtRoutes implements RouteListener, LeveringRetourListener{
                     }
                 }
 
-                System.out.println(route_index);
                 refreshContent(route_index);
 
 

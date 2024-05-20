@@ -8,9 +8,9 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/VintageForLife/API/RouterVRP.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/VintageForLife/API/RouterVRP.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/VintageForLife/LocationInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/VintageForLife/LocationInfo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/VintageForLife/OverzichtRoutes.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/VintageForLife/OverzichtRoutes.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/VintageForLife/RouteInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/VintageForLife/RouteInfo.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/VintageForLife/RouteVisualisatie.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/VintageForLife/RouteVisualisatie.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/VintageForLife/VintageForLifeAPP.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/VintageForLife/VintageForLifeAPP.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/VintageForLife/LocationInfo.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/VintageForLife/LocationInfo.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,7 +41,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "update-route-visualisatie",
     "kotlin-language-version-configured": "true",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",

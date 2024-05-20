@@ -118,6 +118,8 @@ public class RouteVisualisatie {
 
     /**
      * Generate a map based on the given coordinates.
+     * @param coordinates The coordinates to draw the line on the map.
+     * @param locations The locations to set markers on the map.
      */
     private void drawMap(double[][] coordinates, List<GraphhopperLocatie> locations) {
         StringBuilder contentBuilder = new StringBuilder();

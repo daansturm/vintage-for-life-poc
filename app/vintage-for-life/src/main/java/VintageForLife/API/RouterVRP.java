@@ -61,7 +61,7 @@ public class RouterVRP {
         JSONObject responseObject = new JSONObject(jsonResponse);
         JSONArray routesArray = responseObject.getJSONObject("solution").getJSONArray("routes");
 
-        if (routesArray.length() == 0) {
+        if (routesArray.isEmpty()) {
             return route;
         }
 
